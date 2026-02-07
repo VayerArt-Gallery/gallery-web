@@ -63,13 +63,7 @@ export function useArtworksListing({
     [],
   )
 
-  const hasActiveFilters = Object.values(filters).some(
-    (values) => values.length > 0,
-  )
-
-  const showLoadMoreButton =
-    hasNextPage &&
-    (!hasActiveFilters || dedupedArtworks.length >= ITEMS_PER_PAGE)
+  const showLoadMoreButton = Boolean(hasNextPage)
 
   return {
     fallbackOptions,

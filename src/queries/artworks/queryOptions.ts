@@ -5,9 +5,7 @@ import type { QueryFunctionContext, QueryKey } from '@tanstack/react-query'
 import { ITEMS_PER_PAGE } from '@/hooks/useArtworksListing'
 import { normalizePriceRangeValues } from '@/lib/artworks/price'
 
-import { buildFilterCollectionHandles } from './collections'
 import { fetchSanityPage, fetchShopifyPage } from './fetchers'
-import { fetchArtworksForCollectionHandles } from './multiCollectionFetch'
 
 function normalizeFilterValues(values: string[]): string[] {
   return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b))
@@ -39,25 +37,7 @@ export async function fetchArtworksPage(
     return fetchSanityPage(pageSize)
   }
 
-  // Always rebuild collection handles from current filters to prevent stale data
-  const collectionHandles = buildFilterCollectionHandles(filters)
-
-  if (collectionHandles.length > 0) {
-    return fetchArtworksForCollectionHandles(
-      collectionHandles,
-      pageParam,
-      pageSize,
-      sortOption,
-      filters.priceRanges,
-    )
-  }
-
-  return fetchShopifyPage(
-    pageParam.after,
-    pageSize,
-    sortOption,
-    filters.priceRanges,
-  )
+  return fetchShopifyPage(pageParam.after, pageSize, sortOption, filters)
 }
 
 export function getNextArtworksPageParam(
@@ -106,10 +86,9 @@ export function createAllArtworksInfiniteQueryOptions({
 }) {
   const normalizedFilters = normalizeFilters(filters)
   const normalizedSort = sortOption
-  const initialHandles = buildFilterCollectionHandles(normalizedFilters)
-  const hasCollectionFilters = initialHandles.length > 0
-  const hasPriceFilters = normalizedFilters.priceRanges.length > 0
-  const hasFilters = hasCollectionFilters || hasPriceFilters
+  const hasFilters = Object.values(normalizedFilters).some(
+    (values) => values.length > 0,
+  )
 
   // Use Sanity only when sort is 'default' and there are no filters
   const useSanity = normalizedSort === 'default' && !hasFilters
@@ -122,7 +101,7 @@ export function createAllArtworksInfiniteQueryOptions({
     initialPageParam: {
       source: initialSource,
       after: undefined,
-      collectionHandles: hasCollectionFilters ? initialHandles : undefined,
+      collectionHandles: undefined,
       cursorsByHandle: undefined,
       bufferedByHandle: undefined,
     } as ArtworksPageParam,
@@ -133,6 +112,7 @@ export function createAllArtworksInfiniteQueryOptions({
         sortOption: normalizedSort,
       }),
     getNextPageParam: getNextArtworksPageParam,
+    staleTime: 2 * 60 * 1000,
     gcTime: 7 * 60 * 1000,
     maxPages: 20,
   }

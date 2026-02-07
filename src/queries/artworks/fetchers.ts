@@ -14,13 +14,11 @@ import type {
   ProductCollectionSortKeys,
   ProductSortKeys,
 } from '@/queries/graphql/generated/types'
-import type { ArtworksSortOption } from '@/types/filters'
+import type { ArtworksFilterState, ArtworksSortOption } from '@/types/filters'
 import type { Artwork } from '@/types/products'
 
-import {
-  filterArtworksByPriceRanges,
-  normalizePriceRangeValues,
-} from '@/lib/artworks/price'
+import { filterArtworksByFilters } from '@/lib/artworks/filtering'
+import { buildShopifyPriceQueryClause } from '@/lib/artworks/price'
 import { formatProducts, productsToArtworks } from '@/lib/normalizers/products'
 import { SHOPIFY_AVAILABLE_IN_STOCK_QUERY } from '@/queries/constants'
 import { fetcher } from '@/queries/graphql/fetcher'
@@ -73,18 +71,26 @@ export async function fetchShopifyPage(
   after: string | undefined,
   pageSize: number,
   sortOption: ArtworksSortOption,
-  selectedPriceRanges: string[] = [],
+  filters: ArtworksFilterState,
 ): Promise<ArtworksPage> {
   const { sortKey, reverse } = getShopifySortParams(sortOption)
-  const normalizedRanges = normalizePriceRangeValues(selectedPriceRanges)
-  const hasPriceFilter = normalizedRanges.length > 0
+  const hasNonPriceFilters =
+    filters.styles.length > 0 ||
+    filters.categories.length > 0 ||
+    filters.themes.length > 0 ||
+    filters.artists.length > 0
+  const priceQueryClause = buildShopifyPriceQueryClause(filters.priceRanges)
+  const requiresClientScan = hasNonPriceFilters
+  const shopifyQuery = priceQueryClause
+    ? `${SHOPIFY_AVAILABLE_IN_STOCK_QUERY} AND ${priceQueryClause}`
+    : SHOPIFY_AVAILABLE_IN_STOCK_QUERY
 
   let currentCursor = after
   let hasNextPage = true
   let endCursor: string | undefined = after
   let attempts = 0
-  const maxBatches = hasPriceFilter ? 8 : 1
-  const batchSize = hasPriceFilter ? Math.max(pageSize * 2, 48) : pageSize
+  const maxBatches = requiresClientScan ? 8 : 1
+  const batchSize = requiresClientScan ? Math.max(pageSize * 3, 96) : pageSize
   const collected: Artwork[] = []
 
   while (hasNextPage && collected.length < pageSize && attempts < maxBatches) {
@@ -96,7 +102,7 @@ export async function fetchShopifyPage(
       sortKey,
       reverse,
       imagesFirst: 1,
-      query: SHOPIFY_AVAILABLE_IN_STOCK_QUERY,
+      query: shopifyQuery,
     }
 
     const res = await fetcher<
@@ -106,7 +112,7 @@ export async function fetchShopifyPage(
 
     const normalized = formatProducts(res.products) ?? []
     const batchItems = productsToArtworks(normalized)
-    const filteredBatch = filterArtworksByPriceRanges(batchItems, normalizedRanges)
+    const filteredBatch = filterArtworksByFilters(batchItems, filters)
     const remainingSlots = pageSize - collected.length
 
     collected.push(...filteredBatch.slice(0, remainingSlots))

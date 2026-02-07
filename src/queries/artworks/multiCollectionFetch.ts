@@ -7,7 +7,6 @@ import {
   normalizePriceRangeValues,
 } from '@/lib/artworks/price'
 import { collectionHandleToTitle } from './collections'
-import { FILTER_COLLECTION_PREFIXES } from './constants'
 import { fetchCollectionProductsPage } from './fetchers'
 import { applyCollectionMetadataToArtworks } from './utils'
 
@@ -56,7 +55,8 @@ export async function fetchArtworksForCollectionHandles(
   const normalizedRanges = normalizePriceRangeValues(selectedPriceRanges)
 
   const perHandleFetchSize = Math.max(
-    Math.ceil(pageSize / uniqueHandles.length),
+    Math.ceil(pageSize / uniqueHandles.length) *
+      (normalizedRanges.length > 0 ? 2 : 1),
     6,
   )
 
@@ -78,16 +78,6 @@ export async function fetchArtworksForCollectionHandles(
         perHandleFetchSize,
         sortOption,
       )
-
-      if (handle.startsWith(FILTER_COLLECTION_PREFIXES.categories)) {
-        console.log('[category-collection:page]', {
-          handle,
-          after: cursor ?? undefined,
-          received: page.items.length,
-          hasNextPage: page.pageInfo.hasNextPage,
-          titles: page.items.map((item) => item.title),
-        })
-      }
 
       const adjusted = applyCollectionMetadataToArtworks(
         handle,
@@ -114,34 +104,40 @@ export async function fetchArtworksForCollectionHandles(
   const activeHandles = new Set(uniqueHandles)
 
   while (delivered.length < pageSize && activeHandles.size > 0) {
-    for (const handle of Array.from(activeHandles)) {
+    const handlesNeedingLoad = Array.from(activeHandles).filter((handle) => {
       const buffer = buffers.get(handle)
-      if (buffer && buffer.length > 0) continue
+      if (buffer && buffer.length > 0) return false
       const cursor = cursors.get(handle)
       if (cursor === null) {
         activeHandles.delete(handle)
-        continue
+        return false
       }
-      try {
-        await loadBuffer(handle)
-        const updated = buffers.get(handle)
-        if (!updated || updated.length === 0) {
-          const nextCursor = cursors.get(handle)
-          if (nextCursor === null) {
-            activeHandles.delete(handle)
+      return true
+    })
+
+    await Promise.all(
+      handlesNeedingLoad.map(async (handle) => {
+        try {
+          await loadBuffer(handle)
+          const updated = buffers.get(handle)
+          if (!updated || updated.length === 0) {
+            const nextCursor = cursors.get(handle)
+            if (nextCursor === null) {
+              activeHandles.delete(handle)
+            }
           }
+        } catch (error) {
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn(
+              'Failed to load collection products for handle',
+              handle,
+              error,
+            )
+          }
+          activeHandles.delete(handle)
         }
-      } catch (error) {
-        if (process.env.NODE_ENV !== 'production') {
-          console.warn(
-            'Failed to load collection products for handle',
-            handle,
-            error,
-          )
-        }
-        activeHandles.delete(handle)
-      }
-    }
+      }),
+    )
 
     const candidates: Array<{ handle: string; artwork: Artwork }> = []
     for (const handle of activeHandles) {
