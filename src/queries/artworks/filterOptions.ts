@@ -57,7 +57,6 @@ const EMPTY_FILTER_OPTIONS: ArtworksFilterOptions = {
 }
 
 type FilterInputIndex = Record<FilterKey, Map<string, SearchFilterInput>>
-type FilterLabelIndex = Record<FilterKey, Map<string, string>>
 
 function createFilterInputIndex(): FilterInputIndex {
   return {
@@ -68,7 +67,7 @@ function createFilterInputIndex(): FilterInputIndex {
   }
 }
 
-function createFilterLabelIndex(): FilterLabelIndex {
+function createFilterLabelIndex() {
   return {
     styles: new Map(),
     categories: new Map(),
@@ -79,7 +78,6 @@ function createFilterLabelIndex(): FilterLabelIndex {
 
 let cachedOptions: ArtworksFilterOptions | null = null
 let cachedInputIndex: FilterInputIndex = createFilterInputIndex()
-let cachedLabelIndex: FilterLabelIndex = createFilterLabelIndex()
 let inFlight: Promise<ArtworksFilterOptions> | null = null
 
 function normalizeLabel(value: string): string {
@@ -159,8 +157,6 @@ async function loadSearchFilterOptions(): Promise<ArtworksFilterOptions> {
   })
 
   cachedInputIndex = nextIndex
-  cachedLabelIndex = nextLabels
-
   const nextOptions: ArtworksFilterOptions = {
     styles: Array.from(nextLabels.styles.values()).sort((a, b) =>
       a.localeCompare(b),
