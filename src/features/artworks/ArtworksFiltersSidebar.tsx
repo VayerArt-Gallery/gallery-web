@@ -18,15 +18,20 @@ type ArtworksFiltersSidebarProps = {
   sortOption: ArtworksSortOption
   onSortChange: (option: ArtworksSortOption) => void
   filters: ArtworksFilterState
+  hasActiveFilters: boolean
   onFiltersChange: (filters: ArtworksFilterState) => void
   availableOptions: ArtworksFilterOptions
   onClearFilters?: () => void
 }
 
-const sortOptions: { label: string; value: ArtworksSortOption }[] = [
+const sortOptions: {
+  label: string
+  value: ArtworksSortOption
+  disabledWhenFiltered?: boolean
+}[] = [
   { label: 'Default', value: 'default' },
-  { label: 'Title (A → Z)', value: 'title-asc' },
-  { label: 'Title (Z → A)', value: 'title-desc' },
+  { label: 'Title (A → Z)', value: 'title-asc', disabledWhenFiltered: true },
+  { label: 'Title (Z → A)', value: 'title-desc', disabledWhenFiltered: true },
   { label: 'Price (low → high)', value: 'price-asc' },
   { label: 'Price (high → low)', value: 'price-desc' },
 ]
@@ -83,6 +88,7 @@ export default function ArtworksFiltersSidebar({
   sortOption,
   onSortChange,
   filters,
+  hasActiveFilters,
   onFiltersChange,
   availableOptions,
   onClearFilters,
@@ -112,7 +118,7 @@ export default function ArtworksFiltersSidebar({
     }
   }
 
-  const hasActiveFilters =
+  const hasAnyActiveFilters =
     filters.artists.length > 0 ||
     filters.categories.length > 0 ||
     filters.styles.length > 0 ||
@@ -124,7 +130,7 @@ export default function ArtworksFiltersSidebar({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold text-neutral-900">Refine</h2>
-          {hasActiveFilters && (
+          {hasAnyActiveFilters && (
             <button
               onClick={handleClearFilters}
               className="text-sm font-medium text-neutral-500 underline-offset-2 hover:text-neutral-700 hover:underline"
@@ -145,7 +151,14 @@ export default function ArtworksFiltersSidebar({
             </SelectTrigger>
             <SelectContent>
               {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  disabled={Boolean(
+                    hasActiveFilters && option.disabledWhenFiltered,
+                  )}
+                  className="data-disabled:pointer-events-auto data-disabled:cursor-not-allowed data-disabled:opacity-50"
+                >
                   {option.label}
                 </SelectItem>
               ))}

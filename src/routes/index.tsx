@@ -80,7 +80,7 @@ function IndexPage() {
 
         <section
           id="curators-picks"
-          className="mt-8 scroll-mt-[var(--header-height)]"
+          className="mt-8 scroll-mt-(--header-height)"
         >
           <h2 className="featured-headline">Curator's Picks</h2>
           <ArtworksGrid artworks={curatorsPicks} showPrice={false} />
@@ -112,7 +112,7 @@ function IndexPage() {
         <hr className="mb-4 w-full bg-neutral-400 md:mb-8" />
 
         <section>
-          <h3 className="featured-headline text-center md:!text-2xl">
+          <h3 className="featured-headline text-center md:text-2xl!">
             Secure Payment Options
           </h3>
           <div className="flex items-center justify-center gap-4">

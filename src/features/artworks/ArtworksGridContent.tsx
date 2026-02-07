@@ -106,7 +106,7 @@ export default function ArtworksGridContent({
   }, [query])
 
   const [sortValue] = query['sort'] ?? []
-  const sortOption: ArtworksSortOption = isSortOption(sortValue)
+  const parsedSortOption: ArtworksSortOption = isSortOption(sortValue)
     ? sortValue
     : DEFAULT_SORT
 
@@ -117,6 +117,19 @@ export default function ArtworksGridContent({
     artists: query['artists'] ?? [],
     priceRanges: query['priceRanges'] ?? [],
   }
+  const hasActiveFilters = Object.values(filters).some(
+    (values) => values.length > 0,
+  )
+  const isTitleSortSelected =
+    parsedSortOption === 'title-asc' || parsedSortOption === 'title-desc'
+  const sortOption: ArtworksSortOption =
+    hasActiveFilters && isTitleSortSelected ? DEFAULT_SORT : parsedSortOption
+
+  useEffect(() => {
+    if (hasActiveFilters && isTitleSortSelected) {
+      setQuery('sort', undefined)
+    }
+  }, [hasActiveFilters, isTitleSortSelected, setQuery])
 
   const {
     fallbackOptions,
@@ -231,6 +244,7 @@ export default function ArtworksGridContent({
                 sortOption={sortOption}
                 onSortChange={handleSortChange}
                 filters={filters}
+                hasActiveFilters={hasActiveFilters}
                 onFiltersChange={handleFiltersChange}
                 availableOptions={availableOptions}
                 onClearFilters={handleClearFilters}
@@ -243,7 +257,7 @@ export default function ArtworksGridContent({
       <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
         <div
           ref={sidebarWrapperRef}
-          className="hidden lg:sticky lg:top-36 lg:block lg:w-64 lg:flex-shrink-0 lg:self-start"
+          className="hidden lg:sticky lg:top-36 lg:block lg:w-64 lg:shrink-0 lg:self-start"
         >
           <div className="relative">
             <div
@@ -261,6 +275,7 @@ export default function ArtworksGridContent({
                 sortOption={sortOption}
                 onSortChange={handleSortChange}
                 filters={filters}
+                hasActiveFilters={hasActiveFilters}
                 onFiltersChange={handleFiltersChange}
                 availableOptions={availableOptions}
                 onClearFilters={handleClearFilters}
@@ -270,7 +285,7 @@ export default function ArtworksGridContent({
             {showScrollHint && (
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-10 items-end justify-center bg-gradient-to-t from-white via-white/90 to-transparent lg:flex"
+                className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-10 items-end justify-center bg-linear-to-t from-white via-white/90 to-transparent lg:flex"
               >
                 <button
                   type="button"
@@ -289,13 +304,13 @@ export default function ArtworksGridContent({
           {status === 'pending' ? (
             <ArtworksGridSkeleton />
           ) : status === 'error' ? (
-            <div className="flex min-h-[240px] items-center justify-center rounded-lg border border-dashed border-neutral-300 p-6 text-center text-sm text-red-600">
+            <div className="flex min-h-60 items-center justify-center rounded-lg border border-dashed border-neutral-300 p-6 text-center text-sm text-red-600">
               Unable to load artworks. Please try again.
             </div>
           ) : sortedArtworks.length > 0 ? (
             <ArtworksGrid artworks={sortedArtworks} showPrice={showPrice} />
           ) : (
-            <div className="flex min-h-[240px] items-center justify-center rounded-lg border border-dashed border-neutral-300 p-6 text-center text-sm text-neutral-500">
+            <div className="flex min-h-60 items-center justify-center rounded-lg border border-dashed border-neutral-300 p-6 text-center text-sm text-neutral-500">
               No artworks match your current filters. Try adjusting or clearing
               them.
             </div>

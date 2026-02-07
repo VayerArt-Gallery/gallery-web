@@ -106,8 +106,8 @@ export function buildShopifyPriceQueryClause(selectedRanges: string[]): string {
     .filter((option): option is PriceRangeOption => Boolean(option))
     .map((option) => {
       const parts: string[] = []
-      if (option.min > 0) parts.push(`variants.price:>=${option.min}`)
-      if (option.max != null) parts.push(`variants.price:<${option.max}`)
+      if (option.min > 0) parts.push(`price:>=${option.min}`)
+      if (option.max != null) parts.push(`price:<${option.max}`)
       if (parts.length === 0) return ''
       if (parts.length === 1) return parts[0]
       return `(${parts.join(' AND ')})`

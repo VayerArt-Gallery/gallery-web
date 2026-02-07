@@ -9,8 +9,8 @@ import { useMemo } from 'react'
 import { queryOptions, useInfiniteQuery } from '@tanstack/react-query'
 
 import { dedupeArtworks } from '@/lib/artworks/utils'
+import { fetchFilterOptions } from '@/queries/artworks/filterOptions'
 import { createAllArtworksInfiniteQueryOptions } from '@/queries/artworks/queryOptions'
-import { fetchFilterOptions } from '@/queries/artworks/collections'
 
 export const ITEMS_PER_PAGE = 32
 

@@ -47,25 +47,6 @@ export function getNextArtworksPageParam(
     // After the initial Sanity page, we move to Shopify paging
     return { source: 'shopify', after: undefined }
   }
-  const handles = lastPage.collectionHandles
-  if (handles && handles.length > 0) {
-    const cursors = lastPage.cursorsByHandle ?? {}
-    const buffers = lastPage.bufferedByHandle ?? {}
-    const hasMore = handles.some((handle) => {
-      if (handle in buffers) return true // buffer only exists if length > 0
-      const cursor = cursors[handle]
-      return cursor !== null && cursor !== undefined
-    })
-
-    return hasMore
-      ? {
-          source: 'shopify',
-          collectionHandles: handles,
-          cursorsByHandle: cursors,
-          bufferedByHandle: buffers,
-        }
-      : undefined
-  }
 
   return lastPage.pageInfo.hasNextPage
     ? {
