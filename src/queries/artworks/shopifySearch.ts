@@ -1,13 +1,10 @@
 import type { ArtworksPage } from './types'
-import type {
-  Public_GetAllProductsQuery,
-} from '@/queries/graphql/generated/react-query'
 import type { SearchSortKeys } from '@/queries/graphql/generated/types'
 import type { ArtworksFilterState, ArtworksSortOption } from '@/types/filters'
 import type { Artwork } from '@/types/products'
 
 import { filterArtworksByFilters } from '@/lib/artworks/filtering'
-import { formatProducts, productsToArtworks } from '@/lib/normalizers/products'
+import { slugify } from '@/lib/utils'
 import { buildSearchProductFilters } from '@/queries/artworks/filterOptions'
 import { fetcher } from '@/queries/graphql/fetcher'
 
@@ -41,8 +38,6 @@ type SearchProductsResponse = {
       id?: string
       title?: string
       handle?: string
-      createdAt?: string
-      descriptionHtml?: string
       priceRange?: {
         maxVariantPrice: {
           amount: string
@@ -52,18 +47,13 @@ type SearchProductsResponse = {
       images?: {
         edges: Array<{
           node: {
-            id?: string | null
             url: string
-            altText?: string | null
-            width?: number | null
-            height?: number | null
           }
         }>
       }
       artist?: { value?: string | null } | null
       category?: { value?: string | null } | null
       dimensionsImperial?: { value?: string | null } | null
-      dimensionsMetric?: { value?: string | null } | null
       medium?: { value?: string | null } | null
       style?: {
         references?: {
@@ -119,16 +109,10 @@ const SEARCH_PRODUCTS_QUERY = `
           id
           title
           handle
-          createdAt
-          descriptionHtml
           images(first: $imagesFirst) {
             edges {
               node {
-                id
                 url
-                altText
-                width
-                height
               }
             }
           }
@@ -148,11 +132,6 @@ const SEARCH_PRODUCTS_QUERY = `
           }
           dimensionsImperial: metafield(namespace: "custom", key: "dimensions_us") {
             value
-            type
-          }
-          dimensionsMetric: metafield(namespace: "custom", key: "dimensions_global") {
-            value
-            type
           }
           medium: metafield(namespace: "custom", key: "medium") {
             value
@@ -203,10 +182,35 @@ function getShopifySearchSortParams(sortOption: ArtworksSortOption): {
   }
 }
 
-function toProductConnection(
+function normalizeMetaLabel(value: string): string {
+  const label = value.trim()
+  if (!label) return ''
+  return label
+    .split('-')
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ')
+}
+
+function extractTagLabels(
+  field: SearchProductsResponse['search']['nodes'][number]['style'] | SearchProductsResponse['search']['nodes'][number]['theme'],
+): string[] {
+  const nodes = field?.references?.nodes ?? []
+  const labels = nodes
+    .filter((node) => node.__typename === 'Metaobject')
+    .map((node) => {
+      const raw = node.label?.value ?? node.handle ?? ''
+      return normalizeMetaLabel(raw)
+    })
+    .filter(Boolean)
+
+  return Array.from(new Set(labels))
+}
+
+function toArtworkBatch(
   nodes: SearchProductsResponse['search']['nodes'],
-): NonNullable<Public_GetAllProductsQuery['products']> {
-  const edges = nodes
+): Artwork[] {
+  return nodes
     .filter((node) => node.__typename === 'Product')
     .filter(
       (node): node is SearchProductsResponse['search']['nodes'][number] & {
@@ -214,8 +218,6 @@ function toProductConnection(
         id: string
         title: string
         handle: string
-        createdAt: string
-        descriptionHtml: string
         images: NonNullable<SearchProductsResponse['search']['nodes'][number]['images']>
         priceRange: NonNullable<SearchProductsResponse['search']['nodes'][number]['priceRange']>
       } =>
@@ -223,37 +225,35 @@ function toProductConnection(
           node.id &&
             node.title &&
             node.handle &&
-            node.createdAt &&
-            node.descriptionHtml &&
             node.images &&
             node.priceRange,
         ),
     )
-    .map((node) => ({
-      cursor: node.id,
-      node: {
-        id: node.id,
-        title: node.title,
-        handle: node.handle,
-        createdAt: node.createdAt,
-        descriptionHtml: node.descriptionHtml,
-        images: node.images,
-        priceRange: node.priceRange,
-        artist: node.artist ?? null,
-        category: node.category ?? null,
-        dimensionsImperial: node.dimensionsImperial ?? null,
-        dimensionsMetric: node.dimensionsMetric ?? null,
-        medium: node.medium ?? null,
-        style: node.style ?? null,
-        theme: node.theme ?? null,
-      },
-    }))
+    .map((node) => {
+      const artistName = node.artist?.value?.trim() || 'Unknown'
+      const styleTags = extractTagLabels(node.style)
+      const themeTags = extractTagLabels(node.theme)
+      const previewImageUrl = node.images.edges[0]?.node.url ?? ''
 
-  return {
-    __typename: 'ProductConnection',
-    edges: edges as NonNullable<Public_GetAllProductsQuery['products']>['edges'],
-    pageInfo: { __typename: 'PageInfo', hasNextPage: false, endCursor: null },
-  }
+      return {
+        id: node.id,
+        gid: node.id,
+        title: node.title,
+        slug: node.handle,
+        previewImageUrl,
+        artist: { name: artistName, slug: slugify(artistName) },
+        price: String(node.priceRange.maxVariantPrice.amount),
+        currencyCode: node.priceRange.maxVariantPrice.currencyCode,
+        category: node.category?.value ?? null,
+        style: styleTags[0] ?? '',
+        styleTags,
+        medium: node.medium?.value ?? '',
+        theme: themeTags[0] ?? '',
+        themeTags,
+        dimensionsImperial: node.dimensionsImperial?.value ?? '',
+        dimensionsMetric: '',
+      } satisfies Artwork
+    })
 }
 
 export async function fetchFilteredShopifyPage(
@@ -300,9 +300,7 @@ export async function fetchFilteredShopifyPage(
       SearchProductsVariables
     >(SEARCH_PRODUCTS_QUERY, variables)()
 
-    const connection = toProductConnection(res.search.nodes)
-    const normalized = formatProducts(connection) ?? []
-    const batchItems = productsToArtworks(normalized)
+    const batchItems = toArtworkBatch(res.search.nodes)
     const filteredBatch = requiresClientFallback
       ? filterArtworksByFilters(batchItems, filters)
       : batchItems
