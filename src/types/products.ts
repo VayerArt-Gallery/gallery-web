@@ -1,6 +1,7 @@
 import type { CurrencyCode } from '@/queries/graphql/generated/types'
 
 export type Artwork = {
+  availableForSale?: boolean
   artist: {
     name: string
     slug: string
@@ -39,6 +40,7 @@ export type ProductImage = {
 // Normalized product from Shopify GraphQL
 export type Product = {
   cursor: string
+  availableForSale: boolean
   id: string
   handle: string
   title: string

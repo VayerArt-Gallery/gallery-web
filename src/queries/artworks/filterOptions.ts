@@ -206,10 +206,11 @@ function addUniqueFilter(
 
 export async function buildSearchProductFilters(
   filters: ArtworksFilterState,
+  availability: boolean = true,
 ): Promise<BuildFilterResult> {
   await fetchFilterOptions()
 
-  const productFilters: SearchFilterInput[] = [{ available: true }]
+  const productFilters: SearchFilterInput[] = [{ available: availability }]
   let requiresClientFallback = false
 
   const keyedValues: Array<[FilterKey, string[]]> = [

@@ -19,6 +19,7 @@ type ArtworksFiltersSidebarProps = {
   onSortChange: (option: ArtworksSortOption) => void
   filters: ArtworksFilterState
   hasActiveFilters: boolean
+  showTitleSortOptions?: boolean
   onFiltersChange: (filters: ArtworksFilterState) => void
   availableOptions: ArtworksFilterOptions
   onClearFilters?: () => void
@@ -117,9 +118,7 @@ function SingleSelectFilterSection({
                 <span
                   className={[
                     'flex h-4 w-4 items-center justify-center rounded-full border transition-colors',
-                    isSelected
-                      ? 'border-neutral-900'
-                      : 'border-neutral-300',
+                    isSelected ? 'border-neutral-900' : 'border-neutral-300',
                   ].join(' ')}
                 >
                   {isSelected && (
@@ -141,6 +140,7 @@ export default function ArtworksFiltersSidebar({
   onSortChange,
   filters,
   hasActiveFilters,
+  showTitleSortOptions = true,
   onFiltersChange,
   availableOptions,
   onClearFilters,
@@ -182,6 +182,13 @@ export default function ArtworksFiltersSidebar({
     filters.themes.length > 0 ||
     filters.priceRanges.length > 0
 
+  const displayedSortOptions = showTitleSortOptions
+    ? sortOptions
+    : sortOptions.filter(
+        (option) =>
+          option.value !== 'title-asc' && option.value !== 'title-desc',
+      )
+
   return (
     <aside className="space-y-6 rounded-lg border border-neutral-200 p-4">
       <div className="space-y-3">
@@ -207,7 +214,7 @@ export default function ArtworksFiltersSidebar({
               <SelectValue placeholder="Select a sort option" />
             </SelectTrigger>
             <SelectContent>
-              {sortOptions.map((option) => (
+              {displayedSortOptions.map((option) => (
                 <SelectItem
                   key={option.value}
                   value={option.value}

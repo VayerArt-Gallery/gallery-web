@@ -147,7 +147,12 @@ export function ArtworkGridItem({
         </div>
 
         {showPrice && (
-          <p className="mt-2 text-sm text-neutral-500/80">{priceDisplay}</p>
+          <p className="mt-2 inline-flex items-center gap-1 text-sm text-neutral-500/80">
+            {priceDisplay}
+            {artwork.availableForSale === false && (
+              <span className="text-rose-600">• Sold</span>
+            )}
+          </p>
         )}
 
         {/*

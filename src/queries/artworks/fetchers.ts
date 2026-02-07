@@ -71,12 +71,13 @@ export async function fetchShopifyPage(
   pageSize: number,
   sortOption: ArtworksSortOption,
   filters: ArtworksFilterState,
+  availability: boolean = true,
 ): Promise<ArtworksPage> {
   const hasActiveFilters = Object.values(filters).some(
     (values) => values.length > 0,
   )
 
-  if (!hasActiveFilters) {
+  if (availability && !hasActiveFilters) {
     const { sortKey, reverse } = getShopifySortParams(sortOption)
 
     const variables: Public_GetAllProductsQueryVariables = {
@@ -100,7 +101,13 @@ export async function fetchShopifyPage(
     return { source: 'shopify', items, pageInfo }
   }
 
-  return fetchFilteredShopifyPage(after, pageSize, sortOption, filters)
+  return fetchFilteredShopifyPage(
+    after,
+    pageSize,
+    sortOption,
+    filters,
+    availability,
+  )
 }
 
 export async function fetchCollectionProductsPage(

@@ -23,7 +23,6 @@ import {
 } from '@/hooks/useArtworksListing'
 import { normalizeSinglePriceRangeValue } from '@/lib/artworks/price'
 import { mergeFilterOptions } from '@/lib/artworks/utils'
-import { Route } from '@/routes/_pathlessLayout/artworks'
 import { useUrlStore } from '@/store/url-store'
 
 import ArtworksFiltersSidebar from './ArtworksFiltersSidebar'
@@ -38,6 +37,12 @@ const FILTER_KEYS: Array<keyof ArtworksFilterState> = [
   'artists',
   'priceRanges',
 ]
+const EMPTY_FILTER_OPTIONS: ArtworksFilterOptions = {
+  styles: [],
+  categories: [],
+  themes: [],
+  artists: [],
+}
 
 function isSortOption(value: string | undefined): value is ArtworksSortOption {
   return (
@@ -51,24 +56,22 @@ function isSortOption(value: string | undefined): value is ArtworksSortOption {
 
 export default function ArtworksGridContent({
   showPrice = false,
+  availability = true,
 }: {
   showPrice: boolean
+  availability?: boolean
 }) {
-  const initialFilterOptions = Route.useLoaderData()
   const query = useUrlStore.use.query()
   const setQuery = useUrlStore.use.setQuery()
   const setQueries = useUrlStore.use.setQueries()
   const syncQueryFromUrl = useUrlStore.use.syncQueryFromUrl()
   const hasSyncedFromUrlRef = useRef(false)
 
-  const initialDataUpdatedAt = useMemo(() => Date.now(), [])
   const { data: remoteFilterOptions } = useQuery({
     ...artworkFilterOptionsQueryOptions,
-    initialData: initialFilterOptions,
-    initialDataUpdatedAt,
   })
 
-  const effectiveFilterOptions = remoteFilterOptions
+  const effectiveFilterOptions = remoteFilterOptions ?? EMPTY_FILTER_OPTIONS
 
   useEffect(() => {
     function syncFromLocation() {
@@ -124,16 +127,17 @@ export default function ArtworksGridContent({
   const hasActiveFilters = Object.values(filters).some(
     (values) => values.length > 0,
   )
+  const disableTitleSort = !availability || hasActiveFilters
   const isTitleSortSelected =
     parsedSortOption === 'title-asc' || parsedSortOption === 'title-desc'
   const sortOption: ArtworksSortOption =
-    hasActiveFilters && isTitleSortSelected ? DEFAULT_SORT : parsedSortOption
+    disableTitleSort && isTitleSortSelected ? DEFAULT_SORT : parsedSortOption
 
   useEffect(() => {
-    if (hasActiveFilters && isTitleSortSelected) {
+    if (disableTitleSort && isTitleSortSelected) {
       setQuery('sort', undefined)
     }
-  }, [hasActiveFilters, isTitleSortSelected, setQuery])
+  }, [disableTitleSort, isTitleSortSelected, setQuery])
 
   const {
     fallbackOptions,
@@ -142,7 +146,7 @@ export default function ArtworksGridContent({
     showLoadMoreButton,
     fetchNextPage,
     isFetchingNextPage,
-  } = useArtworksListing({ sortOption, filters })
+  } = useArtworksListing({ sortOption, filters, availability })
 
   const availableOptions = useMemo<ArtworksFilterOptions>(() => {
     return mergeFilterOptions(effectiveFilterOptions, fallbackOptions)
@@ -248,7 +252,8 @@ export default function ArtworksGridContent({
                 sortOption={sortOption}
                 onSortChange={handleSortChange}
                 filters={filters}
-                hasActiveFilters={hasActiveFilters}
+                hasActiveFilters={disableTitleSort}
+                showTitleSortOptions={availability}
                 onFiltersChange={handleFiltersChange}
                 availableOptions={availableOptions}
                 onClearFilters={handleClearFilters}
@@ -279,7 +284,8 @@ export default function ArtworksGridContent({
                 sortOption={sortOption}
                 onSortChange={handleSortChange}
                 filters={filters}
-                hasActiveFilters={hasActiveFilters}
+                hasActiveFilters={disableTitleSort}
+                showTitleSortOptions={availability}
                 onFiltersChange={handleFiltersChange}
                 availableOptions={availableOptions}
                 onClearFilters={handleClearFilters}

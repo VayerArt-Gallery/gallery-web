@@ -21,6 +21,24 @@ import {
 import { fetcher } from '@/queries/graphql/fetcher'
 import { Public_GetProductByHandleDocument } from '@/queries/graphql/generated/react-query'
 
+type ProductAvailabilityByHandleQuery = {
+  productByHandle?: {
+    availableForSale: boolean
+  } | null
+}
+
+type ProductAvailabilityByHandleQueryVariables = {
+  handle: string
+}
+
+const PRODUCT_AVAILABILITY_BY_HANDLE_QUERY = `
+  query ProductAvailabilityByHandle($handle: String!) {
+    productByHandle(handle: $handle) {
+      availableForSale
+    }
+  }
+`
+
 function createProductQuery(handle: string) {
   return queryOptions({
     queryKey: ['product-by-handle', handle],
@@ -28,6 +46,18 @@ function createProductQuery(handle: string) {
       Public_GetProductByHandleQuery,
       Public_GetProductByHandleQueryVariables
     >(Public_GetProductByHandleDocument, { handle, imagesFirst: 6 }),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+  })
+}
+
+function createProductAvailabilityQuery(handle: string) {
+  return queryOptions({
+    queryKey: ['product-availability-by-handle', handle],
+    queryFn: fetcher<
+      ProductAvailabilityByHandleQuery,
+      ProductAvailabilityByHandleQueryVariables
+    >(PRODUCT_AVAILABILITY_BY_HANDLE_QUERY, { handle }),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
   })
@@ -45,8 +75,17 @@ function generateSeoDescription(artwork: Artwork) {
 }
 
 export const Route = createFileRoute('/_pathlessLayout/artworks/$slug/')({
-  loader: ({ context, params }) =>
-    context.queryClient.ensureQueryData(createProductQuery(params.slug)),
+  loader: async ({ context, params }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(createProductQuery(params.slug)),
+      context.queryClient.ensureQueryData(
+        createProductAvailabilityQuery(params.slug),
+      ),
+    ])
+    return context.queryClient.getQueryData<
+      Public_GetProductByHandleQuery | undefined
+    >(['product-by-handle', params.slug])
+  },
   head: ({ loaderData, params }) => {
     const product = loaderData?.productByHandle
     const normalized = product ? formatProduct(product) : undefined
@@ -73,8 +112,12 @@ export const Route = createFileRoute('/_pathlessLayout/artworks/$slug/')({
 function RouteComponent() {
   const { slug } = Route.useParams()
   const { data } = useSuspenseQuery(createProductQuery(slug))
+  const { data: availabilityData } = useSuspenseQuery(
+    createProductAvailabilityQuery(slug),
+  )
 
   const product = data.productByHandle
+  const isSold = availabilityData.productByHandle?.availableForSale === false
   const normalized = product ? formatProduct(product) : undefined
   const artwork = normalized ? productToArtwork(normalized) : undefined
   const images = normalized?.images.map((i) => i.url) ?? []
@@ -99,7 +142,7 @@ function RouteComponent() {
           onImageClick={handleImageClick}
         />
 
-        <div className="mx-auto my-8 max-w-[700px] align-top text-nowrap lg:my-0 lg:ml-8 lg:w-1/2 xl:ml-16 xl:w-[600px] 2xl:ml-24 2xl:w-[700px]">
+        <div className="mx-auto my-8 max-w-175 align-top text-nowrap lg:my-0 lg:ml-8 lg:w-1/2 xl:ml-16 xl:w-150 2xl:ml-24 2xl:w-175">
           <section className="space-y-1">
             <h2 className="font-lora text-xl font-medium text-wrap md:text-[1.625rem]">
               {artwork?.title}
@@ -117,7 +160,10 @@ function RouteComponent() {
           </section>
 
           {priceDisplay && (
-            <p className="mt-4 text-lg md:text-xl">{priceDisplay}</p>
+            <p className="mt-4 inline-flex items-center gap-1.5 text-lg md:text-xl">
+              {priceDisplay}
+              {isSold && <span className="text-rose-600">• Sold</span>}
+            </p>
           )}
 
           <article className="mt-5 w-full leading-tight text-pretty">
@@ -170,10 +216,20 @@ function RouteComponent() {
           </section>
 
           <section className="mt-8 flex flex-col items-center gap-6 md:flex-row">
-            {artwork && <AddToBagBtn type="solid" product={artwork} />}
-            <p className="text-sm">
-              Pay in installments <br /> with <ShopPayIcon />
-            </p>
+            {artwork && (
+              <div className="w-full md:w-fit">
+                <AddToBagBtn type="solid" product={artwork} isSold={isSold} />
+              </div>
+            )}
+            {isSold ? (
+              <p className="text-sm text-rose-600">
+                This artwork has been sold.
+              </p>
+            ) : (
+              <p className="text-sm">
+                Pay in installments <br /> with <ShopPayIcon />
+              </p>
+            )}
           </section>
         </div>
       </div>

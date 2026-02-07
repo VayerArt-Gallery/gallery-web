@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PathlessLayoutRouteRouteImport } from './routes/_pathlessLayout/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PathlessLayoutSoldIndexRouteImport } from './routes/_pathlessLayout/sold/index'
 import { Route as PathlessLayoutMagazineIndexRouteImport } from './routes/_pathlessLayout/magazine/index'
 import { Route as PathlessLayoutEventsIndexRouteImport } from './routes/_pathlessLayout/events/index'
 import { Route as PathlessLayoutArtworksIndexRouteImport } from './routes/_pathlessLayout/artworks/index'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PathlessLayoutSoldIndexRoute = PathlessLayoutSoldIndexRouteImport.update({
+  id: '/sold/',
+  path: '/sold/',
+  getParentRoute: () => PathlessLayoutRouteRoute,
 } as any)
 const PathlessLayoutMagazineIndexRoute =
   PathlessLayoutMagazineIndexRouteImport.update({
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/artworks/': typeof PathlessLayoutArtworksIndexRoute
   '/events/': typeof PathlessLayoutEventsIndexRoute
   '/magazine/': typeof PathlessLayoutMagazineIndexRoute
+  '/sold/': typeof PathlessLayoutSoldIndexRoute
   '/artists/$slug/': typeof PathlessLayoutArtistsSlugIndexRoute
   '/artworks/$slug/': typeof PathlessLayoutArtworksSlugIndexRoute
   '/legal/$slug/': typeof PathlessLayoutLegalSlugIndexRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/artworks': typeof PathlessLayoutArtworksIndexRoute
   '/events': typeof PathlessLayoutEventsIndexRoute
   '/magazine': typeof PathlessLayoutMagazineIndexRoute
+  '/sold': typeof PathlessLayoutSoldIndexRoute
   '/artists/$slug': typeof PathlessLayoutArtistsSlugIndexRoute
   '/artworks/$slug': typeof PathlessLayoutArtworksSlugIndexRoute
   '/legal/$slug': typeof PathlessLayoutLegalSlugIndexRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/_pathlessLayout/artworks/': typeof PathlessLayoutArtworksIndexRoute
   '/_pathlessLayout/events/': typeof PathlessLayoutEventsIndexRoute
   '/_pathlessLayout/magazine/': typeof PathlessLayoutMagazineIndexRoute
+  '/_pathlessLayout/sold/': typeof PathlessLayoutSoldIndexRoute
   '/_pathlessLayout/artists/$slug/': typeof PathlessLayoutArtistsSlugIndexRoute
   '/_pathlessLayout/artworks/$slug/': typeof PathlessLayoutArtworksSlugIndexRoute
   '/_pathlessLayout/legal/$slug/': typeof PathlessLayoutLegalSlugIndexRoute
@@ -173,6 +182,7 @@ export interface FileRouteTypes {
     | '/artworks/'
     | '/events/'
     | '/magazine/'
+    | '/sold/'
     | '/artists/$slug/'
     | '/artworks/$slug/'
     | '/legal/$slug/'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/artworks'
     | '/events'
     | '/magazine'
+    | '/sold'
     | '/artists/$slug'
     | '/artworks/$slug'
     | '/legal/$slug'
@@ -206,6 +217,7 @@ export interface FileRouteTypes {
     | '/_pathlessLayout/artworks/'
     | '/_pathlessLayout/events/'
     | '/_pathlessLayout/magazine/'
+    | '/_pathlessLayout/sold/'
     | '/_pathlessLayout/artists/$slug/'
     | '/_pathlessLayout/artworks/$slug/'
     | '/_pathlessLayout/legal/$slug/'
@@ -242,6 +254,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_pathlessLayout/sold/': {
+      id: '/_pathlessLayout/sold/'
+      path: '/sold'
+      fullPath: '/sold/'
+      preLoaderRoute: typeof PathlessLayoutSoldIndexRouteImport
+      parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/magazine/': {
       id: '/_pathlessLayout/magazine/'
@@ -337,6 +356,7 @@ interface PathlessLayoutRouteRouteChildren {
   PathlessLayoutArtworksIndexRoute: typeof PathlessLayoutArtworksIndexRoute
   PathlessLayoutEventsIndexRoute: typeof PathlessLayoutEventsIndexRoute
   PathlessLayoutMagazineIndexRoute: typeof PathlessLayoutMagazineIndexRoute
+  PathlessLayoutSoldIndexRoute: typeof PathlessLayoutSoldIndexRoute
   PathlessLayoutArtistsSlugIndexRoute: typeof PathlessLayoutArtistsSlugIndexRoute
   PathlessLayoutArtworksSlugIndexRoute: typeof PathlessLayoutArtworksSlugIndexRoute
   PathlessLayoutLegalSlugIndexRoute: typeof PathlessLayoutLegalSlugIndexRoute
@@ -351,6 +371,7 @@ const PathlessLayoutRouteRouteChildren: PathlessLayoutRouteRouteChildren = {
   PathlessLayoutArtworksIndexRoute: PathlessLayoutArtworksIndexRoute,
   PathlessLayoutEventsIndexRoute: PathlessLayoutEventsIndexRoute,
   PathlessLayoutMagazineIndexRoute: PathlessLayoutMagazineIndexRoute,
+  PathlessLayoutSoldIndexRoute: PathlessLayoutSoldIndexRoute,
   PathlessLayoutArtistsSlugIndexRoute: PathlessLayoutArtistsSlugIndexRoute,
   PathlessLayoutArtworksSlugIndexRoute: PathlessLayoutArtworksSlugIndexRoute,
   PathlessLayoutLegalSlugIndexRoute: PathlessLayoutLegalSlugIndexRoute,

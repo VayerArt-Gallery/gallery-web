@@ -28,11 +28,7 @@ export const Route = createFileRoute('/_pathlessLayout/magazine/')({
 })
 
 function RouteComponent() {
-  const {
-    data: articles,
-    isLoading,
-    isError,
-  } = useSuspenseQuery(allArticlesQueryOptions)
+  const { data: articles } = useSuspenseQuery(allArticlesQueryOptions)
 
   return (
     <main className="page-main">
@@ -57,7 +53,7 @@ function RouteComponent() {
                     'group flex h-full flex-col overflow-hidden rounded border border-neutral-800 bg-neutral-900 transition-colors duration-200 ease-in hover:bg-neutral-800'
                   }
                 >
-                  <div className="aspect-[5/4] w-full bg-neutral-800">
+                  <div className="aspect-5/4 w-full bg-neutral-800">
                     <img
                       src={a.coverImage}
                       alt={a.title}

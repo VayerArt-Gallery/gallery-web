@@ -28,17 +28,25 @@ export async function fetchArtworksPage(
     pageSize = ITEMS_PER_PAGE,
     filters,
     sortOption,
+    availability = true,
   }: {
     pageSize?: number
     filters: ArtworksFilterState
     sortOption: ArtworksSortOption
+    availability?: boolean
   },
 ): Promise<ArtworksPage> {
   if (pageParam.source === 'sanity') {
     return fetchSanityPage(pageSize)
   }
 
-  return fetchShopifyPage(pageParam.after, pageSize, sortOption, filters)
+  return fetchShopifyPage(
+    pageParam.after,
+    pageSize,
+    sortOption,
+    filters,
+    availability,
+  )
 }
 
 export function getNextArtworksPageParam(
@@ -61,10 +69,12 @@ export function createAllArtworksInfiniteQueryOptions({
   pageSize = ITEMS_PER_PAGE,
   filters,
   sortOption,
+  availability = true,
 }: {
   pageSize?: number
   filters: ArtworksFilterState
   sortOption: ArtworksSortOption
+  availability?: boolean
 }) {
   const normalizedFilters = normalizeFilters(filters)
   const normalizedSort = sortOption
@@ -73,13 +83,13 @@ export function createAllArtworksInfiniteQueryOptions({
   )
 
   // Use Sanity only when sort is 'default' and there are no filters
-  const useSanity = normalizedSort === 'default' && !hasFilters
+  const useSanity = availability && normalizedSort === 'default' && !hasFilters
   const initialSource: ArtworksPageParam['source'] = useSanity
     ? 'sanity'
     : 'shopify'
 
   return {
-    queryKey: ['all-artworks', normalizedFilters, normalizedSort],
+    queryKey: ['all-artworks', normalizedFilters, normalizedSort, availability],
     initialPageParam: {
       source: initialSource,
       after: undefined,
@@ -89,6 +99,7 @@ export function createAllArtworksInfiniteQueryOptions({
         pageSize,
         filters: normalizedFilters,
         sortOption: normalizedSort,
+        availability,
       }),
     getNextPageParam: getNextArtworksPageParam,
     staleTime: 2 * 60 * 1000,

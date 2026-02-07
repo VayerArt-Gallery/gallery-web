@@ -24,7 +24,7 @@ type ProductLike = Pick<
   | 'medium'
   | 'style'
   | 'theme'
->
+> & { availableForSale?: boolean | null }
 
 const isNonNull = <T>(v: T | null | undefined): v is T => v != null
 
@@ -70,6 +70,7 @@ function formatLabeledMetaobjects(
 export function formatProduct(node: ProductLike, cursor?: string): Product {
   return {
     cursor: cursor ?? '',
+    availableForSale: node.availableForSale ?? true,
     id: node.id,
     title: node.title,
     handle: node.handle,
@@ -137,6 +138,7 @@ export function productsToArtworks(products: Product[]): Artwork[] {
     const styleTags = formatMetaLabelList(p.style)
     const themeTags = formatMetaLabelList(p.theme)
     return {
+      availableForSale: p.availableForSale,
       id: p.id,
       gid: p.id,
       title: p.title,
@@ -162,6 +164,7 @@ export function productToArtwork(p: Product): Artwork {
   const styleTags = formatMetaLabelList(p.style)
   const themeTags = formatMetaLabelList(p.theme)
   return {
+    availableForSale: p.availableForSale,
     id: p.id,
     gid: p.id,
     title: p.title,

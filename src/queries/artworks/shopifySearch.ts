@@ -94,7 +94,7 @@ const SEARCH_PRODUCTS_QUERY = `
       after: $after
       query: $query
       types: [PRODUCT]
-      unavailableProducts: HIDE
+      unavailableProducts: SHOW
       sortKey: $sortKey
       reverse: $reverse
       productFilters: $productFilters
@@ -209,6 +209,7 @@ function extractTagLabels(
 
 function toArtworkBatch(
   nodes: SearchProductsResponse['search']['nodes'],
+  availability: boolean,
 ): Artwork[] {
   return nodes
     .filter((node) => node.__typename === 'Product')
@@ -236,6 +237,7 @@ function toArtworkBatch(
       const previewImageUrl = node.images.edges[0]?.node.url ?? ''
 
       return {
+        availableForSale: availability,
         id: node.id,
         gid: node.id,
         title: node.title,
@@ -261,10 +263,11 @@ export async function fetchFilteredShopifyPage(
   pageSize: number,
   sortOption: ArtworksSortOption,
   filters: ArtworksFilterState,
+  availability: boolean = true,
 ): Promise<ArtworksPage> {
   const { sortKey, reverse } = getShopifySearchSortParams(sortOption)
   const { productFilters, searchQuery, requiresClientFallback } =
-    await buildSearchProductFilters(filters)
+    await buildSearchProductFilters(filters, availability)
 
   const requiresClientScan = requiresClientFallback
 
@@ -300,7 +303,7 @@ export async function fetchFilteredShopifyPage(
       SearchProductsVariables
     >(SEARCH_PRODUCTS_QUERY, variables)()
 
-    const batchItems = toArtworkBatch(res.search.nodes)
+    const batchItems = toArtworkBatch(res.search.nodes, availability)
     const filteredBatch = requiresClientFallback
       ? filterArtworksByFilters(batchItems, filters)
       : batchItems

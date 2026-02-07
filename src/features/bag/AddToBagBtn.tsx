@@ -11,12 +11,14 @@ type AddToBagBtnProps = {
   type: 'solid' | 'minimal'
   product: Artwork
   disabled?: boolean
+  isSold?: boolean
 }
 
 export default function AddToBagBtn({
   type,
   product,
   disabled = false,
+  isSold = false,
 }: AddToBagBtnProps) {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -24,7 +26,7 @@ export default function AddToBagBtn({
   const addItem = useBagStore.use.addItem()
 
   const isAlreadyInBag = items.some((bagItem) => bagItem.id === product.gid)
-  const isDisabled = disabled || isAlreadyInBag || isLoading
+  const isDisabled = disabled || isSold || isAlreadyInBag || isLoading
 
   const isSolid = type === 'solid'
   const baseClasses = isSolid
@@ -66,7 +68,9 @@ export default function AddToBagBtn({
   }
 
   let buttonText = 'Add to bag'
-  if (isLoading) {
+  if (isSold) {
+    buttonText = 'Sold'
+  } else if (isLoading) {
     buttonText = 'Adding...'
   } else if (isAlreadyInBag) {
     buttonText = 'In bag'

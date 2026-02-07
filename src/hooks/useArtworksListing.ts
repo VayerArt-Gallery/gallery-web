@@ -25,11 +25,13 @@ export const artworkFilterOptionsQueryOptions = queryOptions({
 interface UseArtworksListingArgs {
   sortOption: ArtworksSortOption
   filters: ArtworksFilterState
+  availability?: boolean
 }
 
 export function useArtworksListing({
   sortOption,
   filters,
+  availability = true,
 }: UseArtworksListingArgs) {
   const infiniteQueryOptions = useMemo(
     () =>
@@ -37,8 +39,9 @@ export function useArtworksListing({
         pageSize: ITEMS_PER_PAGE,
         filters,
         sortOption,
+        availability,
       }),
-    [filters, sortOption],
+    [availability, filters, sortOption],
   )
 
   const {

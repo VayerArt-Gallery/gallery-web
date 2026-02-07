@@ -16,6 +16,7 @@ export default function Footer() {
     { title: 'Artworks', path: '/artworks' },
     { title: 'Exhibitions & Fairs', path: '/events?filter=current' },
     { title: 'Magazine', path: '/magazine' },
+    { title: 'Sold', path: '/sold' },
     { title: 'About', path: '/about' },
   ]
 
