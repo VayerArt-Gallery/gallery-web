@@ -1,14 +1,23 @@
 import type { ArtworksPage, ArtworksPageParam } from './types'
-import type { ArtworksSortOption } from '@/types/filters'
+import type { ArtworksFilterOptions, ArtworksSortOption } from '@/types/filters'
 import type { Artwork } from '@/types/products'
 
 import {
   filterArtworksByPriceRanges,
-  normalizePriceRangeValues,
+  normalizeSinglePriceRangeValue,
 } from '@/lib/artworks/price'
-import { collectionHandleToTitle } from './collections'
 import { fetchCollectionProductsPage } from './fetchers'
 import { applyCollectionMetadataToArtworks } from './utils'
+
+const collectionHandleToTitle: Record<
+  keyof ArtworksFilterOptions,
+  Map<string, string>
+> = {
+  styles: new Map(),
+  categories: new Map(),
+  themes: new Map(),
+  artists: new Map(),
+}
 
 export async function fetchArtworksForCollectionHandles(
   handles: string[],
@@ -52,11 +61,12 @@ export async function fetchArtworksForCollectionHandles(
 
   const delivered: Artwork[] = []
   const seen = new Set<string>()
-  const normalizedRanges = normalizePriceRangeValues(selectedPriceRanges)
+  const selectedPriceRange = normalizeSinglePriceRangeValue(selectedPriceRanges)
+  const normalizedRanges = selectedPriceRange ? [selectedPriceRange] : []
 
   const perHandleFetchSize = Math.max(
     Math.ceil(pageSize / uniqueHandles.length) *
-      (normalizedRanges.length > 0 ? 2 : 1),
+      (selectedPriceRange ? 2 : 1),
     6,
   )
 
@@ -67,7 +77,7 @@ export async function fetchArtworksForCollectionHandles(
     if (existingBuffer && existingBuffer.length > 0) return
 
     let attempts = 0
-    const maxAttempts = normalizedRanges.length > 0 ? 4 : 1
+    const maxAttempts = selectedPriceRange ? 4 : 1
 
     while (cursor !== null && attempts < maxAttempts) {
       attempts += 1

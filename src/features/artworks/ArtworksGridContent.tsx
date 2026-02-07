@@ -21,6 +21,7 @@ import {
   artworkFilterOptionsQueryOptions,
   useArtworksListing,
 } from '@/hooks/useArtworksListing'
+import { normalizeSinglePriceRangeValue } from '@/lib/artworks/price'
 import { mergeFilterOptions } from '@/lib/artworks/utils'
 import { Route } from '@/routes/_pathlessLayout/artworks'
 import { useUrlStore } from '@/store/url-store'
@@ -115,7 +116,10 @@ export default function ArtworksGridContent({
     categories: query['categories'] ?? [],
     themes: query['themes'] ?? [],
     artists: query['artists'] ?? [],
-    priceRanges: query['priceRanges'] ?? [],
+    priceRanges: (() => {
+      const single = normalizeSinglePriceRangeValue(query['priceRanges'] ?? [])
+      return single ? [single] : []
+    })(),
   }
   const hasActiveFilters = Object.values(filters).some(
     (values) => values.length > 0,

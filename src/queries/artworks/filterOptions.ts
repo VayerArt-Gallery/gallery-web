@@ -4,9 +4,8 @@ import type {
 } from '@/types/filters'
 
 import {
-  getCombinedContiguousPriceBounds,
   getPriceBoundsForRange,
-  normalizePriceRangeValues,
+  normalizeSinglePriceRangeValue,
 } from '@/lib/artworks/price'
 import { fetcher } from '@/queries/graphql/fetcher'
 
@@ -239,24 +238,15 @@ export async function buildSearchProductFilters(
     })
   })
 
-  const normalizedPriceRanges = normalizePriceRangeValues(filters.priceRanges)
-  let searchQuery = '*'
+  const normalizedPriceRange = normalizeSinglePriceRangeValue(
+    filters.priceRanges,
+  )
+  const searchQuery = '*'
 
-  if (normalizedPriceRanges.length === 1) {
-    const bounds = getPriceBoundsForRange(normalizedPriceRanges[0])
+  if (normalizedPriceRange) {
+    const bounds = getPriceBoundsForRange(normalizedPriceRange)
     if (bounds) {
       addUniqueFilter(productFilters, { price: bounds })
-    }
-  } else if (normalizedPriceRanges.length > 1) {
-    const combinedBounds = getCombinedContiguousPriceBounds(
-      normalizedPriceRanges,
-    )
-    if (combinedBounds) {
-      addUniqueFilter(productFilters, { price: combinedBounds })
-    } else {
-      // Disjoint ranges require OR semantics; keep client-side predicate for correctness.
-      requiresClientFallback = true
-      searchQuery = '*'
     }
   }
 

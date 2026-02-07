@@ -3,7 +3,7 @@ import type { ArtworksFilterState, ArtworksSortOption } from '@/types/filters'
 import type { QueryFunctionContext, QueryKey } from '@tanstack/react-query'
 
 import { ITEMS_PER_PAGE } from '@/hooks/useArtworksListing'
-import { normalizePriceRangeValues } from '@/lib/artworks/price'
+import { normalizeSinglePriceRangeValue } from '@/lib/artworks/price'
 
 import { fetchSanityPage, fetchShopifyPage } from './fetchers'
 
@@ -12,12 +12,13 @@ function normalizeFilterValues(values: string[]): string[] {
 }
 
 function normalizeFilters(filters: ArtworksFilterState): ArtworksFilterState {
+  const singlePriceRange = normalizeSinglePriceRangeValue(filters.priceRanges)
   return {
     styles: normalizeFilterValues(filters.styles),
     categories: normalizeFilterValues(filters.categories),
     themes: normalizeFilterValues(filters.themes),
     artists: normalizeFilterValues(filters.artists),
-    priceRanges: normalizePriceRangeValues(filters.priceRanges),
+    priceRanges: singlePriceRange ? [singlePriceRange] : [],
   }
 }
 
@@ -82,9 +83,6 @@ export function createAllArtworksInfiniteQueryOptions({
     initialPageParam: {
       source: initialSource,
       after: undefined,
-      collectionHandles: undefined,
-      cursorsByHandle: undefined,
-      bufferedByHandle: undefined,
     } as ArtworksPageParam,
     queryFn: (ctx: QueryFunctionContext<QueryKey, ArtworksPageParam>) =>
       fetchArtworksPage(ctx, {

@@ -84,6 +84,58 @@ function FilterSection({
   )
 }
 
+type SingleSelectFilterSectionProps = {
+  label: string
+  options: Array<{ label: string; value: string }>
+  selectedValue: string | null
+  onSelect: (value: string) => void
+}
+
+function SingleSelectFilterSection({
+  label,
+  options,
+  selectedValue,
+  onSelect,
+}: SingleSelectFilterSectionProps) {
+  if (options.length === 0) return null
+
+  return (
+    <section className="space-y-3">
+      <h3 className="text-sm font-medium text-neutral-700">{label}</h3>
+      <ul className="space-y-2">
+        {options.map((option) => {
+          const isSelected = selectedValue === option.value
+
+          return (
+            <li key={option.value}>
+              <button
+                type="button"
+                onClick={() => onSelect(option.value)}
+                className="flex w-full cursor-pointer items-center gap-2 text-left"
+                aria-pressed={isSelected}
+              >
+                <span
+                  className={[
+                    'flex h-4 w-4 items-center justify-center rounded-full border transition-colors',
+                    isSelected
+                      ? 'border-neutral-900'
+                      : 'border-neutral-300',
+                  ].join(' ')}
+                >
+                  {isSelected && (
+                    <span className="h-2 w-2 rounded-full bg-neutral-900" />
+                  )}
+                </span>
+                <span className="text-sm text-neutral-700">{option.label}</span>
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
+  )
+}
+
 export default function ArtworksFiltersSidebar({
   sortOption,
   onSortChange,
@@ -100,7 +152,12 @@ export default function ArtworksFiltersSidebar({
   const handleToggle = (name: keyof ArtworksFilterState, value: string) => {
     onFiltersChange({
       ...filters,
-      [name]: toggleArrayValue(filters[name], value),
+      [name]:
+        name === 'priceRanges'
+          ? filters.priceRanges[0] === value
+            ? []
+            : [value]
+          : toggleArrayValue(filters[name], value),
     })
   }
 
@@ -168,20 +225,11 @@ export default function ArtworksFiltersSidebar({
       </div>
 
       <div className="space-y-6">
-        <FilterSection
+        <SingleSelectFilterSection
           label="Price"
-          name="priceRanges"
-          options={PRICE_RANGE_OPTIONS.map((option) => option.label)}
-          selected={PRICE_RANGE_OPTIONS.filter((option) =>
-            filters.priceRanges.includes(option.value),
-          ).map((option) => option.label)}
-          onToggle={(_, value) => {
-            const range = PRICE_RANGE_OPTIONS.find(
-              (option) => option.label === value,
-            )
-            if (!range) return
-            handleToggle('priceRanges', range.value)
-          }}
+          options={PRICE_RANGE_OPTIONS}
+          selectedValue={filters.priceRanges[0] ?? null}
+          onSelect={(value) => handleToggle('priceRanges', value)}
         />
         <FilterSection
           label="Style"
