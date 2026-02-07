@@ -35,6 +35,7 @@ const FILTER_KEYS: Array<keyof ArtworksFilterState> = [
   'categories',
   'themes',
   'artists',
+  'priceRanges',
 ]
 
 function isSortOption(value: string | undefined): value is ArtworksSortOption {
@@ -114,6 +115,7 @@ export default function ArtworksGridContent({
     categories: query['categories'] ?? [],
     themes: query['themes'] ?? [],
     artists: query['artists'] ?? [],
+    priceRanges: query['priceRanges'] ?? [],
   }
 
   const {

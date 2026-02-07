@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { PRICE_RANGE_OPTIONS } from '@/lib/artworks/price'
 import { slugify, toggleArrayValue } from '@/lib/utils'
 
 type ArtworksFiltersSidebarProps = {
@@ -106,6 +107,7 @@ export default function ArtworksFiltersSidebar({
         categories: [],
         themes: [],
         artists: [],
+        priceRanges: [],
       })
     }
   }
@@ -114,7 +116,8 @@ export default function ArtworksFiltersSidebar({
     filters.artists.length > 0 ||
     filters.categories.length > 0 ||
     filters.styles.length > 0 ||
-    filters.themes.length > 0
+    filters.themes.length > 0 ||
+    filters.priceRanges.length > 0
 
   return (
     <aside className="space-y-6 rounded-lg border border-neutral-200 p-4">
@@ -152,6 +155,21 @@ export default function ArtworksFiltersSidebar({
       </div>
 
       <div className="space-y-6">
+        <FilterSection
+          label="Price"
+          name="priceRanges"
+          options={PRICE_RANGE_OPTIONS.map((option) => option.label)}
+          selected={PRICE_RANGE_OPTIONS.filter((option) =>
+            filters.priceRanges.includes(option.value),
+          ).map((option) => option.label)}
+          onToggle={(_, value) => {
+            const range = PRICE_RANGE_OPTIONS.find(
+              (option) => option.label === value,
+            )
+            if (!range) return
+            handleToggle('priceRanges', range.value)
+          }}
+        />
         <FilterSection
           label="Style"
           name="styles"

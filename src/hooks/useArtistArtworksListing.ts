@@ -84,6 +84,7 @@ export function useArtistArtworksListing({
         },
         ITEMS_PER_PAGE,
         'default',
+        [],
       )
     },
     getNextPageParam: (lastPage) => {

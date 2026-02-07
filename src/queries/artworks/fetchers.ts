@@ -17,6 +17,10 @@ import type {
 import type { ArtworksSortOption } from '@/types/filters'
 import type { Artwork } from '@/types/products'
 
+import {
+  filterArtworksByPriceRanges,
+  normalizePriceRangeValues,
+} from '@/lib/artworks/price'
 import { formatProducts, productsToArtworks } from '@/lib/normalizers/products'
 import { SHOPIFY_AVAILABLE_IN_STOCK_QUERY } from '@/queries/constants'
 import { fetcher } from '@/queries/graphql/fetcher'
@@ -69,28 +73,54 @@ export async function fetchShopifyPage(
   after: string | undefined,
   pageSize: number,
   sortOption: ArtworksSortOption,
+  selectedPriceRanges: string[] = [],
 ): Promise<ArtworksPage> {
   const { sortKey, reverse } = getShopifySortParams(sortOption)
+  const normalizedRanges = normalizePriceRangeValues(selectedPriceRanges)
+  const hasPriceFilter = normalizedRanges.length > 0
 
-  const variables: Public_GetAllProductsQueryVariables = {
-    first: pageSize,
-    after,
-    sortKey,
-    reverse,
-    imagesFirst: 1,
-    query: SHOPIFY_AVAILABLE_IN_STOCK_QUERY,
+  let currentCursor = after
+  let hasNextPage = true
+  let endCursor: string | undefined = after
+  let attempts = 0
+  const maxBatches = hasPriceFilter ? 8 : 1
+  const batchSize = hasPriceFilter ? Math.max(pageSize * 2, 48) : pageSize
+  const collected: Artwork[] = []
+
+  while (hasNextPage && collected.length < pageSize && attempts < maxBatches) {
+    attempts += 1
+
+    const variables: Public_GetAllProductsQueryVariables = {
+      first: batchSize,
+      after: currentCursor,
+      sortKey,
+      reverse,
+      imagesFirst: 1,
+      query: SHOPIFY_AVAILABLE_IN_STOCK_QUERY,
+    }
+
+    const res = await fetcher<
+      Public_GetAllProductsQuery,
+      Public_GetAllProductsQueryVariables
+    >(Public_GetAllProductsDocument, variables)()
+
+    const normalized = formatProducts(res.products) ?? []
+    const batchItems = productsToArtworks(normalized)
+    const filteredBatch = filterArtworksByPriceRanges(batchItems, normalizedRanges)
+    const remainingSlots = pageSize - collected.length
+
+    collected.push(...filteredBatch.slice(0, remainingSlots))
+
+    hasNextPage = res.products.pageInfo.hasNextPage
+    currentCursor = res.products.pageInfo.endCursor ?? undefined
+    endCursor = currentCursor
   }
 
-  const res = await fetcher<
-    Public_GetAllProductsQuery,
-    Public_GetAllProductsQueryVariables
-  >(Public_GetAllProductsDocument, variables)()
-
-  const normalized = formatProducts(res.products) ?? []
-  const items = productsToArtworks(normalized)
-  const pageInfo = res.products.pageInfo
-
-  return { source: 'shopify', items, pageInfo }
+  return {
+    source: 'shopify',
+    items: collected,
+    pageInfo: { hasNextPage, endCursor },
+  }
 }
 
 export async function fetchCollectionProductsPage(

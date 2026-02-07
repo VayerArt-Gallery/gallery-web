@@ -116,16 +116,16 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/magazine/$slug': typeof PathlessLayoutMagazineSlugRoute
   '/api/shopify/graphql': typeof ApiShopifyGraphqlRoute
-  '/about': typeof PathlessLayoutAboutIndexRoute
-  '/artists': typeof PathlessLayoutArtistsIndexRoute
-  '/artworks': typeof PathlessLayoutArtworksIndexRoute
-  '/events': typeof PathlessLayoutEventsIndexRoute
-  '/magazine': typeof PathlessLayoutMagazineIndexRoute
-  '/artists/$slug': typeof PathlessLayoutArtistsSlugIndexRoute
-  '/artworks/$slug': typeof PathlessLayoutArtworksSlugIndexRoute
-  '/legal/$slug': typeof PathlessLayoutLegalSlugIndexRoute
-  '/events/exhibitions/$slug': typeof PathlessLayoutEventsExhibitionsSlugIndexRoute
-  '/events/fairs/$slug': typeof PathlessLayoutEventsFairsSlugIndexRoute
+  '/about/': typeof PathlessLayoutAboutIndexRoute
+  '/artists/': typeof PathlessLayoutArtistsIndexRoute
+  '/artworks/': typeof PathlessLayoutArtworksIndexRoute
+  '/events/': typeof PathlessLayoutEventsIndexRoute
+  '/magazine/': typeof PathlessLayoutMagazineIndexRoute
+  '/artists/$slug/': typeof PathlessLayoutArtistsSlugIndexRoute
+  '/artworks/$slug/': typeof PathlessLayoutArtworksSlugIndexRoute
+  '/legal/$slug/': typeof PathlessLayoutLegalSlugIndexRoute
+  '/events/exhibitions/$slug/': typeof PathlessLayoutEventsExhibitionsSlugIndexRoute
+  '/events/fairs/$slug/': typeof PathlessLayoutEventsFairsSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -168,16 +168,16 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/magazine/$slug'
     | '/api/shopify/graphql'
-    | '/about'
-    | '/artists'
-    | '/artworks'
-    | '/events'
-    | '/magazine'
-    | '/artists/$slug'
-    | '/artworks/$slug'
-    | '/legal/$slug'
-    | '/events/exhibitions/$slug'
-    | '/events/fairs/$slug'
+    | '/about/'
+    | '/artists/'
+    | '/artworks/'
+    | '/events/'
+    | '/magazine/'
+    | '/artists/$slug/'
+    | '/artworks/$slug/'
+    | '/legal/$slug/'
+    | '/events/exhibitions/$slug/'
+    | '/events/fairs/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,7 +232,7 @@ declare module '@tanstack/react-router' {
     '/_pathlessLayout': {
       id: '/_pathlessLayout'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof PathlessLayoutRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -246,35 +246,35 @@ declare module '@tanstack/react-router' {
     '/_pathlessLayout/magazine/': {
       id: '/_pathlessLayout/magazine/'
       path: '/magazine'
-      fullPath: '/magazine'
+      fullPath: '/magazine/'
       preLoaderRoute: typeof PathlessLayoutMagazineIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/events/': {
       id: '/_pathlessLayout/events/'
       path: '/events'
-      fullPath: '/events'
+      fullPath: '/events/'
       preLoaderRoute: typeof PathlessLayoutEventsIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/artworks/': {
       id: '/_pathlessLayout/artworks/'
       path: '/artworks'
-      fullPath: '/artworks'
+      fullPath: '/artworks/'
       preLoaderRoute: typeof PathlessLayoutArtworksIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/artists/': {
       id: '/_pathlessLayout/artists/'
       path: '/artists'
-      fullPath: '/artists'
+      fullPath: '/artists/'
       preLoaderRoute: typeof PathlessLayoutArtistsIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/about/': {
       id: '/_pathlessLayout/about/'
       path: '/about'
-      fullPath: '/about'
+      fullPath: '/about/'
       preLoaderRoute: typeof PathlessLayoutAboutIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
@@ -295,35 +295,35 @@ declare module '@tanstack/react-router' {
     '/_pathlessLayout/legal/$slug/': {
       id: '/_pathlessLayout/legal/$slug/'
       path: '/legal/$slug'
-      fullPath: '/legal/$slug'
+      fullPath: '/legal/$slug/'
       preLoaderRoute: typeof PathlessLayoutLegalSlugIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/artworks/$slug/': {
       id: '/_pathlessLayout/artworks/$slug/'
       path: '/artworks/$slug'
-      fullPath: '/artworks/$slug'
+      fullPath: '/artworks/$slug/'
       preLoaderRoute: typeof PathlessLayoutArtworksSlugIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/artists/$slug/': {
       id: '/_pathlessLayout/artists/$slug/'
       path: '/artists/$slug'
-      fullPath: '/artists/$slug'
+      fullPath: '/artists/$slug/'
       preLoaderRoute: typeof PathlessLayoutArtistsSlugIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/events/fairs/$slug/': {
       id: '/_pathlessLayout/events/fairs/$slug/'
       path: '/events/fairs/$slug'
-      fullPath: '/events/fairs/$slug'
+      fullPath: '/events/fairs/$slug/'
       preLoaderRoute: typeof PathlessLayoutEventsFairsSlugIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/events/exhibitions/$slug/': {
       id: '/_pathlessLayout/events/exhibitions/$slug/'
       path: '/events/exhibitions/$slug'
-      fullPath: '/events/exhibitions/$slug'
+      fullPath: '/events/exhibitions/$slug/'
       preLoaderRoute: typeof PathlessLayoutEventsExhibitionsSlugIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }

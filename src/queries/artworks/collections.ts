@@ -115,7 +115,7 @@ function resolveHandlesForArtist(value: string): string[] {
 }
 
 function resolveHandlesForFilter(
-  type: keyof ArtworksFilterState,
+  type: FilterKey,
   value: string,
 ): string[] {
   if (!value) return []
@@ -132,7 +132,7 @@ export function buildFilterCollectionHandles(
 ): string[] {
   const allHandles = new Set<string>()
 
-  ;(Object.keys(filters) as Array<keyof ArtworksFilterState>).forEach((key) => {
+  FILTER_KEYS.forEach((key) => {
     const values = filters[key]
     values.forEach((value) => {
       resolveHandlesForFilter(key, value).forEach((handle) => {

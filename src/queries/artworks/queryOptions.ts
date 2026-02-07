@@ -3,6 +3,7 @@ import type { ArtworksFilterState, ArtworksSortOption } from '@/types/filters'
 import type { QueryFunctionContext, QueryKey } from '@tanstack/react-query'
 
 import { ITEMS_PER_PAGE } from '@/hooks/useArtworksListing'
+import { normalizePriceRangeValues } from '@/lib/artworks/price'
 
 import { buildFilterCollectionHandles } from './collections'
 import { fetchSanityPage, fetchShopifyPage } from './fetchers'
@@ -18,6 +19,7 @@ function normalizeFilters(filters: ArtworksFilterState): ArtworksFilterState {
     categories: normalizeFilterValues(filters.categories),
     themes: normalizeFilterValues(filters.themes),
     artists: normalizeFilterValues(filters.artists),
+    priceRanges: normalizePriceRangeValues(filters.priceRanges),
   }
 }
 
@@ -46,10 +48,16 @@ export async function fetchArtworksPage(
       pageParam,
       pageSize,
       sortOption,
+      filters.priceRanges,
     )
   }
 
-  return fetchShopifyPage(pageParam.after, pageSize, sortOption)
+  return fetchShopifyPage(
+    pageParam.after,
+    pageSize,
+    sortOption,
+    filters.priceRanges,
+  )
 }
 
 export function getNextArtworksPageParam(
@@ -99,7 +107,9 @@ export function createAllArtworksInfiniteQueryOptions({
   const normalizedFilters = normalizeFilters(filters)
   const normalizedSort = sortOption
   const initialHandles = buildFilterCollectionHandles(normalizedFilters)
-  const hasFilters = initialHandles.length > 0
+  const hasCollectionFilters = initialHandles.length > 0
+  const hasPriceFilters = normalizedFilters.priceRanges.length > 0
+  const hasFilters = hasCollectionFilters || hasPriceFilters
 
   // Use Sanity only when sort is 'default' and there are no filters
   const useSanity = normalizedSort === 'default' && !hasFilters
@@ -112,7 +122,7 @@ export function createAllArtworksInfiniteQueryOptions({
     initialPageParam: {
       source: initialSource,
       after: undefined,
-      collectionHandles: hasFilters ? initialHandles : undefined,
+      collectionHandles: hasCollectionFilters ? initialHandles : undefined,
       cursorsByHandle: undefined,
       bufferedByHandle: undefined,
     } as ArtworksPageParam,

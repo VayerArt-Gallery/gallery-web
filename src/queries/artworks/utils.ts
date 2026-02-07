@@ -1,11 +1,11 @@
-import type { ArtworksFilterState } from '@/types/filters'
+import type { ArtworksFilterOptions } from '@/types/filters'
 import type { Artwork } from '@/types/products'
 
 import { slugify, slugifyName } from '@/lib/utils'
 
 import { FILTER_COLLECTION_PREFIXES, FILTER_COLLECTION_PREFIX_ENTRIES } from './constants'
 
-type FilterKey = keyof ArtworksFilterState
+type FilterKey = keyof ArtworksFilterOptions
 
 export function detectFilterKey(handle: string): FilterKey | undefined {
   for (const [key, prefix] of FILTER_COLLECTION_PREFIX_ENTRIES) {

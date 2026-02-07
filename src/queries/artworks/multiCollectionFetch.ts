@@ -2,6 +2,10 @@ import type { ArtworksPage, ArtworksPageParam } from './types'
 import type { ArtworksSortOption } from '@/types/filters'
 import type { Artwork } from '@/types/products'
 
+import {
+  filterArtworksByPriceRanges,
+  normalizePriceRangeValues,
+} from '@/lib/artworks/price'
 import { collectionHandleToTitle } from './collections'
 import { FILTER_COLLECTION_PREFIXES } from './constants'
 import { fetchCollectionProductsPage } from './fetchers'
@@ -12,6 +16,7 @@ export async function fetchArtworksForCollectionHandles(
   pageParam: ArtworksPageParam,
   pageSize: number,
   sortOption: ArtworksSortOption,
+  selectedPriceRanges: string[] = [],
 ): Promise<ArtworksPage> {
   const uniqueHandles = Array.from(new Set(handles.filter(Boolean)))
   if (uniqueHandles.length === 0) {
@@ -48,6 +53,7 @@ export async function fetchArtworksForCollectionHandles(
 
   const delivered: Artwork[] = []
   const seen = new Set<string>()
+  const normalizedRanges = normalizePriceRangeValues(selectedPriceRanges)
 
   const perHandleFetchSize = Math.max(
     Math.ceil(pageSize / uniqueHandles.length),
@@ -55,50 +61,57 @@ export async function fetchArtworksForCollectionHandles(
   )
 
   async function loadBuffer(handle: string) {
-    const cursor = cursors.get(handle)
+    let cursor = cursors.get(handle)
     if (cursor === null) return
     const existingBuffer = buffers.get(handle)
     if (existingBuffer && existingBuffer.length > 0) return
 
-    const page = await fetchCollectionProductsPage(
-      handle,
-      cursor ?? undefined,
-      perHandleFetchSize,
-      sortOption,
-    )
+    let attempts = 0
+    const maxAttempts = normalizedRanges.length > 0 ? 4 : 1
 
-    if (handle.startsWith(FILTER_COLLECTION_PREFIXES.categories)) {
-      console.log('[category-collection:page]', {
+    while (cursor !== null && attempts < maxAttempts) {
+      attempts += 1
+
+      const page = await fetchCollectionProductsPage(
         handle,
-        after: cursor ?? undefined,
-        received: page.items.length,
-        hasNextPage: page.pageInfo.hasNextPage,
-        titles: page.items.map((item) => item.title),
-      })
+        cursor ?? undefined,
+        perHandleFetchSize,
+        sortOption,
+      )
+
+      if (handle.startsWith(FILTER_COLLECTION_PREFIXES.categories)) {
+        console.log('[category-collection:page]', {
+          handle,
+          after: cursor ?? undefined,
+          received: page.items.length,
+          hasNextPage: page.pageInfo.hasNextPage,
+          titles: page.items.map((item) => item.title),
+        })
+      }
+
+      const adjusted = applyCollectionMetadataToArtworks(
+        handle,
+        page.items,
+        collectionHandleToTitle,
+      )
+      const filtered = filterArtworksByPriceRanges(adjusted, normalizedRanges)
+      if (filtered.length > 0) {
+        const existing = buffers.get(handle)
+        buffers.set(handle, existing ? existing.concat(filtered) : [...filtered])
+      }
+
+      const nextCursor = page.pageInfo.hasNextPage
+        ? (page.pageInfo.endCursor ?? null)
+        : null
+      cursors.set(handle, nextCursor)
+      cursor = nextCursor
+
+      const refreshed = buffers.get(handle)
+      if (refreshed && refreshed.length > 0) return
     }
-
-    const adjusted = applyCollectionMetadataToArtworks(
-      handle,
-      page.items,
-      collectionHandleToTitle,
-    )
-    const existing = buffers.get(handle)
-    buffers.set(handle, existing ? existing.concat(adjusted) : [...adjusted])
-
-    const nextCursor = page.pageInfo.hasNextPage
-      ? (page.pageInfo.endCursor ?? null)
-      : null
-    cursors.set(handle, nextCursor)
   }
 
   const activeHandles = new Set(uniqueHandles)
-
-  const compareArtworks = (a: Artwork, b: Artwork): number => {
-    // Shopify API already sorted results by sortOption
-    // When merging multiple collections, just pick in round-robin fashion
-    // to maintain relative order from each collection
-    return 0
-  }
 
   while (delivered.length < pageSize && activeHandles.size > 0) {
     for (const handle of Array.from(activeHandles)) {
@@ -140,13 +153,7 @@ export async function fetchArtworksForCollectionHandles(
 
     if (candidates.length === 0) break
 
-    let selected = candidates[0]
-    for (let i = 1; i < candidates.length; i += 1) {
-      const candidate = candidates[i]
-      if (compareArtworks(candidate.artwork, selected.artwork) < 0) {
-        selected = candidate
-      }
-    }
+    const selected = candidates[0]
 
     const key = selected.artwork.gid || selected.artwork.id
     const buffer = buffers.get(selected.handle) ?? []
