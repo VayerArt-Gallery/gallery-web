@@ -76,7 +76,7 @@ export default function Header() {
       ref={headerRef}
       style={{ position: 'fixed', top: 0 }}
       className={cn(
-        'inset-x-0 z-50 w-full px-3 py-4 transition-colors duration-200 md:px-8',
+        'inset-x-0 z-50 w-full px-3 pt-2.5 pb-0 transition-colors duration-200 md:px-10 md:pt-3 md:pb-0 lg:pt-2 lg:pb-0 xl:pb-2',
         isMagazineRoute
           ? 'bg-black text-white'
           : solidMode
@@ -84,7 +84,7 @@ export default function Header() {
             : 'bg-transparent text-white',
       )}
     >
-      <nav className="mx-auto flex max-w-400 items-center justify-between">
+      <nav className="mx-auto flex w-full items-center justify-between">
         <Link
           to="/"
           aria-label="Home"
@@ -93,7 +93,7 @@ export default function Header() {
           <img
             src={logoSrc}
             alt="Vayer Art Gallery logo"
-            className="w-32 md:w-44"
+            className="w-28 md:w-40 lg:w-36 xl:w-40"
             width="128"
             height="48"
             loading="eager"
@@ -103,14 +103,14 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center">
-          <nav className="hidden md:flex">
-            <ul className="flex flex-col gap-5 tracking-wide md:flex-row md:gap-10">
+          <nav className="hidden lg:flex">
+            <ul className="flex flex-col gap-5 tracking-wide lg:flex-row lg:gap-6 xl:gap-10">
               {navLinks.map((navLink) => (
                 <li key={navLink.path}>
                   <Link
                     to={navLink.path}
                     className={cn(
-                      'relative font-medium transition-all duration-200',
+                      'relative text-base font-medium transition-all duration-200',
                       'after:absolute after:-bottom-px after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100',
                       isMagazineRoute
                         ? 'after:bg-white'
@@ -126,7 +126,7 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="mr-4 ml-10 flex gap-4 md:mr-0 md:gap-4">
+          <div className="mr-4 ml-10 flex gap-4 lg:mr-0 lg:gap-4">
             <SearchDialog isMagazineRoute={isMagazineRoute} />
 
             <Bag />
@@ -137,12 +137,12 @@ export default function Header() {
             open={drawerOpen}
             onOpenChange={setDrawerOpen}
           >
-            <DrawerTrigger className="z-40 py-3 pl-2 text-base font-medium md:hidden">
+            <DrawerTrigger className="z-40 py-2 pl-2 text-base font-medium lg:hidden">
               Menu
             </DrawerTrigger>
             <DrawerContent
               className={cn(
-                'w-full md:hidden',
+                'w-full lg:hidden',
                 isMagazineRoute ? 'bg-black text-white' : 'bg-white text-black',
               )}
             >

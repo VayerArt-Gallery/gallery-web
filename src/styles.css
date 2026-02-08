@@ -14,7 +14,7 @@ body {
 
 :root {
   --color-accent: oklch(0.5309 0.21 24.5);
-  --header-height: 10rem;
+  --header-height: 6rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
