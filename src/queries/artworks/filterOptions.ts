@@ -53,6 +53,7 @@ const EMPTY_FILTER_OPTIONS: ArtworksFilterOptions = {
   categories: [],
   themes: [],
   artists: [],
+  orientations: [],
 }
 
 type FilterInputIndex = Record<FilterKey, Map<string, SearchFilterInput>>
@@ -63,6 +64,7 @@ function createFilterInputIndex(): FilterInputIndex {
     categories: new Map(),
     themes: new Map(),
     artists: new Map(),
+    orientations: new Map(),
   }
 }
 
@@ -72,6 +74,7 @@ function createFilterLabelIndex() {
     categories: new Map(),
     themes: new Map(),
     artists: new Map(),
+    orientations: new Map(),
   }
 }
 
@@ -92,6 +95,9 @@ function detectFilterKey(
 
   if (pm?.namespace === 'custom' && pm?.key === 'artist') return 'artists'
   if (pm?.namespace === 'custom' && pm?.key === 'category') return 'categories'
+  if (pm?.namespace === 'custom' && pm?.key === 'orientation') {
+    return 'orientations'
+  }
 
   if (tm?.namespace === 'shopify' && tm?.key === 'art-movement') return 'styles'
   if (tm?.namespace === 'shopify' && tm?.key === 'theme') return 'themes'
@@ -101,6 +107,7 @@ function detectFilterKey(
 
   if (filterId.includes('.custom.artist')) return 'artists'
   if (filterId.includes('.custom.category')) return 'categories'
+  if (filterId.includes('.custom.orientation')) return 'orientations'
   if (filterId.includes('art-movement')) return 'styles'
   if (filterId.endsWith('.theme')) return 'themes'
 
@@ -119,6 +126,11 @@ function fallbackFilterInput(
   if (key === 'categories') {
     return {
       productMetafield: { namespace: 'custom', key: 'category', value },
+    }
+  }
+  if (key === 'orientations') {
+    return {
+      productMetafield: { namespace: 'custom', key: 'orientation', value },
     }
   }
   return undefined
@@ -167,6 +179,9 @@ async function loadSearchFilterOptions(): Promise<ArtworksFilterOptions> {
       a.localeCompare(b),
     ),
     artists: Array.from(nextLabels.artists.values()).sort((a, b) =>
+      a.localeCompare(b),
+    ),
+    orientations: Array.from(nextLabels.orientations.values()).sort((a, b) =>
       a.localeCompare(b),
     ),
   }
@@ -218,6 +233,7 @@ export async function buildSearchProductFilters(
     ['categories', filters.categories],
     ['styles', filters.styles],
     ['themes', filters.themes],
+    ['orientations', filters.orientations],
   ]
 
   keyedValues.forEach(([key, values]) => {

@@ -35,6 +35,7 @@ const FILTER_KEYS: Array<keyof ArtworksFilterState> = [
   'categories',
   'themes',
   'artists',
+  'orientations',
   'priceRanges',
 ]
 const EMPTY_FILTER_OPTIONS: ArtworksFilterOptions = {
@@ -42,6 +43,7 @@ const EMPTY_FILTER_OPTIONS: ArtworksFilterOptions = {
   categories: [],
   themes: [],
   artists: [],
+  orientations: [],
 }
 
 function isSortOption(value: string | undefined): value is ArtworksSortOption {
@@ -119,6 +121,7 @@ export default function ArtworksGridContent({
     categories: query['categories'] ?? [],
     themes: query['themes'] ?? [],
     artists: query['artists'] ?? [],
+    orientations: query['orientations'] ?? [],
     priceRanges: (() => {
       const single = normalizeSinglePriceRangeValue(query['priceRanges'] ?? [])
       return single ? [single] : []

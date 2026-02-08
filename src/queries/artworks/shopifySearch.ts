@@ -53,6 +53,7 @@ type SearchProductsResponse = {
       }
       artist?: { value?: string | null } | null
       category?: { value?: string | null } | null
+      orientation?: { value?: string | null } | null
       dimensionsImperial?: { value?: string | null } | null
       medium?: { value?: string | null } | null
       style?: {
@@ -127,6 +128,10 @@ const SEARCH_PRODUCTS_QUERY = `
             type
           }
           category: metafield(namespace: "custom", key: "category") {
+            value
+            type
+          }
+          orientation: metafield(namespace: "custom", key: "orientation") {
             value
             type
           }
@@ -247,6 +252,7 @@ function toArtworkBatch(
         price: String(node.priceRange.maxVariantPrice.amount),
         currencyCode: node.priceRange.maxVariantPrice.currencyCode,
         category: node.category?.value ?? null,
+        orientation: node.orientation?.value ?? null,
         style: styleTags[0] ?? '',
         styleTags,
         medium: node.medium?.value ?? '',

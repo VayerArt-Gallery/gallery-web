@@ -25,6 +25,7 @@ export function matchesArtworkFilters(
   if (
     !hasAnyMatch(filters.categories, [artwork.category]) ||
     !hasAnyMatch(filters.artists, [artwork.artist.name]) ||
+    !hasAnyMatch(filters.orientations, [artwork.orientation]) ||
     !hasAnyMatch(filters.styles, [artwork.style, ...(artwork.styleTags ?? [])]) ||
     !hasAnyMatch(filters.themes, [artwork.theme, ...(artwork.themeTags ?? [])])
   ) {

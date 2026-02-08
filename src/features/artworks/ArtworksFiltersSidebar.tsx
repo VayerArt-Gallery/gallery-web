@@ -170,6 +170,7 @@ export default function ArtworksFiltersSidebar({
         categories: [],
         themes: [],
         artists: [],
+        orientations: [],
         priceRanges: [],
       })
     }
@@ -180,6 +181,7 @@ export default function ArtworksFiltersSidebar({
     filters.categories.length > 0 ||
     filters.styles.length > 0 ||
     filters.themes.length > 0 ||
+    filters.orientations.length > 0 ||
     filters.priceRanges.length > 0
 
   const displayedSortOptions = showTitleSortOptions
@@ -221,7 +223,7 @@ export default function ArtworksFiltersSidebar({
                   disabled={Boolean(
                     hasActiveFilters && option.disabledWhenFiltered,
                   )}
-                  className="data-disabled:pointer-events-auto data-disabled:cursor-not-allowed data-disabled:opacity-50"
+                  className="data-[disabled]:pointer-events-auto data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50"
                 >
                   {option.label}
                 </SelectItem>
@@ -237,6 +239,13 @@ export default function ArtworksFiltersSidebar({
           options={PRICE_RANGE_OPTIONS}
           selectedValue={filters.priceRanges[0] ?? null}
           onSelect={(value) => handleToggle('priceRanges', value)}
+        />
+        <FilterSection
+          label="Orientation"
+          name="orientations"
+          options={availableOptions.orientations}
+          selected={filters.orientations}
+          onToggle={handleToggle}
         />
         <FilterSection
           label="Style"

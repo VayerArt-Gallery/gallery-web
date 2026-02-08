@@ -8,6 +8,7 @@ export type Artwork = {
   }
   currencyCode: CurrencyCode
   category: string | null
+  orientation?: string | null
   dimensionsImperial: string
   dimensionsMetric: string
   gid: string
@@ -47,6 +48,7 @@ export type Product = {
   descriptionHtml: string
   artist: string | null
   category: string | null
+  orientation?: string | null
   dimensionsImperial: string | null
   dimensionsMetric: string | null
   medium: string | null

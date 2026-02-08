@@ -62,7 +62,13 @@ export function useArtworksListing({
   )
 
   const fallbackOptions = useMemo<ArtworksFilterOptions>(
-    () => ({ styles: [], categories: [], themes: [], artists: [] }),
+    () => ({
+      styles: [],
+      categories: [],
+      themes: [],
+      artists: [],
+      orientations: [],
+    }),
     [],
   )
 

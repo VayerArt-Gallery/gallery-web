@@ -10,6 +10,7 @@ export type ArtworksFilterState = {
   categories: string[]
   themes: string[]
   artists: string[]
+  orientations: string[]
   priceRanges: string[]
 }
 
@@ -18,4 +19,5 @@ export type ArtworksFilterOptions = {
   categories: string[]
   themes: string[]
   artists: string[]
+  orientations: string[]
 }

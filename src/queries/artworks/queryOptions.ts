@@ -18,6 +18,7 @@ function normalizeFilters(filters: ArtworksFilterState): ArtworksFilterState {
     categories: normalizeFilterValues(filters.categories),
     themes: normalizeFilterValues(filters.themes),
     artists: normalizeFilterValues(filters.artists),
+    orientations: normalizeFilterValues(filters.orientations),
     priceRanges: singlePriceRange ? [singlePriceRange] : [],
   }
 }

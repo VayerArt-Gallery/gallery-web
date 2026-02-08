@@ -11,6 +11,8 @@
     "serve": "vite preview",
     "test": "vitest run",
     "lint": "eslint",
+    "orientation:dry": "bun scripts/backfill-orientation.ts",
+    "orientation:apply": "bun scripts/backfill-orientation.ts --apply",
     "format": "prettier",
     "check": "prettier --write . && eslint --fix",
     "codegen": "graphql-codegen",

@@ -39,5 +39,6 @@ export function mergeFilterOptions(
     categories: mergeValues(primary.categories, fallback.categories),
     themes: mergeValues(primary.themes, fallback.themes),
     artists: mergeValues(primary.artists, fallback.artists),
+    orientations: mergeValues(primary.orientations, fallback.orientations),
   }
 }
