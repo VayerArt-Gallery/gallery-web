@@ -27,10 +27,6 @@ export default function Header() {
   })
 
   useLayoutEffect(() => {
-    // Force scroll to top on navigation to prevent iOS Safari bug
-    // where header appears at wrong position during page transitions
-    window.scrollTo(0, 0)
-
     const onScroll = () => {
       const doc = document.documentElement
       const scrollable = Math.max(0, doc.scrollHeight - window.innerHeight)
@@ -136,6 +132,7 @@ export default function Header() {
             direction="right"
             open={drawerOpen}
             onOpenChange={setDrawerOpen}
+            modal={false}
           >
             <DrawerTrigger className="z-40 py-2 pl-2 text-base font-medium lg:hidden">
               Menu
@@ -162,14 +159,16 @@ export default function Header() {
                   <ul>
                     {navLinks.map((navLink) => (
                       <li key={navLink.path} className="mb-5">
-                        <DrawerClose asChild>
-                          <Link
-                            to={navLink.path}
-                            className="text-lg font-medium"
-                          >
-                            {navLink.title}
-                          </Link>
-                        </DrawerClose>
+                        <Link
+                          to={navLink.path}
+                          className="text-lg font-medium"
+                          resetScroll
+                          onClick={() => {
+                            setDrawerOpen(false)
+                          }}
+                        >
+                          {navLink.title}
+                        </Link>
                       </li>
                     ))}
                   </ul>
