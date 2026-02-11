@@ -2,14 +2,14 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 import { formatDateLong } from '@/lib/utils'
-import { getAllArticles } from '@/queries/sanity/magazine'
+import { getAllArticles } from '@/queries/sanity/blog'
 
 const allArticlesQueryOptions = queryOptions({
   queryKey: ['all-articles'],
   queryFn: () => getAllArticles(),
 })
 
-export const Route = createFileRoute('/_pathlessLayout/magazine/')({
+export const Route = createFileRoute('/_pathlessLayout/blog/')({
   loader: ({ context }) =>
     context.queryClient
       .ensureQueryData(allArticlesQueryOptions)
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_pathlessLayout/magazine/')({
   head: () => ({
     meta: [
       {
-        title: 'Magazine',
+        title: 'Blog',
         description:
           'Read essays, interviews, and stories from VayerArt Gallery highlighting artists, exhibitions, and the contemporary art scene.',
         type: 'article',
@@ -33,7 +33,7 @@ function RouteComponent() {
   return (
     <main className="page-main">
       <section className="mb-12">
-        <h2 className="page-headline">Magazine</h2>
+        <h2 className="page-headline">Blog</h2>
       </section>
 
       <section className="animate-fade-in">
@@ -44,7 +44,7 @@ function RouteComponent() {
             return (
               <Link
                 key={a.id}
-                to="/magazine/$slug"
+                to="/blog/$slug"
                 params={{ slug: a.slug }}
                 className="h-full"
               >

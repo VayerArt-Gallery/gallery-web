@@ -55,7 +55,7 @@ export default function Header() {
     { title: 'Artists', path: '/artists' },
     { title: 'Artworks', path: '/artworks' },
     { title: 'Exhibitions & Fairs', path: '/events?filter=current' },
-    { title: 'Magazine', path: '/magazine' },
+    { title: 'Blog', path: '/blog' },
     { title: 'Sold', path: '/sold' },
     { title: 'About', path: '/about' },
   ]
@@ -63,9 +63,9 @@ export default function Header() {
   // When not floating, we want solid header styling immediately (as if scrolled)
   const floatingRoute = pathname === '/'
   const solidMode = !floatingRoute || scrolled || drawerOpen
-  const isMagazineRoute = pathname.startsWith('/magazine')
+  const isBlogRoute = pathname.startsWith('/blog')
   const logoSrc =
-    solidMode && !isMagazineRoute ? '/logo-black.webp' : '/logo-white.webp'
+    solidMode && !isBlogRoute ? '/logo-black.webp' : '/logo-white.webp'
 
   return (
     <header
@@ -73,7 +73,7 @@ export default function Header() {
       style={{ position: 'fixed', top: 0 }}
       className={cn(
         'inset-x-0 z-50 w-full px-3 pt-2.5 pb-0 transition-colors duration-200 md:px-10 md:pt-3 md:pb-0 lg:pt-2 lg:pb-0 xl:pb-2',
-        isMagazineRoute
+        isBlogRoute
           ? 'bg-black text-white'
           : solidMode
             ? 'bg-white text-black'
@@ -108,7 +108,7 @@ export default function Header() {
                     className={cn(
                       'relative text-base font-medium transition-all duration-200',
                       'after:absolute after:-bottom-px after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100',
-                      isMagazineRoute
+                      isBlogRoute
                         ? 'after:bg-white'
                         : solidMode
                           ? 'after:bg-black'
@@ -123,7 +123,7 @@ export default function Header() {
           </nav>
 
           <div className="mr-4 ml-10 flex gap-4 lg:mr-0 lg:gap-4">
-            <SearchDialog isMagazineRoute={isMagazineRoute} />
+            <SearchDialog isBlogRoute={isBlogRoute} />
 
             <Bag />
           </div>
@@ -140,12 +140,12 @@ export default function Header() {
             <DrawerContent
               className={cn(
                 'w-full lg:hidden',
-                isMagazineRoute ? 'bg-black text-white' : 'bg-white text-black',
+                isBlogRoute ? 'bg-black text-white' : 'bg-white text-black',
               )}
             >
               <DrawerHeader>
                 <DrawerTitle
-                  className={`mr-auto ${isMagazineRoute ? 'text-white' : 'text-black'}`}
+                  className={`mr-auto ${isBlogRoute ? 'text-white' : 'text-black'}`}
                 >
                   Menu
                 </DrawerTitle>
@@ -179,7 +179,7 @@ export default function Header() {
                 <DrawerClose className="ml-auto">
                   <Button
                     variant="ghost"
-                    className={isMagazineRoute ? 'text-white' : 'text-black'}
+                    className={isBlogRoute ? 'text-white' : 'text-black'}
                   >
                     Close
                   </Button>

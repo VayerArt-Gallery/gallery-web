@@ -5,7 +5,7 @@ import type { SitemapProduct } from '@/queries/graphql/sitemap-fetcher'
 import { fetchAllSitemapProducts } from '@/queries/graphql/sitemap-fetcher'
 import { getAllArtists } from '@/queries/sanity/artists'
 import { getAllExhibitions, getAllFairs } from '@/queries/sanity/events'
-import { getAllArticles } from '@/queries/sanity/magazine'
+import { getAllArticles } from '@/queries/sanity/blog'
 import { getAllPages } from '@/queries/sanity/pages'
 
 const BASE_URL = 'https://vayerartgallery.com'
@@ -113,7 +113,7 @@ async function buildSitemapUrls(): Promise<SitemapUrl[]> {
   })
 
   urls.push({
-    loc: buildUrl('/magazine'),
+    loc: buildUrl('/blog'),
     lastmod: today,
     changefreq: 'daily',
     priority: '0.8',
@@ -191,7 +191,7 @@ async function buildSitemapUrls(): Promise<SitemapUrl[]> {
     const articles = articlesResult.value
     articles.forEach((article: any) => {
       urls.push({
-        loc: buildUrl(`/magazine/${article.slug}`),
+        loc: buildUrl(`/blog/${article.slug}`),
         lastmod: formatDate(article.date || article._updatedAt || article._createdAt),
         changefreq: 'monthly',
         priority: '0.6',
@@ -272,7 +272,7 @@ export const Route = createFileRoute('/sitemap.xml')({
               priority: '0.8',
             },
             {
-              loc: buildUrl('/magazine'),
+              loc: buildUrl('/blog'),
               lastmod: formatDate(new Date()),
               changefreq: 'daily',
               priority: '0.8',

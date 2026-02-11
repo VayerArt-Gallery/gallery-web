@@ -4,7 +4,7 @@ import SocialMedia from './SocialMedia'
 
 export default function Footer() {
   const location = useLocation()
-  const isMagazineRoute = location.pathname.startsWith('/magazine')
+  const isBlogRoute = location.pathname.startsWith('/blog')
 
   const SF_API_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_PUBLIC_TOKEN
   const CHECKOUT_DOMAIN = import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN
@@ -15,12 +15,12 @@ export default function Footer() {
     { title: 'Artists', path: '/artists' },
     { title: 'Artworks', path: '/artworks' },
     { title: 'Exhibitions & Fairs', path: '/events?filter=current' },
-    { title: 'Magazine', path: '/magazine' },
+    { title: 'Blog', path: '/blog' },
     { title: 'Sold', path: '/sold' },
     { title: 'About', path: '/about' },
   ]
 
-  const footerBgClass = isMagazineRoute
+  const footerBgClass = isBlogRoute
     ? 'bg-black text-white'
     : 'bg-neutral-100/60'
 

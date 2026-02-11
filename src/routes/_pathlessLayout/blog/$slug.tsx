@@ -1,4 +1,4 @@
-import type { Article } from '@/types/magazine'
+import type { Article } from '@/types/blog'
 
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
@@ -6,7 +6,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { PortableText } from '@portabletext/react'
 
 import { formatDateLong } from '@/lib/utils'
-import { getArticle } from '@/queries/sanity/magazine'
+import { getArticle } from '@/queries/sanity/blog'
 
 function createArticleQuery(slug: string) {
   return queryOptions({
@@ -18,17 +18,17 @@ function createArticleQuery(slug: string) {
 function generateSeoDescription(article: Article) {
   const publishedOn = formatDateLong(article.date)
 
-  return `${article.title} — published ${publishedOn} by VayerArt Gallery Magazine.`
+  return `${article.title} — published ${publishedOn} by VayerArt Gallery Blog.`
 }
 
-export const Route = createFileRoute('/_pathlessLayout/magazine/$slug')({
+export const Route = createFileRoute('/_pathlessLayout/blog/$slug')({
   loader: async ({ context, params }) =>
     context.queryClient.ensureQueryData(createArticleQuery(params.slug)),
   head: ({ loaderData, params }) => {
     const title = loaderData?.title ?? params.slug
     const description = loaderData
       ? generateSeoDescription(loaderData)
-      : `Explore ${title} from VayerArt Gallery Magazine.`
+      : `Explore ${title} from VayerArt Gallery Blog.`
 
     return {
       meta: [
@@ -48,7 +48,7 @@ function RouteComponent() {
   const { slug } = Route.useParams()
   const articleQuery = createArticleQuery(slug)
 
-  const { data: article, isLoading, error } = useSuspenseQuery(articleQuery)
+  const { data: article } = useSuspenseQuery(articleQuery)
 
   const date = formatDateLong(article.date)
 
@@ -56,7 +56,7 @@ function RouteComponent() {
     <main className="page-main">
       <article className="mx-auto max-w-3xl">
         {/* Cover Image */}
-        <div className="mb-8 aspect-[16/9] w-full overflow-hidden rounded-lg">
+        <div className="mb-8 aspect-video w-full overflow-hidden rounded-lg">
           <img
             src={article.coverImage}
             alt={article.title}

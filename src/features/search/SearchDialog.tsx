@@ -8,10 +8,10 @@ import SearchDesktopDialog from './SearchDesktopDialog'
 import SearchMobileDrawer from './SearchMobileDrawer'
 
 type SearchDialogProps = {
-  isMagazineRoute: boolean
+  isBlogRoute: boolean
 }
 
-export default function SearchDialog({ isMagazineRoute }: SearchDialogProps) {
+export default function SearchDialog({ isBlogRoute }: SearchDialogProps) {
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 768px)')
@@ -57,7 +57,7 @@ export default function SearchDialog({ isMagazineRoute }: SearchDialogProps) {
       onOpenChange={setOpen}
       searchLogic={searchLogic}
       onLinkClick={handleLinkClick}
-      isMagazineRoute={isMagazineRoute}
+      isBlogRoute={isBlogRoute}
     />
   )
 }

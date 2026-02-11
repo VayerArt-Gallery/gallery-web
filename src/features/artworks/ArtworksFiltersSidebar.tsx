@@ -223,7 +223,7 @@ export default function ArtworksFiltersSidebar({
                   disabled={Boolean(
                     hasActiveFilters && option.disabledWhenFiltered,
                   )}
-                  className="data-[disabled]:pointer-events-auto data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50"
+                  className="data-disabled:pointer-events-auto data-disabled:cursor-not-allowed data-disabled:opacity-50"
                 >
                   {option.label}
                 </SelectItem>

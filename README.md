@@ -10,7 +10,7 @@ VayerArt Gallery is a full-featured digital storefront for contemporary art, pro
 - **Artwork Browsing** with advanced filtering by styles, themes, categories, and artists
 - **Artist Directory** with detailed portfolios and biographies
 - **Exhibitions & Fairs** showcasing gallery events with date-based filtering
-- **Magazine** featuring editorial articles and art world commentary
+- **Blog** featuring editorial articles and art world commentary
 - **Shopping Cart** with Shopify checkout integration
 - **Content Management** via Sanity CMS for all editorial content
 

@@ -13,13 +13,13 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PathlessLayoutRouteRouteImport } from './routes/_pathlessLayout/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PathlessLayoutSoldIndexRouteImport } from './routes/_pathlessLayout/sold/index'
-import { Route as PathlessLayoutMagazineIndexRouteImport } from './routes/_pathlessLayout/magazine/index'
 import { Route as PathlessLayoutEventsIndexRouteImport } from './routes/_pathlessLayout/events/index'
+import { Route as PathlessLayoutBlogIndexRouteImport } from './routes/_pathlessLayout/blog/index'
 import { Route as PathlessLayoutArtworksIndexRouteImport } from './routes/_pathlessLayout/artworks/index'
 import { Route as PathlessLayoutArtistsIndexRouteImport } from './routes/_pathlessLayout/artists/index'
 import { Route as PathlessLayoutAboutIndexRouteImport } from './routes/_pathlessLayout/about/index'
 import { Route as ApiShopifyGraphqlRouteImport } from './routes/api/shopify/graphql'
-import { Route as PathlessLayoutMagazineSlugRouteImport } from './routes/_pathlessLayout/magazine/$slug'
+import { Route as PathlessLayoutBlogSlugRouteImport } from './routes/_pathlessLayout/blog/$slug'
 import { Route as PathlessLayoutLegalSlugIndexRouteImport } from './routes/_pathlessLayout/legal/$slug.index'
 import { Route as PathlessLayoutArtworksSlugIndexRouteImport } from './routes/_pathlessLayout/artworks/$slug.index'
 import { Route as PathlessLayoutArtistsSlugIndexRouteImport } from './routes/_pathlessLayout/artists/$slug/index'
@@ -45,18 +45,17 @@ const PathlessLayoutSoldIndexRoute = PathlessLayoutSoldIndexRouteImport.update({
   path: '/sold/',
   getParentRoute: () => PathlessLayoutRouteRoute,
 } as any)
-const PathlessLayoutMagazineIndexRoute =
-  PathlessLayoutMagazineIndexRouteImport.update({
-    id: '/magazine/',
-    path: '/magazine/',
-    getParentRoute: () => PathlessLayoutRouteRoute,
-  } as any)
 const PathlessLayoutEventsIndexRoute =
   PathlessLayoutEventsIndexRouteImport.update({
     id: '/events/',
     path: '/events/',
     getParentRoute: () => PathlessLayoutRouteRoute,
   } as any)
+const PathlessLayoutBlogIndexRoute = PathlessLayoutBlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => PathlessLayoutRouteRoute,
+} as any)
 const PathlessLayoutArtworksIndexRoute =
   PathlessLayoutArtworksIndexRouteImport.update({
     id: '/artworks/',
@@ -80,12 +79,11 @@ const ApiShopifyGraphqlRoute = ApiShopifyGraphqlRouteImport.update({
   path: '/api/shopify/graphql',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PathlessLayoutMagazineSlugRoute =
-  PathlessLayoutMagazineSlugRouteImport.update({
-    id: '/magazine/$slug',
-    path: '/magazine/$slug',
-    getParentRoute: () => PathlessLayoutRouteRoute,
-  } as any)
+const PathlessLayoutBlogSlugRoute = PathlessLayoutBlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => PathlessLayoutRouteRoute,
+} as any)
 const PathlessLayoutLegalSlugIndexRoute =
   PathlessLayoutLegalSlugIndexRouteImport.update({
     id: '/legal/$slug/',
@@ -120,13 +118,13 @@ const PathlessLayoutEventsExhibitionsSlugIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/magazine/$slug': typeof PathlessLayoutMagazineSlugRoute
+  '/blog/$slug': typeof PathlessLayoutBlogSlugRoute
   '/api/shopify/graphql': typeof ApiShopifyGraphqlRoute
   '/about/': typeof PathlessLayoutAboutIndexRoute
   '/artists/': typeof PathlessLayoutArtistsIndexRoute
   '/artworks/': typeof PathlessLayoutArtworksIndexRoute
+  '/blog/': typeof PathlessLayoutBlogIndexRoute
   '/events/': typeof PathlessLayoutEventsIndexRoute
-  '/magazine/': typeof PathlessLayoutMagazineIndexRoute
   '/sold/': typeof PathlessLayoutSoldIndexRoute
   '/artists/$slug/': typeof PathlessLayoutArtistsSlugIndexRoute
   '/artworks/$slug/': typeof PathlessLayoutArtworksSlugIndexRoute
@@ -137,13 +135,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/magazine/$slug': typeof PathlessLayoutMagazineSlugRoute
+  '/blog/$slug': typeof PathlessLayoutBlogSlugRoute
   '/api/shopify/graphql': typeof ApiShopifyGraphqlRoute
   '/about': typeof PathlessLayoutAboutIndexRoute
   '/artists': typeof PathlessLayoutArtistsIndexRoute
   '/artworks': typeof PathlessLayoutArtworksIndexRoute
+  '/blog': typeof PathlessLayoutBlogIndexRoute
   '/events': typeof PathlessLayoutEventsIndexRoute
-  '/magazine': typeof PathlessLayoutMagazineIndexRoute
   '/sold': typeof PathlessLayoutSoldIndexRoute
   '/artists/$slug': typeof PathlessLayoutArtistsSlugIndexRoute
   '/artworks/$slug': typeof PathlessLayoutArtworksSlugIndexRoute
@@ -156,13 +154,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_pathlessLayout': typeof PathlessLayoutRouteRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/_pathlessLayout/magazine/$slug': typeof PathlessLayoutMagazineSlugRoute
+  '/_pathlessLayout/blog/$slug': typeof PathlessLayoutBlogSlugRoute
   '/api/shopify/graphql': typeof ApiShopifyGraphqlRoute
   '/_pathlessLayout/about/': typeof PathlessLayoutAboutIndexRoute
   '/_pathlessLayout/artists/': typeof PathlessLayoutArtistsIndexRoute
   '/_pathlessLayout/artworks/': typeof PathlessLayoutArtworksIndexRoute
+  '/_pathlessLayout/blog/': typeof PathlessLayoutBlogIndexRoute
   '/_pathlessLayout/events/': typeof PathlessLayoutEventsIndexRoute
-  '/_pathlessLayout/magazine/': typeof PathlessLayoutMagazineIndexRoute
   '/_pathlessLayout/sold/': typeof PathlessLayoutSoldIndexRoute
   '/_pathlessLayout/artists/$slug/': typeof PathlessLayoutArtistsSlugIndexRoute
   '/_pathlessLayout/artworks/$slug/': typeof PathlessLayoutArtworksSlugIndexRoute
@@ -175,13 +173,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/sitemap.xml'
-    | '/magazine/$slug'
+    | '/blog/$slug'
     | '/api/shopify/graphql'
     | '/about/'
     | '/artists/'
     | '/artworks/'
+    | '/blog/'
     | '/events/'
-    | '/magazine/'
     | '/sold/'
     | '/artists/$slug/'
     | '/artworks/$slug/'
@@ -192,13 +190,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/sitemap.xml'
-    | '/magazine/$slug'
+    | '/blog/$slug'
     | '/api/shopify/graphql'
     | '/about'
     | '/artists'
     | '/artworks'
+    | '/blog'
     | '/events'
-    | '/magazine'
     | '/sold'
     | '/artists/$slug'
     | '/artworks/$slug'
@@ -210,13 +208,13 @@ export interface FileRouteTypes {
     | '/'
     | '/_pathlessLayout'
     | '/sitemap.xml'
-    | '/_pathlessLayout/magazine/$slug'
+    | '/_pathlessLayout/blog/$slug'
     | '/api/shopify/graphql'
     | '/_pathlessLayout/about/'
     | '/_pathlessLayout/artists/'
     | '/_pathlessLayout/artworks/'
+    | '/_pathlessLayout/blog/'
     | '/_pathlessLayout/events/'
-    | '/_pathlessLayout/magazine/'
     | '/_pathlessLayout/sold/'
     | '/_pathlessLayout/artists/$slug/'
     | '/_pathlessLayout/artworks/$slug/'
@@ -262,18 +260,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PathlessLayoutSoldIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
-    '/_pathlessLayout/magazine/': {
-      id: '/_pathlessLayout/magazine/'
-      path: '/magazine'
-      fullPath: '/magazine/'
-      preLoaderRoute: typeof PathlessLayoutMagazineIndexRouteImport
-      parentRoute: typeof PathlessLayoutRouteRoute
-    }
     '/_pathlessLayout/events/': {
       id: '/_pathlessLayout/events/'
       path: '/events'
       fullPath: '/events/'
       preLoaderRoute: typeof PathlessLayoutEventsIndexRouteImport
+      parentRoute: typeof PathlessLayoutRouteRoute
+    }
+    '/_pathlessLayout/blog/': {
+      id: '/_pathlessLayout/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof PathlessLayoutBlogIndexRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/artworks/': {
@@ -304,11 +302,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiShopifyGraphqlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_pathlessLayout/magazine/$slug': {
-      id: '/_pathlessLayout/magazine/$slug'
-      path: '/magazine/$slug'
-      fullPath: '/magazine/$slug'
-      preLoaderRoute: typeof PathlessLayoutMagazineSlugRouteImport
+    '/_pathlessLayout/blog/$slug': {
+      id: '/_pathlessLayout/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof PathlessLayoutBlogSlugRouteImport
       parentRoute: typeof PathlessLayoutRouteRoute
     }
     '/_pathlessLayout/legal/$slug/': {
@@ -350,12 +348,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface PathlessLayoutRouteRouteChildren {
-  PathlessLayoutMagazineSlugRoute: typeof PathlessLayoutMagazineSlugRoute
+  PathlessLayoutBlogSlugRoute: typeof PathlessLayoutBlogSlugRoute
   PathlessLayoutAboutIndexRoute: typeof PathlessLayoutAboutIndexRoute
   PathlessLayoutArtistsIndexRoute: typeof PathlessLayoutArtistsIndexRoute
   PathlessLayoutArtworksIndexRoute: typeof PathlessLayoutArtworksIndexRoute
+  PathlessLayoutBlogIndexRoute: typeof PathlessLayoutBlogIndexRoute
   PathlessLayoutEventsIndexRoute: typeof PathlessLayoutEventsIndexRoute
-  PathlessLayoutMagazineIndexRoute: typeof PathlessLayoutMagazineIndexRoute
   PathlessLayoutSoldIndexRoute: typeof PathlessLayoutSoldIndexRoute
   PathlessLayoutArtistsSlugIndexRoute: typeof PathlessLayoutArtistsSlugIndexRoute
   PathlessLayoutArtworksSlugIndexRoute: typeof PathlessLayoutArtworksSlugIndexRoute
@@ -365,12 +363,12 @@ interface PathlessLayoutRouteRouteChildren {
 }
 
 const PathlessLayoutRouteRouteChildren: PathlessLayoutRouteRouteChildren = {
-  PathlessLayoutMagazineSlugRoute: PathlessLayoutMagazineSlugRoute,
+  PathlessLayoutBlogSlugRoute: PathlessLayoutBlogSlugRoute,
   PathlessLayoutAboutIndexRoute: PathlessLayoutAboutIndexRoute,
   PathlessLayoutArtistsIndexRoute: PathlessLayoutArtistsIndexRoute,
   PathlessLayoutArtworksIndexRoute: PathlessLayoutArtworksIndexRoute,
+  PathlessLayoutBlogIndexRoute: PathlessLayoutBlogIndexRoute,
   PathlessLayoutEventsIndexRoute: PathlessLayoutEventsIndexRoute,
-  PathlessLayoutMagazineIndexRoute: PathlessLayoutMagazineIndexRoute,
   PathlessLayoutSoldIndexRoute: PathlessLayoutSoldIndexRoute,
   PathlessLayoutArtistsSlugIndexRoute: PathlessLayoutArtistsSlugIndexRoute,
   PathlessLayoutArtworksSlugIndexRoute: PathlessLayoutArtworksSlugIndexRoute,

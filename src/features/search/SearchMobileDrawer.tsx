@@ -22,7 +22,7 @@ type SearchMobileDrawerProps = {
   onOpenChange: (open: boolean) => void
   searchLogic: UseSearchLogicReturn
   onLinkClick: () => void
-  isMagazineRoute: boolean
+  isBlogRoute: boolean
 }
 
 export default function SearchMobileDrawer({
@@ -30,7 +30,7 @@ export default function SearchMobileDrawer({
   onOpenChange,
   searchLogic,
   onLinkClick,
-  isMagazineRoute,
+  isBlogRoute,
 }: SearchMobileDrawerProps) {
   const [viewportHeight, setViewportHeight] = useState<number | null>(null)
 
@@ -64,7 +64,7 @@ export default function SearchMobileDrawer({
       <DrawerContent
         className={cn(
           'flex flex-col',
-          isMagazineRoute ? 'bg-black text-white' : 'bg-white text-black',
+          isBlogRoute ? 'bg-black text-white' : 'bg-white text-black',
         )}
         style={
           viewportHeight
@@ -74,7 +74,7 @@ export default function SearchMobileDrawer({
       >
         <DrawerHeader className="pb-2">
           <DrawerTitle
-            className={isMagazineRoute ? 'text-white' : 'text-black'}
+            className={isBlogRoute ? 'text-white' : 'text-black'}
           >
             Search
           </DrawerTitle>
@@ -100,7 +100,7 @@ export default function SearchMobileDrawer({
           <button
             className={cn(
               'absolute top-4 right-4 p-2 transition-colors',
-              isMagazineRoute
+              isBlogRoute
                 ? 'text-white hover:bg-white/10'
                 : 'text-black hover:bg-black/10',
             )}

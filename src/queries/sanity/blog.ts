@@ -1,4 +1,4 @@
-import type { Article } from '@/types/magazine'
+import type { Article } from '@/types/blog'
 
 import { sanityClient } from '@/lib/sanity-client'
 

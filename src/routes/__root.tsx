@@ -19,6 +19,10 @@ import Header from '@/components/Header'
 import { seo } from '@/lib/seo'
 import { cn } from '@/lib/utils'
 
+interface Window {
+  privacyBanner: string
+}
+
 interface MyRouterContext {
   queryClient: QueryClient
 }
@@ -55,7 +59,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     select: (location) => location.pathname,
   })
 
-  const isMagazineRoute = pathname.startsWith('/magazine')
+  const isBlogRoute = pathname.startsWith('/blog')
 
   useEffect(() => {
     const SF_API_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_PUBLIC_TOKEN
@@ -106,7 +110,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body
         className={cn(
           'mx-3 flex min-h-screen flex-col transition-colors duration-200 ease-in-out md:mx-10',
-          isMagazineRoute ? 'bg-black text-white' : 'bg-white text-black',
+          isBlogRoute ? 'bg-black text-white' : 'bg-white text-black',
         )}
       >
         <Header />
