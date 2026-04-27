@@ -1,0 +1,3110 @@
+{
+  "exportedAt": "2026-04-24T21:01:24.072Z",
+  "apiVersion": "2026-04",
+  "sourceShop": "rg0mgs-my.myshopify.com",
+  "ownerTypes": [
+    "API_PERMISSION",
+    "COMPANY",
+    "COMPANY_LOCATION",
+    "PAYMENT_CUSTOMIZATION",
+    "VALIDATION",
+    "CUSTOMER",
+    "DELIVERY_CUSTOMIZATION",
+    "DRAFTORDER",
+    "GIFT_CARD_TRANSACTION",
+    "MARKET",
+    "CARTTRANSFORM",
+    "COLLECTION",
+    "MEDIA_IMAGE",
+    "PRODUCT",
+    "PRODUCTVARIANT",
+    "SELLING_PLAN",
+    "ARTICLE",
+    "BLOG",
+    "PAGE",
+    "FULFILLMENT_CONSTRAINT_RULE",
+    "ORDER_ROUTING_LOCATION_RULE",
+    "DISCOUNT",
+    "ORDER",
+    "LOCATION",
+    "SHOP"
+  ],
+  "metaobjectDefinitions": [
+    {
+      "id": "gid://shopify/MetaobjectDefinition/11786256750",
+      "name": "Art movement",
+      "type": "shopify--art-movement",
+      "description": "Defines the stylistic approach or art movement of a painting, e.g. Impressionism, Expressionism",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--art-movement"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base art movement",
+          "description": null,
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "art-movement"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/18245189998",
+      "name": "Art style",
+      "type": "shopify--art-style",
+      "description": "Describes the aesthetic style of a product, such as art nouveau or typography",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--art-style"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base art style",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "art-style"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12056166766",
+      "name": "Artwork authenticity",
+      "type": "shopify--artwork-authenticity",
+      "description": "Indicates the authenticity of the artwork, specifying whether it is an original creation or a reproduction",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--artwork-authenticity"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base artwork authenticity",
+          "description": null,
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "artwork-authenticity"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12056199534",
+      "name": "Artwork frame material",
+      "type": "shopify--artwork-frame-material",
+      "description": "Identifies the material used in art frames, such as wood or gold-plated",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--artwork-frame-material"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base artwork frame material",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "artwork-frame-material"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12056101230",
+      "name": "Color",
+      "type": "shopify--color-pattern",
+      "description": "Defines the primary color or pattern, such as blue or striped",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--color-pattern"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "color",
+          "name": "Color",
+          "description": null,
+          "required": false,
+          "type": "color",
+          "validations": [],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "image",
+          "name": "Image",
+          "description": null,
+          "required": false,
+          "type": "file_reference",
+          "validations": [
+            {
+              "name": "file_type_options",
+              "type": "list.single_line_text_field",
+              "value": "[\"Image\"]"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "color_taxonomy_reference",
+          "name": "Base color",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "list.product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "color"
+            },
+            {
+              "name": "list.min",
+              "type": "number_integer",
+              "value": "1"
+            },
+            {
+              "name": "list.max",
+              "type": "number_integer",
+              "value": "4"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "key": "pattern_taxonomy_reference",
+          "name": "Base pattern",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "pattern"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12069536110",
+      "name": "Decoration material",
+      "type": "shopify--decoration-material",
+      "description": "Identifies the material used for decoration, such as sequins or feathers",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--decoration-material"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base decoration material",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "decoration-material"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12056133998",
+      "name": "Frame style",
+      "type": "shopify--frame-style",
+      "description": "Describes the design or type of frame for artwork, such as modern or rustic",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--frame-style"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base frame style",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "frame-style"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12619350382",
+      "name": "Material",
+      "type": "shopify--material",
+      "description": "Defines a product's primary material, such as cotton or wool",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--material"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base material",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "material"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/18245124462",
+      "name": "Orientation",
+      "type": "shopify--orientation",
+      "description": "Specifies the product's intended positioning, e.g. horizontal, vertical",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--orientation"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base orientation",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "orientation"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12056068462",
+      "name": "Painting medium",
+      "type": "shopify--painting-medium",
+      "description": "Indicates the primary material or technique used in a painting, e.g. acrylic, oil",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--painting-medium"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base painting medium",
+          "description": null,
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "painting-medium"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/12619383150",
+      "name": "Photographic paper type",
+      "type": "shopify--photographic-paper-type",
+      "description": "Specifies the type of photographic paper used, such as satin or metallic",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--photographic-paper-type"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base photographic paper type",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "photographic-paper-type"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/18245222766",
+      "name": "Rarity",
+      "type": "shopify--rarity",
+      "description": "Specifies the uniqueness of items, typically for collectibles; e.g. limited edition, ultra rare",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--rarity"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base rarity",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "rarity"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/18245157230",
+      "name": "Signature presence",
+      "type": "shopify--signature-presence",
+      "description": "Specifies whether and how the painting is signed by the artist.",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--signature-presence"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base signature presence",
+          "description": null,
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "signature-presence"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gid://shopify/MetaobjectDefinition/11793793390",
+      "name": "Theme",
+      "type": "shopify--theme",
+      "description": "Describes the product's primary theme or motif, such as sport, space, or holidays",
+      "displayNameKey": "label",
+      "standardTemplate": {
+        "type": "shopify--theme"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ"
+      },
+      "capabilities": {
+        "publishable": {
+          "enabled": false
+        },
+        "translatable": {
+          "enabled": true
+        },
+        "renderable": {
+          "enabled": false,
+          "data": {
+            "metaTitleKey": null,
+            "metaDescriptionKey": null
+          }
+        },
+        "onlineStore": {
+          "enabled": false
+        }
+      },
+      "fieldDefinitions": [
+        {
+          "key": "label",
+          "name": "Label",
+          "description": null,
+          "required": true,
+          "type": "single_line_text_field",
+          "validations": [
+            {
+              "name": "max",
+              "type": "number_integer",
+              "value": "255"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "key": "taxonomy_reference",
+          "name": "Base theme",
+          "description": "Base values map to standards for better search and organization",
+          "required": true,
+          "type": "product_taxonomy_value_reference",
+          "validations": [
+            {
+              "name": "product_taxonomy_attribute_handle",
+              "type": "single_line_text_field",
+              "value": "theme"
+            }
+          ],
+          "capabilities": {
+            "adminFilterable": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "metafieldDefinitions": [
+    {
+      "id": "gid://shopify/MetafieldDefinition/117141799278",
+      "ownerType": "COLLECTION",
+      "namespace": "custom",
+      "key": "type",
+      "name": "Type",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "choices",
+          "type": "list.single_line_text_field",
+          "value": "[\"Artist\",\"Category\",\"Price\",\"Style\",\"Theme\"]"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 1,
+      "useAsCollectionCondition": false,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/140985336174",
+      "ownerType": "PRODUCT",
+      "namespace": "custom",
+      "key": "artist",
+      "name": "Artist",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": true
+        },
+        "smartCollectionCondition": {
+          "enabled": true
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "choices",
+          "type": "list.single_line_text_field",
+          "value": "[\"Alex Kelenyuk\",\"Anatoly Varvarov\",\"Ara Hakobyan\",\"Armine Nika\",\"Artyom Abrahamyan\",\"Ashot Muradyan\",\"Ashot Yan\",\"Hayk Gasparyan\",\"Jack Avetisyan\",\"Karapet Balakeseryan\",\"Karen Darbinyan\",\"Karo Martirosyan\",\"Khoren Keshishyan\",\"Lika Brutyan\",\"Lin Qingyi\",\"Lucy Gregry\",\"Lyan Amiryan\",\"Mkrtich Sarkisyan\",\"Tigran Hovumyan\",\"Vadim Zang\",\"Vahe Yeremyan\",\"Varoujan Hovakimyan\",\"Voskan Galstian\"]"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 6,
+      "useAsCollectionCondition": true,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/117205860718",
+      "ownerType": "PRODUCT",
+      "namespace": "custom",
+      "key": "category",
+      "name": "Category",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": true
+        },
+        "smartCollectionCondition": {
+          "enabled": true
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "choices",
+          "type": "list.single_line_text_field",
+          "value": "[\"Painting\",\"Sculpture\",\"Photography\"]"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 5,
+      "useAsCollectionCondition": true,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/141286211950",
+      "ownerType": "PRODUCT",
+      "namespace": "custom",
+      "key": "dimensions_global",
+      "name": "Dimensions (Global)",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "regex",
+          "type": "single_line_text_field",
+          "value": "^\\d+(?:\\.\\d+)? x \\d+(?:\\.\\d+)? x \\d+(?:\\.\\d+)? cm$"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 2,
+      "useAsCollectionCondition": false,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/141286179182",
+      "ownerType": "PRODUCT",
+      "namespace": "custom",
+      "key": "dimensions_us",
+      "name": "Dimensions (US)",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "regex",
+          "type": "single_line_text_field",
+          "value": "^\\d+(?:\\.\\d+)? x \\d+(?:\\.\\d+)? x \\d+(?:\\.\\d+)? in$"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 1,
+      "useAsCollectionCondition": false,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/141289619822",
+      "ownerType": "PRODUCT",
+      "namespace": "custom",
+      "key": "medium",
+      "name": "Medium",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "choices",
+          "type": "list.single_line_text_field",
+          "value": "[\"Acrylic on Canvas\",\"Acrylic on Linen\",\"Acrylic on Paper\",\"Drawings & Watercolor\",\"Glass\",\"Graphic\",\"Ink on Paper\",\"Mixed Media\",\"Oil on Canvas\",\"Oil on Cardboard\",\"Oil on Linen\",\"Sculpture\"]"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 4,
+      "useAsCollectionCondition": false,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/176845554030",
+      "ownerType": "PRODUCT",
+      "namespace": "custom",
+      "key": "orientation",
+      "name": "Orientation",
+      "description": "",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": true
+        },
+        "smartCollectionCondition": {
+          "enabled": true
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "choices",
+          "type": "list.single_line_text_field",
+          "value": "[\"Horizontal\",\"Square\",\"Vertical\"]"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": 3,
+      "useAsCollectionCondition": true,
+      "standardTemplate": null
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/140378308974",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "art-movement",
+      "name": "Art movement",
+      "description": "Defines the stylistic approach or art movement of a painting, e.g. Impressionism, Expressionism",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": true
+        },
+        "smartCollectionCondition": {
+          "enabled": true
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/11786256750"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "hg-3-4-2-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": true,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/13508",
+        "namespace": "shopify",
+        "key": "art-movement"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/207452668270",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "art-style",
+      "name": "Art style",
+      "description": "Describes the aesthetic style of a product, such as art nouveau or typography",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/18245189998"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "ae-2-2-11",
+          "hg-3-4-2",
+          "hg-3-4-2-1",
+          "hg-3-4-2-2",
+          "hg-3-4-2-3",
+          "hg-3-4-2-4",
+          "hg-3-4-2-5"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/12386",
+        "namespace": "shopify",
+        "key": "art-style"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/142859403630",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "artwork-authenticity",
+      "name": "Artwork authenticity",
+      "description": "Indicates the authenticity of the artwork, specifying whether it is an original creation or a reproduction",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12056166766"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "hg-3-4-2-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/13509",
+        "namespace": "shopify",
+        "key": "artwork-authenticity"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/142859338094",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "artwork-frame-material",
+      "name": "Artwork frame material",
+      "description": "Identifies the material used in art frames, such as wood or gold-plated",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12056199534"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "hg-3-4-2",
+          "hg-3-4-2-1",
+          "hg-3-4-2-2",
+          "hg-3-4-2-3",
+          "hg-3-4-2-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/12796",
+        "namespace": "shopify",
+        "key": "artwork-frame-material"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/142859305326",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "color-pattern",
+      "name": "Color",
+      "description": "Defines the primary color or pattern, such as blue or striped",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12056101230"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "aa",
+          "aa-1",
+          "aa-1-1",
+          "aa-1-1-1",
+          "aa-1-1-1-1",
+          "aa-1-1-1-2",
+          "aa-1-1-1-3",
+          "aa-1-1-1-4",
+          "aa-1-1-1-5",
+          "aa-1-1-1-6",
+          "aa-1-1-1-7",
+          "aa-1-1-1-8",
+          "aa-1-1-2",
+          "aa-1-1-2-1",
+          "aa-1-1-2-2",
+          "aa-1-1-2-3",
+          "aa-1-1-4",
+          "aa-1-1-5",
+          "aa-1-1-6",
+          "aa-1-1-7",
+          "aa-1-1-7-2",
+          "aa-1-1-7-4",
+          "aa-1-1-7-5",
+          "aa-1-1-8",
+          "aa-1-1-8-1",
+          "aa-1-1-8-2",
+          "aa-1-2",
+          "aa-1-2-1",
+          "aa-1-2-1-11",
+          "aa-1-2-1-12",
+          "aa-1-2-1-13",
+          "aa-1-2-1-14",
+          "aa-1-2-1-2",
+          "aa-1-2-1-3",
+          "aa-1-2-1-4",
+          "aa-1-2-1-5",
+          "aa-1-2-1-7",
+          "aa-1-2-1-8",
+          "aa-1-2-2",
+          "aa-1-2-3",
+          "aa-1-2-4",
+          "aa-1-2-4-17",
+          "aa-1-2-4-17-1",
+          "aa-1-2-4-17-10",
+          "aa-1-2-4-17-11",
+          "aa-1-2-4-17-12",
+          "aa-1-2-4-17-13",
+          "aa-1-2-4-17-14",
+          "aa-1-2-4-17-15",
+          "aa-1-2-4-17-16",
+          "aa-1-2-4-17-2",
+          "aa-1-2-4-17-3",
+          "aa-1-2-4-17-4",
+          "aa-1-2-4-17-5",
+          "aa-1-2-4-17-6",
+          "aa-1-2-4-17-7",
+          "aa-1-2-4-17-8",
+          "aa-1-2-4-17-9",
+          "aa-1-2-4-18",
+          "aa-1-2-5",
+          "aa-1-2-6",
+          "aa-1-2-7",
+          "aa-1-2-8",
+          "aa-1-2-8-10",
+          "aa-1-2-8-13",
+          "aa-1-2-8-14",
+          "aa-1-2-8-15",
+          "aa-1-2-8-2",
+          "aa-1-2-8-22",
+          "aa-1-2-8-23",
+          "aa-1-2-8-3",
+          "aa-1-2-8-4",
+          "aa-1-2-8-9",
+          "ap-2-1-1",
+          "ap-2-1-1-1",
+          "ap-2-1-1-2",
+          "ap-2-1-1-2-1",
+          "ap-2-1-1-2-2",
+          "ap-2-1-1-2-3",
+          "ap-2-1-2",
+          "ap-2-14",
+          "ap-2-14-1",
+          "ap-2-14-2",
+          "ap-2-14-3",
+          "ap-2-14-4",
+          "ap-2-14-5",
+          "ap-2-14-6",
+          "ap-2-14-7",
+          "ap-2-14-8",
+          "ap-2-17",
+          "ap-2-17-1",
+          "ap-2-17-10",
+          "ap-2-17-2",
+          "ap-2-17-3",
+          "ap-2-17-4",
+          "ap-2-17-5",
+          "ap-2-17-6",
+          "ap-2-17-7",
+          "ap-2-17-8",
+          "ap-2-17-9",
+          "ap-2-18",
+          "ap-2-18-1",
+          "ap-2-18-2",
+          "ap-2-18-3",
+          "ap-2-18-4",
+          "ap-2-18-5",
+          "ap-2-18-6",
+          "ap-2-2-2",
+          "ap-2-2-2-1",
+          "ap-2-2-2-2",
+          "ap-2-2-2-3",
+          "ap-2-2-2-4",
+          "ap-2-2-2-5",
+          "ap-2-2-2-6",
+          "ap-2-2-2-7",
+          "ap-2-2-4-2",
+          "ap-2-2-4-3",
+          "ap-2-20",
+          "ap-2-20-1",
+          "ap-2-20-2",
+          "ap-2-20-3",
+          "ap-2-20-4",
+          "ap-2-20-5",
+          "ap-2-26-3",
+          "ap-2-26-3-1",
+          "ap-2-26-3-2",
+          "ap-2-26-3-3",
+          "ap-2-26-3-4",
+          "ap-2-26-3-5",
+          "ap-2-26-4",
+          "ap-2-26-5",
+          "ap-2-26-6",
+          "ap-2-28",
+          "ap-2-3-2",
+          "ap-2-3-4",
+          "ap-2-3-6",
+          "ap-2-3-6-1",
+          "ap-2-3-6-2",
+          "ap-2-3-6-3",
+          "ap-2-3-6-4",
+          "ap-2-3-6-5",
+          "ap-2-31",
+          "ap-2-31-1",
+          "ap-2-31-2",
+          "ap-2-31-3",
+          "ap-2-31-4",
+          "ap-2-31-5",
+          "ap-2-31-6",
+          "ap-2-35",
+          "ap-2-39",
+          "ap-2-39-1",
+          "ap-2-39-2",
+          "ap-2-39-3",
+          "ap-2-39-4",
+          "ap-2-39-5",
+          "ap-2-4-1",
+          "ap-2-4-1-1",
+          "ap-2-4-1-2",
+          "ap-2-4-1-3",
+          "ap-2-4-1-4",
+          "ap-2-4-1-5",
+          "ap-2-4-10",
+          "ap-2-4-10-1",
+          "ap-2-4-10-2",
+          "ap-2-4-10-3",
+          "ap-2-4-10-4",
+          "ap-2-4-2",
+          "ap-2-4-2-1",
+          "ap-2-4-2-2",
+          "ap-2-4-2-3",
+          "ap-2-4-2-4",
+          "ap-2-4-2-5",
+          "ap-2-4-4",
+          "ap-2-4-4-1",
+          "ap-2-4-4-2",
+          "ap-2-4-4-3",
+          "ap-2-4-4-4",
+          "ap-2-4-4-5",
+          "ap-2-4-4-6",
+          "ap-2-4-4-7",
+          "ap-2-4-4-8",
+          "ap-2-4-4-9",
+          "ap-2-4-6",
+          "ap-2-4-6-1",
+          "ap-2-4-6-2",
+          "ap-2-4-6-3",
+          "ap-2-4-6-4",
+          "ap-2-41",
+          "ap-2-41-1",
+          "ap-2-41-2",
+          "ap-2-41-2-1",
+          "ap-2-41-2-2",
+          "ap-2-41-2-3",
+          "ap-2-41-3",
+          "ap-2-41-4",
+          "ap-2-45",
+          "ap-2-45-1",
+          "ap-2-45-2",
+          "ap-2-45-3",
+          "ap-2-45-4",
+          "ap-2-46-5",
+          "ap-2-47-1",
+          "ap-2-48",
+          "ap-2-48-1",
+          "ap-2-48-2",
+          "ap-2-48-3",
+          "ap-2-48-4",
+          "ap-2-48-5",
+          "ap-2-49",
+          "ap-2-5",
+          "ap-2-5-1",
+          "ap-2-5-2",
+          "ap-2-5-3",
+          "ap-2-5-4",
+          "ap-2-5-5",
+          "ap-2-5-6",
+          "ap-2-5-7",
+          "ap-2-5-8",
+          "ap-2-6",
+          "ap-2-6-1",
+          "ap-2-6-10",
+          "ap-2-6-11",
+          "ap-2-6-12",
+          "ap-2-6-13",
+          "ap-2-6-14",
+          "ap-2-6-15",
+          "ap-2-6-16",
+          "ap-2-6-17",
+          "ap-2-6-2",
+          "ap-2-6-3",
+          "ap-2-6-4",
+          "ap-2-6-5",
+          "ap-2-6-6",
+          "ap-2-6-7",
+          "ap-2-6-8",
+          "ap-2-6-9",
+          "ap-2-9",
+          "ap-2-9-1",
+          "ap-2-9-10",
+          "ap-2-9-11",
+          "ap-2-9-12",
+          "ap-2-9-13",
+          "ap-2-9-2",
+          "ap-2-9-3",
+          "ap-2-9-4",
+          "ap-2-9-5",
+          "ap-2-9-6",
+          "ap-2-9-7",
+          "ap-2-9-8",
+          "ap-2-9-9"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/10001",
+        "namespace": "shopify",
+        "key": "color-pattern"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/143009874286",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "decoration-material",
+      "name": "Decoration material",
+      "description": "Identifies the material used for decoration, such as sequins or feathers",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12069536110"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "aa-2-11",
+          "ae-2-1-2-5-3",
+          "ae-3-2-15",
+          "ae-3-2-9",
+          "ap-2-4-4",
+          "ap-2-4-4-1",
+          "ap-2-4-4-2",
+          "ap-2-4-4-3",
+          "ap-2-4-4-4",
+          "ap-2-4-4-5",
+          "ap-2-4-4-6",
+          "ap-2-4-4-7",
+          "ap-2-4-4-8",
+          "ap-2-4-4-9",
+          "hg-3-11",
+          "hg-3-19",
+          "hg-3-2-1",
+          "hg-3-2-2",
+          "hg-3-2-3",
+          "hg-3-2-4",
+          "hg-3-20",
+          "hg-3-21",
+          "hg-3-22",
+          "hg-3-23",
+          "hg-3-24",
+          "hg-3-25",
+          "hg-3-3",
+          "hg-3-30",
+          "hg-3-31",
+          "hg-3-4-1",
+          "hg-3-4-3",
+          "hg-3-42",
+          "hg-3-44",
+          "hg-3-46",
+          "hg-3-49",
+          "hg-3-50",
+          "hg-3-52",
+          "hg-3-53",
+          "hg-3-53-1",
+          "hg-3-53-2",
+          "hg-3-54",
+          "hg-3-58-12",
+          "hg-3-58-7",
+          "hg-3-58-8",
+          "hg-3-58-9",
+          "hg-3-60",
+          "hg-3-67",
+          "hg-3-70",
+          "hg-3-8",
+          "hg-3-8-1",
+          "hg-3-8-2",
+          "hg-3-8-3",
+          "vp-1-5-4",
+          "vp-1-5-4-1",
+          "vp-1-5-4-11",
+          "vp-1-5-4-13",
+          "vp-1-5-4-14",
+          "vp-1-5-4-15",
+          "vp-1-5-4-16",
+          "vp-1-5-4-17",
+          "vp-1-5-4-19",
+          "vp-1-5-4-2",
+          "vp-1-5-4-3",
+          "vp-1-5-4-4",
+          "vp-1-5-4-5",
+          "vp-1-5-4-6",
+          "vp-1-5-4-7",
+          "vp-1-5-4-8"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/12782",
+        "namespace": "shopify",
+        "key": "decoration-material"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/142859370862",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "frame-style",
+      "name": "Frame style",
+      "description": "Describes the design or type of frame for artwork, such as modern or rustic",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12056133998"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "hg-3-4-2",
+          "hg-3-4-2-1",
+          "hg-3-4-2-2",
+          "hg-3-4-2-3",
+          "hg-3-4-2-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/13137",
+        "namespace": "shopify",
+        "key": "frame-style"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/148127646062",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "material",
+      "name": "Material",
+      "description": "Defines a product's primary material, such as cotton or wool",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12619350382"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "aa-2-30",
+          "aa-6-10",
+          "ae-2-1-1-7",
+          "ae-2-1-2-1-3",
+          "ae-2-1-2-10",
+          "ae-2-1-2-10-1",
+          "ae-2-1-2-10-2",
+          "ae-2-1-2-10-3",
+          "ae-2-1-2-11",
+          "ae-2-1-2-14-1-1",
+          "ae-2-1-2-15",
+          "ae-2-1-2-15-1",
+          "ae-2-1-2-15-2",
+          "ae-2-1-2-15-3",
+          "ae-2-1-2-16",
+          "ae-2-1-2-16-1",
+          "ae-2-1-2-6-1",
+          "ae-2-1-2-6-1-1",
+          "ae-2-1-2-6-1-2",
+          "ae-2-1-3",
+          "ae-2-1-3-1",
+          "ae-2-1-3-3",
+          "ae-2-1-3-4",
+          "ae-2-1-3-5",
+          "ae-2-1-3-6",
+          "ae-2-1-3-6-1",
+          "ae-2-1-3-6-11",
+          "ae-2-1-3-6-12",
+          "ae-2-1-3-6-13",
+          "ae-2-1-3-6-14",
+          "ae-2-1-3-6-15",
+          "ae-2-1-3-6-17",
+          "ae-2-1-3-6-18",
+          "ae-2-1-3-6-19",
+          "ae-2-1-3-6-2",
+          "ae-2-1-3-6-20",
+          "ae-2-1-3-6-3",
+          "ae-2-1-3-6-4",
+          "ae-2-1-3-6-5",
+          "ae-2-1-3-6-7",
+          "ae-2-1-3-6-8",
+          "ae-2-1-3-6-9",
+          "ae-2-1-3-7",
+          "ae-2-1-4-10",
+          "ae-2-1-4-10-1",
+          "ae-2-1-4-10-2",
+          "ae-2-1-4-10-3",
+          "ae-2-1-4-10-4",
+          "ae-2-1-4-10-5",
+          "ae-2-1-4-13-3",
+          "ae-2-1-4-13-3-1",
+          "ae-2-1-4-13-3-2",
+          "ae-2-1-4-13-3-3",
+          "ae-2-1-4-13-4",
+          "ae-2-1-4-16-2",
+          "ae-2-1-4-16-2-1",
+          "ae-2-1-4-16-2-2",
+          "ae-2-1-4-16-2-3",
+          "ae-2-1-4-16-2-4",
+          "ae-2-1-4-16-3",
+          "ae-2-1-4-16-3-1",
+          "ae-2-1-4-16-3-2",
+          "ae-2-1-4-16-3-3",
+          "ae-2-1-4-16-3-4",
+          "ae-2-1-4-16-5",
+          "ae-2-1-4-16-5-1",
+          "ae-2-1-4-16-5-2",
+          "ae-2-1-4-16-5-3",
+          "ae-2-1-4-16-5-4",
+          "ae-2-1-4-18",
+          "ae-2-1-4-18-1-2",
+          "ae-2-1-4-18-1-3",
+          "ae-2-1-4-18-1-4",
+          "ae-2-1-4-18-1-5",
+          "ae-2-1-4-18-2",
+          "ae-2-1-4-18-2-1",
+          "ae-2-1-4-18-2-2",
+          "ae-2-1-4-18-2-3",
+          "ae-2-1-4-18-4",
+          "ae-2-1-4-18-4-1",
+          "ae-2-1-4-18-4-2",
+          "ae-2-1-4-18-4-3",
+          "ae-2-1-4-18-4-4",
+          "ae-2-1-4-18-6",
+          "ae-2-1-4-18-6-1",
+          "ae-2-1-4-18-6-2",
+          "ae-2-1-4-18-7",
+          "ae-2-1-4-18-7-1",
+          "ae-2-1-4-18-7-2",
+          "ae-2-1-4-18-7-3",
+          "ae-2-1-4-18-7-4",
+          "ae-2-1-4-18-8",
+          "ae-2-1-4-18-8-1",
+          "ae-2-1-4-6-5",
+          "ap-2-1-1",
+          "ap-2-1-1-1",
+          "ap-2-1-2",
+          "ap-2-1-5-1",
+          "ap-2-1-5-2",
+          "ap-2-10",
+          "ap-2-10-1",
+          "ap-2-10-2",
+          "ap-2-10-3",
+          "ap-2-12",
+          "ap-2-13",
+          "ap-2-14",
+          "ap-2-14-1",
+          "ap-2-14-2",
+          "ap-2-14-3",
+          "ap-2-14-4",
+          "ap-2-14-5",
+          "ap-2-14-6",
+          "ap-2-14-7",
+          "ap-2-14-8",
+          "ap-2-15",
+          "ap-2-16",
+          "ap-2-16-1",
+          "ap-2-16-10",
+          "ap-2-16-11",
+          "ap-2-16-12",
+          "ap-2-16-2",
+          "ap-2-16-3",
+          "ap-2-16-5",
+          "ap-2-16-8",
+          "ap-2-16-9",
+          "ap-2-17",
+          "ap-2-17-1",
+          "ap-2-17-10",
+          "ap-2-17-2",
+          "ap-2-17-3",
+          "ap-2-17-4",
+          "ap-2-17-5",
+          "ap-2-17-6",
+          "ap-2-17-7",
+          "ap-2-17-8",
+          "ap-2-17-9",
+          "ap-2-18",
+          "ap-2-18-2",
+          "ap-2-18-3",
+          "ap-2-18-5",
+          "ap-2-18-6",
+          "ap-2-19",
+          "ap-2-2-4-2",
+          "ap-2-2-4-3",
+          "ap-2-24",
+          "ap-2-24-2",
+          "ap-2-24-3",
+          "ap-2-25",
+          "ap-2-26",
+          "ap-2-26-4",
+          "ap-2-27",
+          "ap-2-29",
+          "ap-2-29-1",
+          "ap-2-29-2",
+          "ap-2-29-3",
+          "ap-2-29-4",
+          "ap-2-3-1",
+          "ap-2-3-2",
+          "ap-2-3-4",
+          "ap-2-3-5",
+          "ap-2-3-6",
+          "ap-2-3-6-1",
+          "ap-2-3-6-2",
+          "ap-2-3-6-3",
+          "ap-2-3-6-4",
+          "ap-2-3-6-5",
+          "ap-2-30",
+          "ap-2-31",
+          "ap-2-31-1",
+          "ap-2-31-2",
+          "ap-2-31-3",
+          "ap-2-31-4",
+          "ap-2-31-5",
+          "ap-2-31-6",
+          "ap-2-35",
+          "ap-2-39",
+          "ap-2-39-1",
+          "ap-2-39-2",
+          "ap-2-39-3",
+          "ap-2-39-4",
+          "ap-2-39-5",
+          "ap-2-4-1",
+          "ap-2-4-1-1",
+          "ap-2-4-1-2",
+          "ap-2-4-1-3",
+          "ap-2-4-1-4",
+          "ap-2-4-1-5",
+          "ap-2-4-10",
+          "ap-2-4-10-1",
+          "ap-2-4-10-2",
+          "ap-2-4-10-3",
+          "ap-2-4-10-4",
+          "ap-2-4-2",
+          "ap-2-4-2-1",
+          "ap-2-4-2-2",
+          "ap-2-4-2-3",
+          "ap-2-4-2-4",
+          "ap-2-4-2-5",
+          "ap-2-4-9",
+          "ap-2-41",
+          "ap-2-41-1",
+          "ap-2-41-2",
+          "ap-2-41-2-1",
+          "ap-2-41-2-2",
+          "ap-2-41-2-3",
+          "ap-2-41-3",
+          "ap-2-41-4",
+          "ap-2-43",
+          "ap-2-43-1",
+          "ap-2-43-2",
+          "ap-2-43-3",
+          "ap-2-45",
+          "ap-2-45-2",
+          "ap-2-45-3",
+          "ap-2-45-4",
+          "ap-2-46-2",
+          "ap-2-46-3",
+          "ap-2-46-5",
+          "ap-2-47-3",
+          "ap-2-47-4",
+          "ap-2-48",
+          "ap-2-48-1",
+          "ap-2-48-2",
+          "ap-2-48-3",
+          "ap-2-48-4",
+          "ap-2-48-5",
+          "ap-2-49",
+          "ap-2-5",
+          "ap-2-5-1",
+          "ap-2-5-2",
+          "ap-2-5-3",
+          "ap-2-5-4",
+          "ap-2-5-5",
+          "ap-2-5-6",
+          "ap-2-5-7",
+          "ap-2-5-8",
+          "ap-2-6-16",
+          "ap-2-7",
+          "ap-2-9",
+          "ap-2-9-10",
+          "ap-2-9-11",
+          "ap-2-9-12",
+          "ap-2-9-13",
+          "ap-2-9-2",
+          "ap-2-9-3",
+          "ap-2-9-4",
+          "ap-2-9-5",
+          "ap-2-9-6",
+          "ap-2-9-7",
+          "ap-2-9-8"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/10004",
+        "namespace": "shopify",
+        "key": "material"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/207452602734",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "orientation",
+      "name": "Orientation",
+      "description": "Specifies the product's intended positioning, e.g. horizontal, vertical",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/18245124462"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "ae-2-7-12-9-2",
+          "ae-2-7-12-9-2-1",
+          "ae-2-7-12-9-2-2",
+          "ae-2-7-12-9-2-3",
+          "ae-2-7-12-9-2-4",
+          "ae-2-7-6",
+          "bi-1-1",
+          "el-6-5",
+          "el-7-8-11",
+          "ha-13",
+          "ha-15-36-17",
+          "ha-15-36-17-1",
+          "ha-15-36-17-1-1",
+          "ha-15-36-17-1-2",
+          "ha-15-36-17-1-3",
+          "ha-15-36-17-2",
+          "ha-15-36-17-2-1",
+          "ha-15-36-17-2-2",
+          "ha-15-36-17-2-3",
+          "ha-15-36-17-3",
+          "ha-15-36-17-3-1",
+          "ha-15-36-17-3-2",
+          "hb-3-17",
+          "hb-3-17-1",
+          "hb-3-17-2",
+          "hg-1-19",
+          "hg-10-16-8",
+          "hg-10-16-8-1",
+          "hg-10-16-8-2",
+          "hg-10-16-8-3",
+          "hg-10-16-8-4",
+          "hg-11-1-17",
+          "hg-11-7-15",
+          "hg-11-8-41-1",
+          "hg-11-8-41-6-1",
+          "hg-11-8-41-7-2",
+          "hg-11-8-41-8",
+          "hg-11-8-41-8-1",
+          "hg-11-8-41-8-2",
+          "hg-3-1",
+          "hg-3-23",
+          "hg-3-33",
+          "hg-3-33-1",
+          "hg-3-33-2",
+          "hg-3-4",
+          "hg-3-4-1",
+          "hg-3-4-2",
+          "hg-3-4-2-1",
+          "hg-3-4-2-2",
+          "hg-3-4-2-3",
+          "hg-3-4-2-4",
+          "hg-3-4-2-5",
+          "hg-3-4-3",
+          "hg-3-44",
+          "hg-3-47",
+          "hg-3-47-1",
+          "hg-3-47-2",
+          "hg-3-50",
+          "hg-3-52",
+          "hg-3-52-1",
+          "hg-3-59",
+          "hg-3-74-2",
+          "hg-8-12-2",
+          "hg-8-12-4",
+          "hg-8-12-7",
+          "hg-8-12-7-1",
+          "hg-8-12-7-2",
+          "hg-8-12-7-3",
+          "hg-8-12-7-4",
+          "hg-8-6-6",
+          "hg-9-1-7-1",
+          "hg-9-1-8",
+          "hg-9-12"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/11383",
+        "namespace": "shopify",
+        "key": "orientation"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/142859436398",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "painting-medium",
+      "name": "Painting medium",
+      "description": "Indicates the primary material or technique used in a painting, e.g. acrylic, oil",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12056068462"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "hg-3-4-2-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/13510",
+        "namespace": "shopify",
+        "key": "painting-medium"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/148127678830",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "photographic-paper-type",
+      "name": "Photographic paper type",
+      "description": "Specifies the type of photographic paper used, such as satin or metallic",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/12619383150"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "co-4-1-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/12045",
+        "namespace": "shopify",
+        "key": "photographic-paper-type"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/207452635502",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "rarity",
+      "name": "Rarity",
+      "description": "Specifies the uniqueness of items, typically for collectibles; e.g. limited edition, ultra rare",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/18245222766"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "ae-2-2-3",
+          "ae-2-2-3-1",
+          "ae-2-2-3-2",
+          "ae-2-2-3-3",
+          "ae-2-2-3-4",
+          "ae-2-2-5",
+          "ae-2-2-5-1",
+          "ae-2-2-5-2",
+          "ae-2-2-5-3",
+          "ae-2-2-5-4",
+          "ae-2-2-5-6",
+          "ae-2-2-6",
+          "ae-2-2-6-1",
+          "ae-2-2-6-2",
+          "ae-2-2-6-3",
+          "ae-2-2-6-4",
+          "hg-3-4-2",
+          "hg-3-4-2-1",
+          "hg-3-4-2-2",
+          "hg-3-4-2-3",
+          "hg-3-4-2-4",
+          "hg-3-4-2-5"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/12368",
+        "namespace": "shopify",
+        "key": "rarity"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/207452701038",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "signature-presence",
+      "name": "Signature presence",
+      "description": "Specifies whether and how the painting is signed by the artist.",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/18245157230"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "hg-3-4-2-4"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/14266",
+        "namespace": "shopify",
+        "key": "signature-presence"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/140469535086",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify",
+      "key": "theme",
+      "name": "Theme",
+      "description": "Describes the product's primary theme or motif, such as sport, space, or holidays",
+      "type": {
+        "name": "list.metaobject_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": true
+        },
+        "smartCollectionCondition": {
+          "enabled": true
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "metaobject_definition_id",
+          "type": "single_line_text_field",
+          "value": "gid://shopify/MetaobjectDefinition/11793793390"
+        }
+      ],
+      "constraints": {
+        "key": "category",
+        "values": [
+          "ae-2-1-2-8-1",
+          "ae-2-1-2-8-1-1",
+          "ae-2-1-2-8-1-2",
+          "ae-2-1-2-8-1-3",
+          "ae-2-1-2-8-1-4",
+          "ae-2-1-2-8-1-5",
+          "ae-2-1-2-8-1-6",
+          "ae-2-1-2-8-1-7",
+          "ae-2-1-2-8-1-8",
+          "ae-2-1-2-8-4",
+          "ae-2-1-2-8-4-1",
+          "ae-2-1-2-8-4-2",
+          "ae-2-1-2-8-4-4",
+          "ae-2-2-3",
+          "ae-2-2-3-1",
+          "ae-2-2-3-3",
+          "ae-3-1-6-2",
+          "ae-3-2-18",
+          "el-1",
+          "el-1-10",
+          "el-1-11",
+          "el-1-12",
+          "el-1-2",
+          "el-1-2-10",
+          "el-1-2-11",
+          "el-1-2-12",
+          "el-1-2-13",
+          "el-1-2-14",
+          "el-1-2-3",
+          "el-1-2-6",
+          "el-1-2-7",
+          "el-1-2-8",
+          "el-1-3",
+          "el-1-5",
+          "el-1-5-10",
+          "el-1-5-11",
+          "el-1-5-4",
+          "el-1-5-6",
+          "el-1-5-7",
+          "el-1-5-8",
+          "el-1-5-8-1",
+          "el-1-5-8-2",
+          "el-1-5-8-3",
+          "el-1-5-8-4",
+          "el-1-5-8-5",
+          "el-1-5-9",
+          "el-1-6",
+          "el-1-7",
+          "el-1-8",
+          "el-1-9",
+          "el-18-4-3",
+          "el-4-8-4",
+          "el-4-8-4-1",
+          "el-4-8-4-1-1",
+          "el-4-8-4-1-10",
+          "el-4-8-4-1-2",
+          "el-4-8-4-1-3",
+          "el-4-8-4-1-4",
+          "el-4-8-4-1-5",
+          "el-4-8-4-1-6",
+          "el-4-8-4-1-7",
+          "el-4-8-4-1-8",
+          "el-4-8-4-1-9",
+          "el-4-8-4-10",
+          "el-4-8-4-11",
+          "el-4-8-4-11-1",
+          "el-4-8-4-11-2",
+          "el-4-8-4-11-3",
+          "el-4-8-4-12",
+          "el-4-8-4-13",
+          "el-4-8-4-2",
+          "el-4-8-4-2-1",
+          "el-4-8-4-3",
+          "el-4-8-4-3-1",
+          "el-4-8-4-3-2",
+          "el-4-8-4-4-1",
+          "el-4-8-4-4-2",
+          "el-4-8-4-5-1",
+          "el-4-8-4-5-2",
+          "el-4-8-4-5-3",
+          "el-4-8-4-5-4",
+          "el-4-8-4-5-5",
+          "el-4-8-4-5-6",
+          "el-4-8-4-5-7",
+          "el-4-8-4-5-8",
+          "el-4-8-4-5-9",
+          "el-4-8-4-6",
+          "el-4-8-4-7",
+          "el-4-8-4-8",
+          "el-4-8-4-9",
+          "el-4-8-7-1",
+          "el-4-8-7-1-1",
+          "el-4-8-7-1-2",
+          "el-7-11-2",
+          "el-7-8-4-1",
+          "el-7-8-4-1-1",
+          "el-7-8-4-1-2",
+          "el-7-8-4-1-3",
+          "el-7-8-4-1-4",
+          "el-7-8-4-1-5",
+          "el-7-8-4-1-6",
+          "el-7-8-4-1-7",
+          "el-7-8-5",
+          "el-7-8-8",
+          "hb-3-2-6-7",
+          "hg-1-2",
+          "hg-11-1-13",
+          "hg-11-8-14",
+          "hg-11-8-15",
+          "hg-11-8-27",
+          "hg-11-8-28-2-1",
+          "hg-11-8-40",
+          "hg-15-1-7",
+          "hg-15-3-4",
+          "hg-3-12",
+          "hg-3-13",
+          "hg-3-19",
+          "hg-3-20",
+          "hg-3-23",
+          "hg-3-26",
+          "hg-3-27",
+          "hg-3-3",
+          "hg-3-30",
+          "hg-3-33",
+          "hg-3-36-2",
+          "hg-3-37",
+          "hg-3-38",
+          "hg-3-39",
+          "hg-3-39-1",
+          "hg-3-39-2",
+          "hg-3-39-3",
+          "hg-3-39-4",
+          "hg-3-39-5",
+          "hg-3-39-5-1",
+          "hg-3-39-5-2",
+          "hg-3-39-5-3",
+          "hg-3-39-5-4",
+          "hg-3-39-5-5",
+          "hg-3-39-6",
+          "hg-3-39-7",
+          "hg-3-4",
+          "hg-3-4-1",
+          "hg-3-4-2",
+          "hg-3-4-2-1",
+          "hg-3-4-2-2",
+          "hg-3-4-2-3",
+          "hg-3-4-2-4",
+          "hg-3-4-3",
+          "hg-3-43",
+          "hg-3-43-1",
+          "hg-3-43-2",
+          "hg-3-45-1",
+          "hg-3-48",
+          "hg-3-50",
+          "hg-3-53",
+          "hg-3-53-1",
+          "hg-3-53-2",
+          "hg-3-56",
+          "hg-3-58",
+          "hg-3-58-1",
+          "hg-3-58-2",
+          "hg-3-58-4",
+          "hg-3-58-7",
+          "hg-3-58-9",
+          "hg-3-61",
+          "hg-3-62",
+          "hg-3-66",
+          "hg-3-66-1",
+          "hg-3-66-2",
+          "hg-3-68",
+          "hg-3-70",
+          "hg-3-71-1",
+          "hg-3-71-2",
+          "hg-3-72",
+          "hg-3-74-2",
+          "hg-3-76-1",
+          "os-4-9-10",
+          "tg-2-7",
+          "tg-5-2-10"
+        ]
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": true,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/10134",
+        "namespace": "shopify",
+        "key": "theme"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/176870162798",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify--discovery--product_recommendation",
+      "key": "complementary_products",
+      "name": "Complementary products",
+      "description": "List of complementary products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "list.max",
+          "type": "number_integer",
+          "value": "10"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/17",
+        "namespace": "shopify--discovery--product_recommendation",
+        "key": "complementary_products"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/176870097262",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify--discovery--product_recommendation",
+      "key": "related_products",
+      "name": "Related products",
+      "description": "List of related products",
+      "type": {
+        "name": "list.product_reference",
+        "category": "REFERENCE"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "list.max",
+          "type": "number_integer",
+          "value": "10"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/14",
+        "namespace": "shopify--discovery--product_recommendation",
+        "key": "related_products"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/176870130030",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify--discovery--product_recommendation",
+      "key": "related_products_display",
+      "name": "Related products settings",
+      "description": "Determines how related products are displayed along with algorithmic product recommendations",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "choices",
+          "type": "list.single_line_text_field",
+          "value": "[\"ahead\",\"only manual\"]"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/15",
+        "namespace": "shopify--discovery--product_recommendation",
+        "key": "related_products_display"
+      }
+    },
+    {
+      "id": "gid://shopify/MetafieldDefinition/176870064494",
+      "ownerType": "PRODUCT",
+      "namespace": "shopify--discovery--product_search_boost",
+      "key": "queries",
+      "name": "Search product boosts",
+      "description": "List of search queries for which a product gets higher rank in search results",
+      "type": {
+        "name": "list.single_line_text_field",
+        "category": "TEXT"
+      },
+      "access": {
+        "admin": "PUBLIC_READ_WRITE",
+        "storefront": "PUBLIC_READ",
+        "customerAccount": "NONE"
+      },
+      "capabilities": {
+        "adminFilterable": {
+          "enabled": false
+        },
+        "smartCollectionCondition": {
+          "enabled": false
+        },
+        "uniqueValues": {
+          "enabled": false
+        }
+      },
+      "validations": [
+        {
+          "name": "max",
+          "type": "number_integer",
+          "value": "100"
+        },
+        {
+          "name": "list.max",
+          "type": "number_integer",
+          "value": "10"
+        }
+      ],
+      "constraints": {
+        "key": null,
+        "values": []
+      },
+      "pinnedPosition": null,
+      "useAsCollectionCondition": false,
+      "standardTemplate": {
+        "id": "gid://shopify/StandardMetafieldDefinitionTemplate/16",
+        "namespace": "shopify--discovery--product_search_boost",
+        "key": "queries"
+      }
+    }
+  ]
+}
