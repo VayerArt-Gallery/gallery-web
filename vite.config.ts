@@ -14,7 +14,11 @@ export default defineConfig({
     }),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      server: {
+        entry: './server.ts',
+      },
+    }),
     viteReact(),
   ],
   resolve: { alias: { 'solid-js/web': 'solid-js/web/dist/web.js' } },

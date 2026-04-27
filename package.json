@@ -13,6 +13,8 @@
     "lint": "eslint",
     "orientation:dry": "bun scripts/backfill-orientation.ts",
     "orientation:apply": "bun scripts/backfill-orientation.ts --apply",
+    "shopify:definitions:export": "bun scripts/export-shopify-definitions.ts",
+    "shopify:definitions:apply": "bun scripts/apply-shopify-definitions.ts",
     "format": "prettier",
     "check": "prettier --write . && eslint --fix",
     "codegen": "graphql-codegen",

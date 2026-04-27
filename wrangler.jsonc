@@ -4,6 +4,22 @@
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
+  "env": {
+    "staging": {
+      "routes": [
+        {
+          "pattern": "staging.vayerartgallery.com",
+          "custom_domain": true,
+        },
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "CART_KV_BINDING",
+          "id": "7512509bec8d480f9d40505434727ff0",
+        },
+      ],
+    },
+  },
   "observability": {
     "logs": {
       "enabled": false,
