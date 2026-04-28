@@ -55,13 +55,18 @@ export function getNextArtworksPageParam(
 ): ArtworksPageParam | undefined {
   if (lastPage.source === 'sanity') {
     // After the initial Sanity page, we move to Shopify paging
-    return { source: 'shopify', after: undefined }
+    return {
+      source: 'shopify',
+      after: undefined,
+      deliveredGids: lastPage.deliveredGids,
+    }
   }
 
   return lastPage.pageInfo.hasNextPage
     ? {
         source: 'shopify',
         after: lastPage.pageInfo.endCursor ?? undefined,
+        deliveredGids: lastPage.deliveredGids,
       }
     : undefined
 }

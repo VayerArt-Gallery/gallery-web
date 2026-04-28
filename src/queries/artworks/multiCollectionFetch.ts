@@ -6,6 +6,7 @@ import {
   filterArtworksByPriceRanges,
   normalizeSinglePriceRangeValue,
 } from '@/lib/artworks/price'
+
 import { fetchCollectionProductsPage } from './fetchers'
 import { applyCollectionMetadataToArtworks } from './utils'
 
@@ -17,6 +18,7 @@ const collectionHandleToTitle: Record<
   categories: new Map(),
   themes: new Map(),
   artists: new Map(),
+  orientations: new Map(),
 }
 
 export async function fetchArtworksForCollectionHandles(
@@ -40,6 +42,7 @@ export async function fetchArtworksForCollectionHandles(
 
   const previousCursors = pageParam.cursorsByHandle ?? {}
   const previousBuffers = pageParam.bufferedByHandle ?? {}
+  const seen = new Set<string>(pageParam.deliveredGids ?? [])
 
   const cursors = new Map<string, string | null | undefined>()
   const buffers = new Map<string, Artwork[]>(
@@ -60,13 +63,11 @@ export async function fetchArtworksForCollectionHandles(
   })
 
   const delivered: Artwork[] = []
-  const seen = new Set<string>()
   const selectedPriceRange = normalizeSinglePriceRangeValue(selectedPriceRanges)
   const normalizedRanges = selectedPriceRange ? [selectedPriceRange] : []
 
   const perHandleFetchSize = Math.max(
-    Math.ceil(pageSize / uniqueHandles.length) *
-      (selectedPriceRange ? 2 : 1),
+    Math.ceil(pageSize / uniqueHandles.length) * (selectedPriceRange ? 2 : 1),
     6,
   )
 
@@ -97,7 +98,10 @@ export async function fetchArtworksForCollectionHandles(
       const filtered = filterArtworksByPriceRanges(adjusted, normalizedRanges)
       if (filtered.length > 0) {
         const existing = buffers.get(handle)
-        buffers.set(handle, existing ? existing.concat(filtered) : [...filtered])
+        buffers.set(
+          handle,
+          existing ? existing.concat(filtered) : [...filtered],
+        )
       }
 
       const nextCursor = page.pageInfo.hasNextPage
@@ -207,5 +211,6 @@ export async function fetchArtworksForCollectionHandles(
     cursorsByHandle: nextCursors,
     bufferedByHandle:
       Object.keys(nextBuffers).length > 0 ? nextBuffers : undefined,
+    deliveredGids: Array.from(seen),
   }
 }

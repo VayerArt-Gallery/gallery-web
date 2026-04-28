@@ -58,6 +58,9 @@ export function useArtistArtworksListing({
             hasNextPage: handles.length > 0,
             endCursor: undefined,
           },
+          deliveredGids: items
+            .map((artwork) => artwork.gid)
+            .filter((gid): gid is string => Boolean(gid)),
         }
         return page
       }
@@ -93,6 +96,7 @@ export function useArtistArtworksListing({
         return {
           source: 'shopify',
           collectionHandles: handles,
+          deliveredGids: lastPage.deliveredGids,
         }
       }
 

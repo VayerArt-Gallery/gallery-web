@@ -6,6 +6,7 @@ export type ArtworksPageParam = {
   collectionHandles?: string[]
   cursorsByHandle?: Record<string, string | null | undefined>
   bufferedByHandle?: Record<string, Artwork[]>
+  deliveredGids?: string[]
 }
 
 export type ArtworksPage = {
@@ -15,6 +16,7 @@ export type ArtworksPage = {
   collectionHandles?: string[]
   cursorsByHandle?: Record<string, string | null | undefined>
   bufferedByHandle?: Record<string, Artwork[]>
+  deliveredGids?: string[]
 }
 
 export type CollectionSummary = {
