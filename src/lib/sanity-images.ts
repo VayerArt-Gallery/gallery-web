@@ -31,7 +31,7 @@ export function transformSanityImage(url: string, width: number): string {
  */
 export function generateSanitySrcSet(
   url: string,
-  sizes: number[] = [200, 300],
+  sizes: number[] = [320, 480, 640, 960, 1280],
 ): string {
   return sizes
     .map((size) => `${transformSanityImage(url, size)} ${size}w`)

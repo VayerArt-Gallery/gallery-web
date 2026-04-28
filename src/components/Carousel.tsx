@@ -11,6 +11,7 @@ import {
   CarouselPrevious,
   Carousel as CarouselRoot,
 } from '@/components/ui/carousel'
+import { generateSanitySrcSet, SANITY_IMAGE_SIZES } from '@/lib/sanity-images'
 import { cn } from '@/lib/utils'
 import { generateShopifySrcSet, SHOPIFY_IMAGE_SIZES } from '@/lib/shopify-images'
 
@@ -28,6 +29,7 @@ type CarouselProps = {
   imageWrapperClassName?: string
   showNavButtons?: boolean
   navButtonClassName?: string
+  cdnType?: 'shopify' | 'sanity'
 }
 
 export default function Carousel({
@@ -42,6 +44,7 @@ export default function Carousel({
   imageWrapperClassName,
   showNavButtons = false,
   navButtonClassName,
+  cdnType = 'shopify',
 }: CarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
@@ -85,6 +88,10 @@ export default function Carousel({
   }, [carouselApi, thumbsApi, clampedInitialSlide])
 
   const isInteractive = enableZoom && typeof onImageClick === 'function'
+  const generateSrcSet =
+    cdnType === 'sanity' ? generateSanitySrcSet : generateShopifySrcSet
+  const imageSizes =
+    cdnType === 'sanity' ? SANITY_IMAGE_SIZES.detail : SHOPIFY_IMAGE_SIZES.detail
 
   const handleImageClick = (index: number) => {
     if (isInteractive) {
@@ -117,8 +124,8 @@ export default function Carousel({
               >
                 <img
                   src={image}
-                  srcSet={generateShopifySrcSet(image)}
-                  sizes={SHOPIFY_IMAGE_SIZES.detail}
+                  srcSet={generateSrcSet(image)}
+                  sizes={imageSizes}
                   width="1920"
                   height="1080"
                   className={cn(

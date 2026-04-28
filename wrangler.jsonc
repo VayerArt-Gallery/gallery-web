@@ -20,6 +20,9 @@
       ],
     },
   },
+  "vars": {
+    "MAINTENANCE_MODE": false,
+  },
   "observability": {
     "logs": {
       "enabled": false,
