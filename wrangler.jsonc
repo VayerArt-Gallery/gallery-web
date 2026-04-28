@@ -4,24 +4,14 @@
   "main": "src/server.ts",
   "compatibility_date": "2025-09-02",
   "compatibility_flags": ["nodejs_compat"],
-  "env": {
-    "staging": {
-      "routes": [
-        {
-          "pattern": "staging.vayerartgallery.com",
-          "custom_domain": true,
-        },
-      ],
-      "kv_namespaces": [
-        {
-          "binding": "CART_KV_BINDING",
-          "id": "7512509bec8d480f9d40505434727ff0",
-        },
-      ],
-    },
-  },
   "vars": {
     "MAINTENANCE_MODE": false,
+    "SHOPIFY_API_VERSION": "2025-07",
+    "VITE_BASE_URL": "https://vayerartgallery.com",
+    "VITE_CHECKOUT_SESSION_ENDPOINT": "https://www.workers.vayerartgallery.com/api/internal/checkout-session",
+    "VITE_SANITY_DATASET": "vayerart",
+    "VITE_SHOPIFY_DOMAIN": "afpzm0-db.myshopify.com",
+    "VITE_SHOPIFY_CHECKOUT_DOMAIN": "vayerart-gallery.myshopify.com",
   },
   "observability": {
     "logs": {
