@@ -14,6 +14,9 @@ export default function Footer() {
   const SF_API_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_PUBLIC_TOKEN
   const CHECKOUT_DOMAIN = import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN
   const BASE_URL = import.meta.env.VITE_BASE_URL
+  const dataSharingUrl = CHECKOUT_DOMAIN
+    ? `https://${CHECKOUT_DOMAIN}/pages/data-sharing-opt-out`
+    : null
 
   const navLinks = [
     { title: 'Home', path: '/' },
@@ -122,6 +125,16 @@ export default function Footer() {
                 Cookie Preferences
               </button>
             </li>
+            {dataSharingUrl && (
+              <li className="text-sm tracking-wide">
+                <a
+                  href={dataSharingUrl}
+                  className="hover:text-accent transition-colors"
+                >
+                  Data Sharing
+                </a>
+              </li>
+            )}
           </ul>
         </section>
       </div>
