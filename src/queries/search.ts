@@ -3,6 +3,8 @@ import type { Artist } from '@/types/artists'
 import type { Exhibition } from '@/types/exhibitions'
 import type { Fair } from '@/types/fairs'
 
+import { queryOptions } from '@tanstack/react-query'
+
 import { sanityClient } from '@/lib/sanity-client'
 
 import { useSearchProductsQuery } from './graphql/generated/react-query'
@@ -102,4 +104,14 @@ export async function performSearch(
     exhibitions,
     fairs,
   }
+}
+
+export function createSearchSupplementaryQueryOptions(searchTerm: string) {
+  return queryOptions({
+    queryKey: ['search-page-sanity', searchTerm],
+    queryFn: () => performSearch(searchTerm),
+    enabled: searchTerm.length > 0,
+    staleTime: 60 * 1000,
+    gcTime: 5 * 60 * 1000,
+  })
 }

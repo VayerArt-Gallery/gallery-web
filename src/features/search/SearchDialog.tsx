@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { useSearchLogic } from '../../hooks/useSearch'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 
-import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { Search } from 'lucide-react'
 
-import SearchDesktopDialog from './SearchDesktopDialog'
-import SearchMobileDrawer from './SearchMobileDrawer'
+import { cn } from '@/lib/utils'
+
+import SearchForm from './SearchForm'
+import { createSearchPageState } from './searchPageState'
 
 type SearchDialogProps = {
   isBlogRoute: boolean
@@ -13,51 +15,101 @@ type SearchDialogProps = {
 
 export default function SearchDialog({ isBlogRoute }: SearchDialogProps) {
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const isDesktop = useMediaQuery('(min-width: 768px)')
-  const searchLogic = useSearchLogic()
+  const [searchTerm, setSearchTerm] = useState('')
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const navigate = useNavigate()
+  const pathname = useLocation({
+    select: (location) => location.pathname,
+  })
 
-  // Wait until component is mounted before using media query to prevent hydration mismatch
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    if (!open) return
 
-  const handleLinkClick = () => {
+    const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target
+      if (!(target instanceof Node)) return
+      if (containerRef.current?.contains(target)) return
+      setOpen(false)
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown)
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open])
+
+  const handleSubmit = () => {
+    const trimmed = searchTerm.trim()
     setOpen(false)
-    searchLogic.setSearchTerm('')
+
+    void navigate({
+      to: '/search',
+      search: createSearchPageState(trimmed),
+    })
   }
 
-  // Return desktop version as default during SSR to avoid hydration mismatch
-  // This ensures both server and client start with the same HTML
-  if (!mounted) {
-    return (
-      <SearchDesktopDialog
-        open={open}
-        onOpenChange={setOpen}
-        searchLogic={searchLogic}
-        onLinkClick={handleLinkClick}
-      />
-    )
-  }
+  const handleTriggerClick = () => {
+    if (pathname === '/search') {
+      const searchInput = document.getElementById('search-page-input')
+      if (searchInput instanceof HTMLInputElement) {
+        searchInput.focus()
+        const end = searchInput.value.length
+        searchInput.setSelectionRange(end, end)
+      }
+      setOpen(false)
+      return
+    }
 
-  if (isDesktop) {
-    return (
-      <SearchDesktopDialog
-        open={open}
-        onOpenChange={setOpen}
-        searchLogic={searchLogic}
-        onLinkClick={handleLinkClick}
-      />
-    )
+    setOpen((current) => !current)
   }
 
   return (
-    <SearchMobileDrawer
-      open={open}
-      onOpenChange={setOpen}
-      searchLogic={searchLogic}
-      onLinkClick={handleLinkClick}
-      isBlogRoute={isBlogRoute}
-    />
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        aria-label="Search"
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        onClick={handleTriggerClick}
+        className="cursor-pointer p-2 transition-colors duration-200 focus:outline-none"
+      >
+        <Search className="w-5" />
+      </button>
+
+      {open && (
+        <div
+          role="dialog"
+          aria-label="Search"
+          className={cn(
+            'fixed top-[calc(var(--header-height,0px)+0.25rem)] right-3 z-50 w-[min(32rem,calc(100vw-1.5rem))] rounded-2xl border p-1.5 px-2 shadow-sm md:top-[calc(var(--header-height,0px)-1.5rem)] md:right-10',
+            isBlogRoute
+              ? 'border-white/20 bg-black text-white'
+              : 'border-neutral-300 bg-white text-black shadow-neutral-200',
+          )}
+        >
+          <SearchForm
+            value={searchTerm}
+            onChange={setSearchTerm}
+            onSubmit={handleSubmit}
+            autoFocus
+            inputClassName={cn(
+              isBlogRoute
+                ? 'bg-black text-white'
+                : 'border-neutral-200 bg-white text-neutral-900',
+            )}
+            buttonClassName={cn(isBlogRoute && 'hover:text-white')}
+          />
+        </div>
+      )}
+    </div>
   )
 }

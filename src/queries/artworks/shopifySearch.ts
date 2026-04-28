@@ -198,7 +198,9 @@ function normalizeMetaLabel(value: string): string {
 }
 
 function extractTagLabels(
-  field: SearchProductsResponse['search']['nodes'][number]['style'] | SearchProductsResponse['search']['nodes'][number]['theme'],
+  field:
+    | SearchProductsResponse['search']['nodes'][number]['style']
+    | SearchProductsResponse['search']['nodes'][number]['theme'],
 ): string[] {
   const nodes = field?.references?.nodes ?? []
   const labels = nodes
@@ -219,20 +221,26 @@ function toArtworkBatch(
   return nodes
     .filter((node) => node.__typename === 'Product')
     .filter(
-      (node): node is SearchProductsResponse['search']['nodes'][number] & {
+      (
+        node,
+      ): node is SearchProductsResponse['search']['nodes'][number] & {
         __typename: 'Product'
         id: string
         title: string
         handle: string
-        images: NonNullable<SearchProductsResponse['search']['nodes'][number]['images']>
-        priceRange: NonNullable<SearchProductsResponse['search']['nodes'][number]['priceRange']>
+        images: NonNullable<
+          SearchProductsResponse['search']['nodes'][number]['images']
+        >
+        priceRange: NonNullable<
+          SearchProductsResponse['search']['nodes'][number]['priceRange']
+        >
       } =>
         Boolean(
           node.id &&
-            node.title &&
-            node.handle &&
-            node.images &&
-            node.priceRange,
+          node.title &&
+          node.handle &&
+          node.images &&
+          node.priceRange,
         ),
     )
     .map((node) => {
@@ -270,10 +278,11 @@ export async function fetchFilteredShopifyPage(
   sortOption: ArtworksSortOption,
   filters: ArtworksFilterState,
   availability: boolean = true,
+  searchTerm?: string,
 ): Promise<ArtworksPage> {
   const { sortKey, reverse } = getShopifySearchSortParams(sortOption)
   const { productFilters, searchQuery, requiresClientFallback } =
-    await buildSearchProductFilters(filters, availability)
+    await buildSearchProductFilters(filters, availability, searchTerm)
 
   const requiresClientScan = requiresClientFallback
 
@@ -281,13 +290,8 @@ export async function fetchFilteredShopifyPage(
   let hasNextPage = true
   let endCursor: string | undefined = after
   let attempts = 0
-  const isPriceSort =
-    sortOption === 'price-asc' || sortOption === 'price-desc'
-  const maxBatches = requiresClientScan
-    ? isPriceSort
-      ? 40
-      : 12
-    : 1
+  const isPriceSort = sortOption === 'price-asc' || sortOption === 'price-desc'
+  const maxBatches = requiresClientScan ? (isPriceSort ? 40 : 12) : 1
   const batchSize = requiresClientScan ? Math.max(pageSize * 4, 128) : pageSize
   const collected: Artwork[] = []
 
@@ -304,10 +308,10 @@ export async function fetchFilteredShopifyPage(
       productFilters,
     }
 
-    const res = await fetcher<
-      SearchProductsResponse,
-      SearchProductsVariables
-    >(SEARCH_PRODUCTS_QUERY, variables)()
+    const res = await fetcher<SearchProductsResponse, SearchProductsVariables>(
+      SEARCH_PRODUCTS_QUERY,
+      variables,
+    )()
 
     const batchItems = toArtworkBatch(res.search.nodes, availability)
     const filteredBatch = requiresClientFallback

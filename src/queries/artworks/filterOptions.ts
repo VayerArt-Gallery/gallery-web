@@ -222,6 +222,7 @@ function addUniqueFilter(
 export async function buildSearchProductFilters(
   filters: ArtworksFilterState,
   availability: boolean = true,
+  searchTerm?: string,
 ): Promise<BuildFilterResult> {
   await fetchFilterOptions()
 
@@ -258,7 +259,11 @@ export async function buildSearchProductFilters(
   const normalizedPriceRange = normalizeSinglePriceRangeValue(
     filters.priceRanges,
   )
-  const searchQuery = '*'
+  const searchQuery =
+    (searchTerm ?? '')
+      .replace(/["'():\\]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim() || '*'
 
   if (normalizedPriceRange) {
     const bounds = getPriceBoundsForRange(normalizedPriceRange)
