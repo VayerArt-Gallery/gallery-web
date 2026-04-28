@@ -1,5 +1,10 @@
 import { Link, useLocation } from '@tanstack/react-router'
 
+import {
+  resolveStorefrontRootDomain,
+  showShopifyPrivacyPreferences,
+} from '@/lib/shopify-privacy'
+
 import SocialMedia from './SocialMedia'
 
 export default function Footer() {
@@ -8,7 +13,7 @@ export default function Footer() {
 
   const SF_API_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_PUBLIC_TOKEN
   const CHECKOUT_DOMAIN = import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN
-  const STOREFRONT_DOMAIN = 'vayerartgallery.com'
+  const BASE_URL = import.meta.env.VITE_BASE_URL
 
   const navLinks = [
     { title: 'Home', path: '/' },
@@ -93,13 +98,25 @@ export default function Footer() {
               <button
                 className="hover:text-accent transition-colors"
                 onClick={() => {
-                  if (window.privacyBanner) {
-                    window.privacyBanner.showPreferences({
-                      storefrontAccessToken: SF_API_TOKEN,
-                      checkoutRootDomain: CHECKOUT_DOMAIN,
-                      storefrontRootDomain: STOREFRONT_DOMAIN,
-                    })
-                  }
+                  if (!SF_API_TOKEN || !CHECKOUT_DOMAIN) return
+
+                  const storefrontRootDomain = resolveStorefrontRootDomain(
+                    BASE_URL,
+                    window.location.hostname,
+                  )
+                  const locale = document.documentElement.lang || undefined
+
+                  void showShopifyPrivacyPreferences({
+                    storefrontAccessToken: SF_API_TOKEN,
+                    checkoutRootDomain: CHECKOUT_DOMAIN,
+                    storefrontRootDomain,
+                    locale,
+                  }).catch((error) => {
+                    console.warn(
+                      'Failed to open Shopify privacy preferences',
+                      error,
+                    )
+                  })
                 }}
               >
                 Cookie Preferences

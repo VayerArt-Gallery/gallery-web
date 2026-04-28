@@ -2,8 +2,6 @@ import {
   FacebookIcon,
   InstagramIcon,
   PinterestIcon,
-  TiktokIcon,
-  XIcon,
   YouTubeIcon,
 } from './icons/SocialIcons'
 
@@ -19,20 +17,14 @@ const socialMediaLinks = [
   },
   {
     title: 'Instagram',
-    link: 'https://instagram.com/aggallery_la',
+    link: 'https://www.instagram.com/vayerart_gallery',
     icon: InstagramIcon,
   },
   {
     title: 'Pinterest',
-    link: 'https://www.pinterest.com/092qz6ix49wzpibhuj4rond3ec772a/',
+    link: 'https://www.pinterest.com/vayerart/',
     icon: PinterestIcon,
   },
-  {
-    title: 'Tiktok',
-    link: 'https://www.tiktok.com/@aggallery_',
-    icon: TiktokIcon,
-  },
-  { title: 'X', link: 'https://x.com/AGGallery_', icon: XIcon },
   {
     title: 'YouTube',
     link: 'https://www.youtube.com/@AGGallery',

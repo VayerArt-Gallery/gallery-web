@@ -17,11 +17,11 @@ import appCss from '../styles.css?url'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { seo } from '@/lib/seo'
+import {
+  loadShopifyPrivacyBanner,
+  resolveStorefrontRootDomain,
+} from '@/lib/shopify-privacy'
 import { cn } from '@/lib/utils'
-
-interface Window {
-  privacyBanner: string
-}
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -64,42 +64,24 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const SF_API_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_PUBLIC_TOKEN
     const CHECKOUT_DOMAIN = import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN
-    const LOCAL_CONSENT_KEY = 'cookie-consent'
+    const BASE_URL = import.meta.env.VITE_BASE_URL
 
-    const scriptId = 'shopify-privacy-banner-js'
-    if (document.getElementById(scriptId)) return
+    if (!SF_API_TOKEN || !CHECKOUT_DOMAIN) return
 
-    const script = document.createElement('script')
-    script.id = scriptId
-    script.src =
-      'https://cdn.shopify.com/shopifycloud/privacy-banner/storefront-banner.js'
-    script.async = true
-    document.body.appendChild(script)
+    const storefrontRootDomain = resolveStorefrontRootDomain(
+      BASE_URL,
+      window.location.hostname,
+    )
+    const locale = document.documentElement.lang || undefined
 
-    script.onload = () => {
-      const cfg = {
-        storefrontAccessToken: SF_API_TOKEN,
-        checkoutRootDomain: CHECKOUT_DOMAIN,
-        storefrontRootDomain: 'vayerartgallery.com',
-      }
-
-      const localConsent = localStorage.getItem(LOCAL_CONSENT_KEY)
-
-      if (!localConsent && window.privacyBanner) {
-        window.privacyBanner.loadBanner(cfg)
-      }
-
-      const rememberConsent = () => {
-        // Cookie consent stored as "decline" by default
-        localStorage.setItem(LOCAL_CONSENT_KEY, '1')
-      }
-
-      document.addEventListener('visitorConsentCollected', rememberConsent)
-    }
-
-    return () => {
-      document.removeEventListener('visitorConsentCollected', () => {})
-    }
+    void loadShopifyPrivacyBanner({
+      storefrontAccessToken: SF_API_TOKEN,
+      checkoutRootDomain: CHECKOUT_DOMAIN,
+      storefrontRootDomain,
+      locale,
+    }).catch((error) => {
+      console.warn('Failed to load Shopify privacy banner', error)
+    })
   }, [])
 
   return (
