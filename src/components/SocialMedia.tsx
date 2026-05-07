@@ -27,7 +27,7 @@ const socialMediaLinks = [
   },
   {
     title: 'YouTube',
-    link: 'https://www.youtube.com/@AGGallery',
+    link: 'https://www.youtube.com/@VayerArtGallery',
     icon: YouTubeIcon,
   },
 ]
