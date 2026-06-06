@@ -18,6 +18,7 @@ import {
   formatProduct,
   productToArtwork,
 } from '@/lib/normalizers/products'
+import { seo } from '@/lib/seo'
 import { fetcher } from '@/queries/graphql/fetcher'
 import { Public_GetProductByHandleDocument } from '@/queries/graphql/generated/react-query'
 
@@ -97,12 +98,12 @@ export const Route = createFileRoute('/_pathlessLayout/artworks/$slug/')({
 
     return {
       meta: [
-        {
+        ...seo({
           title: artwork?.title ?? params.slug,
           description,
           image: normalized?.images[0]?.url ?? null,
           type: 'product',
-        },
+        }),
       ],
     }
   },

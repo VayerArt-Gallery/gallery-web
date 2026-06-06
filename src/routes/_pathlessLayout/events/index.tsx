@@ -8,6 +8,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import EventsGrid from '@/features/events/EventsGrid'
 import { ITEMS_PER_PAGE } from '@/hooks/useArtworksListing'
 import { filterEventsByTime, sortEventsByTime } from '@/lib/events/utils'
+import { seo } from '@/lib/seo'
 import { getAllExhibitions, getAllFairs } from '@/queries/sanity/events'
 
 const exhibitionsQuery = queryOptions({
@@ -32,12 +33,11 @@ export const Route = createFileRoute('/_pathlessLayout/events/')({
     ]).then(() => undefined),
   head: () => ({
     meta: [
-      {
+      ...seo({
         title: 'Exhibitions & Art Fairs',
         description:
           'Stay current on VayerArt Gallery exhibitions and art fairs, filter by upcoming or past events, and plan your next visit.',
-        type: 'event',
-      },
+      }),
     ],
   }),
   component: RouteComponent,

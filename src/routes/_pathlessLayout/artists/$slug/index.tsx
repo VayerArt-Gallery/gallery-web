@@ -13,6 +13,7 @@ import EventsGrid from '@/features/events/EventsGrid'
 import { useArtistArtworksListing } from '@/hooks/useArtistArtworksListing'
 import { ITEMS_PER_PAGE } from '@/hooks/useArtworksListing'
 import { filterEventsByTime, sortEventsByTime } from '@/lib/events/utils'
+import { seo } from '@/lib/seo'
 import { getArtist } from '@/queries/sanity/artists'
 import { getExhibitionsWithArtist } from '@/queries/sanity/events'
 
@@ -56,12 +57,12 @@ export const Route = createFileRoute('/_pathlessLayout/artists/$slug/')({
 
     return {
       meta: [
-        {
+        ...seo({
           title,
           description,
           image: artist?.artistImage ?? null,
           type: 'profile',
-        },
+        }),
       ],
     }
   },

@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { PortableText } from '@portabletext/react'
 
 import SocialMedia from '@/components/SocialMedia'
+import { seo } from '@/lib/seo'
 import { getAbout } from '@/queries/sanity/about'
 
 const aboutQueryOptions = queryOptions({
@@ -16,11 +17,11 @@ const aboutQueryOptions = queryOptions({
 export const Route = createFileRoute('/_pathlessLayout/about/')({
   head: () => ({
     meta: [
-      {
+      ...seo({
         title: 'About VayerArt Gallery',
         description:
           'Learn about VayerArt Gallery’s commitment to contemporary art, our roots, and how we support artists and collectors.',
-      },
+      }),
     ],
   }),
   loader: ({ context }) =>

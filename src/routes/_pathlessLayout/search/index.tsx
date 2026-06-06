@@ -41,6 +41,7 @@ import {
 } from '@/features/search/searchPageState'
 import { artworkFilterOptionsQueryOptions } from '@/hooks/useArtworksListing'
 import { dedupeArtworks } from '@/lib/artworks/utils'
+import { seo } from '@/lib/seo'
 import { performSearch } from '@/queries/search'
 import { createSearchArtworksInfiniteQueryOptions } from '@/queries/search-artworks'
 
@@ -75,10 +76,10 @@ export const Route = createFileRoute('/_pathlessLayout/search/')({
 
     return {
       meta: [
-        {
+        ...seo({
           title,
           description,
-        },
+        }),
       ],
     }
   },

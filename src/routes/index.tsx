@@ -13,6 +13,7 @@ import {
 import ArtworksGrid from '@/features/artworks/ArtworksGrid'
 import EventsGrid from '@/features/events/EventsGrid'
 import HighlightedArtistsGrid from '@/features/home/HighlightedArtistsGrid'
+import { seo } from '@/lib/seo'
 import { getHomeData } from '@/queries/sanity/homepage'
 
 const homeDataQuery = queryOptions({
@@ -26,11 +27,11 @@ export const Route = createFileRoute('/')({
   loader: ({ context }) => context.queryClient.ensureQueryData(homeDataQuery),
   head: () => ({
     meta: [
-      {
+      ...seo({
         title: 'VayerArt Gallery | Discover Contemporary Art',
         description:
           "Explore curator's picks, highlighted artists, and current exhibitions from VayerArt Gallery in Los Angeles, California.",
-      },
+      }),
     ],
     links: [
       {

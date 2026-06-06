@@ -5,6 +5,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { PortableText } from '@portabletext/react'
 
+import { seo } from '@/lib/seo'
 import { formatDateLong } from '@/lib/utils'
 import { getArticle } from '@/queries/sanity/blog'
 
@@ -32,12 +33,12 @@ export const Route = createFileRoute('/_pathlessLayout/blog/$slug')({
 
     return {
       meta: [
-        {
+        ...seo({
           title,
           description,
           image: loaderData?.coverImage ?? null,
           type: 'article',
-        },
+        }),
       ],
     }
   },

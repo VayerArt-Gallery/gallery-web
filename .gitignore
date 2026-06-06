@@ -17,3 +17,4 @@ routeTree.gen.ts
 /src/queries/graphql/generated
 /src/queries/sanity/generated
 .claude
+tmp

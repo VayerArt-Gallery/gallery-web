@@ -7,6 +7,7 @@ import { PortableText } from '@portabletext/react'
 
 import Carousel from '@/components/Carousel'
 import ArtistsGrid from '@/features/artists/ArtistsGrid'
+import { seo } from '@/lib/seo'
 import { formatDateRange } from '@/lib/utils'
 import { getFair } from '@/queries/sanity/events'
 
@@ -48,12 +49,12 @@ export const Route = createFileRoute('/_pathlessLayout/events/fairs/$slug/')({
 
     return {
       meta: [
-        {
+        ...seo({
           title: loaderData?.title ?? params.slug,
           description,
           image: loaderData ? loaderData.images[0] : null,
           type: 'event',
-        },
+        }),
       ],
     }
   },

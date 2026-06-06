@@ -37,6 +37,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
       },
+      {
+        name: 'google-site-verification',
+        content: 'jXJFcyM1wschu2ZQyRB4vEYYlMMsJiRKdJyrQf6TwKQ',
+      },
       ...seo({
         title: 'VayerArt Gallery | Discover Contemporary Art',
         description:
@@ -47,6 +51,18 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       {
         rel: 'stylesheet',
         href: appCss,
+      },
+    ],
+    scripts: [
+      {
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-4W8RZMMGH6',
+        async: true,
+      },
+      {
+        children: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4W8RZMMGH6');`,
       },
     ],
   }),

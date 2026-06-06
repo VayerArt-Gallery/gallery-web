@@ -2,17 +2,18 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import ArtworksGridContent from '@/features/artworks/ArtworksGridContent'
 import { artworkFilterOptionsQueryOptions } from '@/hooks/useArtworksListing'
+import { seo } from '@/lib/seo'
 
 export const Route = createFileRoute('/_pathlessLayout/sold/')({
   loader: ({ context }) =>
     context.queryClient.ensureQueryData(artworkFilterOptionsQueryOptions),
   head: () => ({
     meta: [
-      {
+      ...seo({
         title: 'Sold Artworks',
         description:
           'Browse sold artworks from VayerArt Gallery, including past acquisitions by artist, style, and category.',
-      },
+      }),
     ],
   }),
   component: RouteComponent,

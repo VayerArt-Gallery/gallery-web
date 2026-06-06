@@ -5,6 +5,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { PortableText } from '@portabletext/react'
 
+import { seo } from '@/lib/seo'
 import { formatDateLong } from '@/lib/utils'
 import { getPage } from '@/queries/sanity/pages'
 
@@ -26,10 +27,10 @@ export const Route = createFileRoute('/_pathlessLayout/legal/$slug/')({
   },
   head: ({ loaderData }) => ({
     meta: [
-      {
+      ...seo({
         title: loaderData ? loaderData.seo.title : '',
         description: loaderData ? loaderData.seo.description : '',
-      },
+      }),
     ],
   }),
   component: Page,

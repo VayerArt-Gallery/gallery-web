@@ -7,6 +7,7 @@ import { PortableText } from '@portabletext/react'
 
 import Carousel from '@/components/Carousel'
 import ArtistsGrid from '@/features/artists/ArtistsGrid'
+import { seo } from '@/lib/seo'
 import { formatDateRange } from '@/lib/utils'
 import { getExhibition } from '@/queries/sanity/events'
 
@@ -48,12 +49,12 @@ export const Route = createFileRoute(
 
     return {
       meta: [
-        {
+        ...seo({
           title: loaderData?.title ?? params.slug,
           description,
           image: loaderData?.images[0] ?? null,
           type: 'event',
-        },
+        }),
       ],
     }
   },

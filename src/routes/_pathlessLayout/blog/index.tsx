@@ -1,6 +1,7 @@
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 
+import { seo } from '@/lib/seo'
 import { formatDateLong } from '@/lib/utils'
 import { getAllArticles } from '@/queries/sanity/blog'
 
@@ -16,12 +17,11 @@ export const Route = createFileRoute('/_pathlessLayout/blog/')({
       .then(() => undefined),
   head: () => ({
     meta: [
-      {
+      ...seo({
         title: 'Blog',
         description:
           'Read essays, interviews, and stories from VayerArt Gallery highlighting artists, exhibitions, and the contemporary art scene.',
-        type: 'article',
-      },
+      }),
     ],
   }),
   component: RouteComponent,
