@@ -12,6 +12,7 @@ const allArtistsQuery = `
     "artistImage": artistImage.asset->url,
     "backgroundImage": backgroundImage.asset->url,
     tagline,
+    jobTitle,
     bio,
     _updatedAt,
     _createdAt
@@ -29,6 +30,7 @@ const artistQuery = `
     "artistImage": artistImage.asset->url,
     "backgroundImage": backgroundImage.asset->url,
     tagline,
+    jobTitle,
     bio,
     selectedWorks[]->{
       "id": _id,

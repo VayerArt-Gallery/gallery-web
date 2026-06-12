@@ -13,7 +13,8 @@ import EventsGrid from '@/features/events/EventsGrid'
 import { useArtistArtworksListing } from '@/hooks/useArtistArtworksListing'
 import { ITEMS_PER_PAGE } from '@/hooks/useArtworksListing'
 import { filterEventsByTime, sortEventsByTime } from '@/lib/events/utils'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
+import { jsonLdScript, personSchema } from '@/lib/structured-data'
 import { getArtist } from '@/queries/sanity/artists'
 import { getExhibitionsWithArtist } from '@/queries/sanity/events'
 
@@ -64,6 +65,8 @@ export const Route = createFileRoute('/_pathlessLayout/artists/$slug/')({
           type: 'profile',
         }),
       ],
+      links: canonicalLinks(`/artists/${params.slug}`),
+      scripts: artist ? [jsonLdScript(personSchema(artist))] : undefined,
     }
   },
   component: RouteComponent,
@@ -147,7 +150,7 @@ function RouteComponent() {
 
   return (
     <main className="page-main mx-auto max-w-[1600px]">
-      <h2 className="page-headline">{artist.name}</h2>
+      <h1 className="page-headline">{artist.name}</h1>
 
       <section className="animate-fade-in my-5 items-start justify-center lg:my-14 lg:flex">
         <div className="group relative">

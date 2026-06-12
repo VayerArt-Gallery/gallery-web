@@ -5,7 +5,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { PortableText } from '@portabletext/react'
 
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
 import { formatDateLong } from '@/lib/utils'
 import { getPage } from '@/queries/sanity/pages'
 
@@ -25,13 +25,14 @@ export const Route = createFileRoute('/_pathlessLayout/legal/$slug/')({
     const pageQueryOptions = createQueryOptions(params.slug)
     return context.queryClient.ensureQueryData(pageQueryOptions)
   },
-  head: ({ loaderData }) => ({
+  head: ({ loaderData, params }) => ({
     meta: [
       ...seo({
         title: loaderData ? loaderData.seo.title : '',
         description: loaderData ? loaderData.seo.description : '',
       }),
     ],
+    links: canonicalLinks(`/legal/${params.slug}`),
   }),
   component: Page,
 })
@@ -48,7 +49,7 @@ function Page() {
     <main className="page-main">
       {data && (
         <>
-          <h2 className="page-headline text-center">{data.title}</h2>
+          <h1 className="page-headline text-center">{data.title}</h1>
 
           <h3 className="mb-4 text-center text-lg font-medium">
             Last Updated: {lastUpdated}

@@ -5,7 +5,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { PortableText } from '@portabletext/react'
 
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
 import { formatDateLong } from '@/lib/utils'
 import { getArticle } from '@/queries/sanity/blog'
 
@@ -40,6 +40,7 @@ export const Route = createFileRoute('/_pathlessLayout/blog/$slug')({
           type: 'article',
         }),
       ],
+      links: canonicalLinks(`/blog/${params.slug}`),
     }
   },
   component: RouteComponent,

@@ -18,7 +18,7 @@ import {
   formatProduct,
   productToArtwork,
 } from '@/lib/normalizers/products'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
 import { fetcher } from '@/queries/graphql/fetcher'
 import { Public_GetProductByHandleDocument } from '@/queries/graphql/generated/react-query'
 
@@ -105,6 +105,7 @@ export const Route = createFileRoute('/_pathlessLayout/artworks/$slug/')({
           type: 'product',
         }),
       ],
+      links: canonicalLinks(`/artworks/${params.slug}`),
     }
   },
   component: RouteComponent,
@@ -145,9 +146,9 @@ function RouteComponent() {
 
         <div className="mx-auto my-8 max-w-175 align-top text-nowrap lg:my-0 lg:ml-8 lg:w-1/2 xl:ml-16 xl:w-150 2xl:ml-24 2xl:w-175">
           <section className="space-y-1">
-            <h2 className="font-lora text-xl font-medium text-wrap md:text-[1.625rem]">
+            <h1 className="font-lora text-xl font-medium text-wrap md:text-[1.625rem]">
               {artwork?.title}
-            </h2>
+            </h1>
             <p className="flex gap-1 text-lg md:text-xl">
               by
               <Link

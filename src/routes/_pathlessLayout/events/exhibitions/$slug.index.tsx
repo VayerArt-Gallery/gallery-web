@@ -7,7 +7,8 @@ import { PortableText } from '@portabletext/react'
 
 import Carousel from '@/components/Carousel'
 import ArtistsGrid from '@/features/artists/ArtistsGrid'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
+import { exhibitionEventSchema, jsonLdScript } from '@/lib/structured-data'
 import { formatDateRange } from '@/lib/utils'
 import { getExhibition } from '@/queries/sanity/events'
 
@@ -56,6 +57,10 @@ export const Route = createFileRoute(
           type: 'event',
         }),
       ],
+      links: canonicalLinks(`/events/exhibitions/${params.slug}`),
+      scripts: loaderData
+        ? [jsonLdScript(exhibitionEventSchema(loaderData, description))]
+        : undefined,
     }
   },
   component: RouteComponent,
@@ -75,7 +80,7 @@ function RouteComponent() {
 
   return (
     <main className="page-main mx-auto max-w-[1600px]">
-      <h2 className="page-headline">{exhibition.title}</h2>
+      <h1 className="page-headline">{exhibition.title}</h1>
       <h3 className="-mt-6 font-medium tracking-wide text-neutral-500">
         {eventDates}
       </h3>

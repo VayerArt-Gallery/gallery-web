@@ -41,6 +41,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         name: 'google-site-verification',
         content: 'jXJFcyM1wschu2ZQyRB4vEYYlMMsJiRKdJyrQf6TwKQ',
       },
+      { name: 'DC.title', content: 'VayerArt Gallery' },
+      { name: 'geo.region', content: 'US-CA' },
+      { name: 'geo.placename', content: 'Granada Hills' },
+      { name: 'geo.position', content: '34.292541;-118.509436' },
+      { name: 'ICBM', content: '34.292541, -118.509436' },
       ...seo({
         title: 'VayerArt Gallery | Discover Contemporary Art',
         description:

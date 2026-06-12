@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { PortableText } from '@portabletext/react'
 
 import SocialMedia from '@/components/SocialMedia'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
 import { getAbout } from '@/queries/sanity/about'
 
 const aboutQueryOptions = queryOptions({
@@ -23,6 +23,7 @@ export const Route = createFileRoute('/_pathlessLayout/about/')({
           'Learn about VayerArt Gallery’s commitment to contemporary art, our roots, and how we support artists and collectors.',
       }),
     ],
+    links: canonicalLinks('/about'),
   }),
   loader: ({ context }) =>
     context.queryClient.ensureQueryData(aboutQueryOptions),
@@ -44,7 +45,7 @@ function AboutPage() {
   return (
     <main className="page-main">
       <div className="mb-12">
-        <h2 className="page-headline">About VayerArt Gallery</h2>
+        <h1 className="page-headline">About VayerArt Gallery</h1>
 
         <section className="flex flex-col gap-4 md:flex-row">
           {data && (

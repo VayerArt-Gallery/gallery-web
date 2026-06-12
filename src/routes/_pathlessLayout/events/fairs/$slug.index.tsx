@@ -7,7 +7,8 @@ import { PortableText } from '@portabletext/react'
 
 import Carousel from '@/components/Carousel'
 import ArtistsGrid from '@/features/artists/ArtistsGrid'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
+import { fairEventSchema, jsonLdScript } from '@/lib/structured-data'
 import { formatDateRange } from '@/lib/utils'
 import { getFair } from '@/queries/sanity/events'
 
@@ -56,6 +57,10 @@ export const Route = createFileRoute('/_pathlessLayout/events/fairs/$slug/')({
           type: 'event',
         }),
       ],
+      links: canonicalLinks(`/events/fairs/${params.slug}`),
+      scripts: loaderData
+        ? [jsonLdScript(fairEventSchema(loaderData, description))]
+        : undefined,
     }
   },
   component: RouteComponent,
@@ -71,9 +76,9 @@ function RouteComponent() {
 
   return (
     <main className="page-main mx-auto max-w-[1600px]">
-      <h2 className="page-headline flex items-center gap-4">
+      <h1 className="page-headline flex items-center gap-4">
         {fair.title} <span className="text-lg">•</span> {fair.location}
-      </h2>
+      </h1>
       <h3 className="-mt-6 font-medium tracking-wide text-neutral-500">
         {eventDates}
       </h3>

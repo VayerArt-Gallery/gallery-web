@@ -13,7 +13,14 @@ import {
 import ArtworksGrid from '@/features/artworks/ArtworksGrid'
 import EventsGrid from '@/features/events/EventsGrid'
 import HighlightedArtistsGrid from '@/features/home/HighlightedArtistsGrid'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
+import {
+  artGallerySchema,
+  jsonLdScript,
+  mainNavBreadcrumbSchema,
+  organizationSchema,
+  websiteSchema,
+} from '@/lib/structured-data'
 import { getHomeData } from '@/queries/sanity/homepage'
 
 const homeDataQuery = queryOptions({
@@ -28,12 +35,13 @@ export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
       ...seo({
-        title: 'VayerArt Gallery | Discover Contemporary Art',
+        title: 'Buy Original Paintings Online | VayerArt Gallery',
         description:
-          "Explore curator's picks, highlighted artists, and current exhibitions from VayerArt Gallery in Los Angeles, California.",
+          "Discover affordable original paintings from Florida, Texas, Miami & Los Angeles artists. Browse our art collective gallery and find a piece you'll love. Shop now.",
       }),
     ],
     links: [
+      ...canonicalLinks('/'),
       {
         rel: 'preload',
         href: '/hero/hero-video.webm',
@@ -41,6 +49,12 @@ export const Route = createFileRoute('/')({
         type: 'video/webm',
         fetchPriority: 'high',
       },
+    ],
+    scripts: [
+      jsonLdScript(organizationSchema()),
+      jsonLdScript(websiteSchema()),
+      jsonLdScript(artGallerySchema()),
+      jsonLdScript(mainNavBreadcrumbSchema()),
     ],
   }),
   component: IndexPage,
@@ -57,6 +71,9 @@ function IndexPage() {
   return (
     <>
       <main>
+        <h1 className="sr-only">
+          Contemporary Art Gallery in Los Angeles - VayerArt Gallery
+        </h1>
         <HeroVideo
           posterSrc="/hero/hero-image.webp"
           videoSrc="/hero/hero-video.webm"

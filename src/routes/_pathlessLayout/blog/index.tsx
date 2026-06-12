@@ -1,7 +1,7 @@
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
 import { formatDateLong } from '@/lib/utils'
 import { getAllArticles } from '@/queries/sanity/blog'
 
@@ -23,6 +23,7 @@ export const Route = createFileRoute('/_pathlessLayout/blog/')({
           'Read essays, interviews, and stories from VayerArt Gallery highlighting artists, exhibitions, and the contemporary art scene.',
       }),
     ],
+    links: canonicalLinks('/blog'),
   }),
   component: RouteComponent,
 })
@@ -33,7 +34,7 @@ function RouteComponent() {
   return (
     <main className="page-main">
       <section className="mb-12">
-        <h2 className="page-headline">Blog</h2>
+        <h1 className="page-headline">Blog</h1>
       </section>
 
       <section className="animate-fade-in">

@@ -2,7 +2,7 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
 import ArtistsGrid from '@/features/artists/ArtistsGrid'
-import { seo } from '@/lib/seo'
+import { canonicalLinks, seo } from '@/lib/seo'
 import { getAllArtists } from '@/queries/sanity/artists'
 
 const artistsQuery = queryOptions({
@@ -17,11 +17,12 @@ export const Route = createFileRoute('/_pathlessLayout/artists/')({
   head: () => ({
     meta: [
       ...seo({
-        title: 'Artists',
+        title: 'Buy Original Paintings from Local Artists | VayerArt Gallery',
         description:
-          'Meet the artists represented by VayerArt Gallery and explore their latest works, exhibitions, and creative practices.',
+          "Explore paintings by talented Florida, Texas & Miami artists. Find original works from local painters you won't see anywhere else. Shop the collection today.",
       }),
     ],
+    links: canonicalLinks('/artists'),
   }),
   component: ArtistsPage,
 })
@@ -31,7 +32,7 @@ function ArtistsPage() {
 
   return (
     <main className="page-main">
-      <h2 className="page-headline">Artists</h2>
+      <h1 className="page-headline">Artists</h1>
       <ArtistsGrid artists={artists} />
     </main>
   )
