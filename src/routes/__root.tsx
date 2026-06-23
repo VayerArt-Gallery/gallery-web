@@ -27,6 +27,8 @@ interface MyRouterContext {
   queryClient: QueryClient
 }
 
+const ANALYTICS_ID = 'G-4W8RZMMGH6'
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
@@ -58,18 +60,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         href: appCss,
       },
     ],
-    scripts: [
-      {
-        src: 'https://www.googletagmanager.com/gtag/js?id=G-4W8RZMMGH6',
-        async: true,
-      },
-      {
-        children: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-4W8RZMMGH6');`,
-      },
-    ],
   }),
 
   shellComponent: RootDocument,
@@ -83,25 +73,35 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const isBlogRoute = pathname.startsWith('/blog')
 
   useEffect(() => {
+    const cancelAnalytics = scheduleAfterLoad(() => {
+      loadAnalytics(ANALYTICS_ID)
+    })
+
+    return cancelAnalytics
+  }, [])
+
+  useEffect(() => {
     const SF_API_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_PUBLIC_TOKEN
     const CHECKOUT_DOMAIN = import.meta.env.VITE_SHOPIFY_CHECKOUT_DOMAIN
     const BASE_URL = import.meta.env.VITE_BASE_URL
 
     if (!SF_API_TOKEN || !CHECKOUT_DOMAIN) return
 
-    const storefrontRootDomain = resolveStorefrontRootDomain(
-      BASE_URL,
-      window.location.hostname,
-    )
-    const locale = document.documentElement.lang || undefined
+    return scheduleAfterLoad(() => {
+      const storefrontRootDomain = resolveStorefrontRootDomain(
+        BASE_URL,
+        window.location.hostname,
+      )
+      const locale = document.documentElement.lang || undefined
 
-    void loadShopifyPrivacyBanner({
-      storefrontAccessToken: SF_API_TOKEN,
-      checkoutRootDomain: CHECKOUT_DOMAIN,
-      storefrontRootDomain,
-      locale,
-    }).catch((error) => {
-      console.warn('Failed to load Shopify privacy banner', error)
+      void loadShopifyPrivacyBanner({
+        storefrontAccessToken: SF_API_TOKEN,
+        checkoutRootDomain: CHECKOUT_DOMAIN,
+        storefrontRootDomain,
+        locale,
+      }).catch((error) => {
+        console.warn('Failed to load Shopify privacy banner', error)
+      })
     })
   }, [])
 
@@ -145,4 +145,67 @@ function Devtools() {
       ]}
     />
   )
+}
+
+function scheduleAfterLoad(task: () => void) {
+  const win = window as Window & {
+    requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+    cancelIdleCallback?: (handle: number) => void
+  }
+
+  let timeoutId: number | null = null
+  let idleId: number | null = null
+
+  const run = () => {
+    if (typeof win.requestIdleCallback === 'function') {
+      idleId = win.requestIdleCallback(task, { timeout: 2000 })
+      return
+    }
+
+    timeoutId = window.setTimeout(task, 1200)
+  }
+
+  if (document.readyState === 'complete') {
+    run()
+  } else {
+    window.addEventListener('load', run, { once: true })
+  }
+
+  return () => {
+    window.removeEventListener('load', run)
+
+    if (idleId !== null && typeof win.cancelIdleCallback === 'function') {
+      win.cancelIdleCallback(idleId)
+    }
+
+    if (timeoutId !== null) {
+      window.clearTimeout(timeoutId)
+    }
+  }
+}
+
+function loadAnalytics(analyticsId: string) {
+  const existing = document.getElementById('gtag-script')
+  if (existing) return
+
+  const win = window as Window & {
+    dataLayer?: unknown[]
+    gtag?: (...args: unknown[]) => void
+  }
+
+  win.dataLayer = win.dataLayer ?? []
+  win.gtag =
+    win.gtag ??
+    function gtag(...args: unknown[]) {
+      win.dataLayer?.push(args)
+    }
+
+  win.gtag('js', new Date())
+  win.gtag('config', analyticsId)
+
+  const script = document.createElement('script')
+  script.id = 'gtag-script'
+  script.async = true
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`
+  document.head.appendChild(script)
 }

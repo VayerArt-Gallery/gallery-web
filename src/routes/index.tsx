@@ -40,16 +40,7 @@ export const Route = createFileRoute('/')({
           "Discover affordable original paintings from Florida, Texas, Miami & Los Angeles artists. Browse our art collective gallery and find a piece you'll love. Shop now.",
       }),
     ],
-    links: [
-      ...canonicalLinks('/'),
-      {
-        rel: 'preload',
-        href: '/hero/hero-video.webm',
-        as: 'video',
-        type: 'video/webm',
-        fetchPriority: 'high',
-      },
-    ],
+    links: [...canonicalLinks('/')],
     scripts: [
       jsonLdScript(organizationSchema()),
       jsonLdScript(websiteSchema()),

@@ -1,9 +1,9 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { Link, useLocation } from '@tanstack/react-router'
 
-import Bag from '@/features/bag/Bag'
-import SearchDialog from '@/features/search/SearchDialog'
+import { BagIcon } from '@/components/icons/BagIcon'
+import { Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 import { Button } from './ui/button'
@@ -18,13 +18,21 @@ import {
   DrawerTrigger,
 } from './ui/drawer'
 
+const Bag = lazy(() => import('@/features/bag/Bag'))
+const SearchDialog = lazy(() => import('@/features/search/SearchDialog'))
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [isHydrated, setIsHydrated] = useState(false)
   const headerRef = useRef<HTMLElement | null>(null)
   const pathname = useLocation({
     select: (location) => location.pathname,
   })
+
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
 
   useLayoutEffect(() => {
     const onScroll = () => {
@@ -80,7 +88,7 @@ export default function Header() {
             : 'bg-transparent text-white',
       )}
     >
-      <nav className="mx-auto flex w-full items-center justify-between">
+      <div className="mx-auto flex w-full items-center justify-between">
         <Link
           to="/"
           aria-label="Home"
@@ -123,9 +131,25 @@ export default function Header() {
           </nav>
 
           <div className="mr-4 ml-10 flex gap-4 lg:mr-0 lg:gap-4">
-            <SearchDialog isBlogRoute={isBlogRoute} />
-
-            <Bag />
+            {isHydrated ? (
+              <>
+                <Suspense
+                  fallback={<HeaderIconButtonFallback ariaLabel="Search" icon="search" />}
+                >
+                  <SearchDialog isBlogRoute={isBlogRoute} />
+                </Suspense>
+                <Suspense
+                  fallback={<HeaderIconButtonFallback ariaLabel="Bag" icon="bag" />}
+                >
+                  <Bag />
+                </Suspense>
+              </>
+            ) : (
+              <>
+                <HeaderIconButtonFallback ariaLabel="Search" icon="search" />
+                <HeaderIconButtonFallback ariaLabel="Bag" icon="bag" />
+              </>
+            )}
           </div>
 
           <Drawer
@@ -188,7 +212,26 @@ export default function Header() {
             </DrawerContent>
           </Drawer>
         </div>
-      </nav>
+      </div>
     </header>
+  )
+}
+
+function HeaderIconButtonFallback({
+  ariaLabel,
+  icon,
+}: {
+  ariaLabel: string
+  icon: 'search' | 'bag'
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      disabled
+      className="cursor-default p-2 opacity-100"
+    >
+      {icon === 'search' ? <Search className="w-5" /> : <BagIcon classes="size-5" />}
+    </button>
   )
 }
