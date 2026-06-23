@@ -1,6 +1,7 @@
 import {
   generateShopifySrcSet,
   SHOPIFY_IMAGE_SIZES,
+  SHOPIFY_THUMBNAIL_SRC_SET_WIDTHS,
 } from '@/lib/shopify-images'
 import { cn } from '@/lib/utils'
 
@@ -30,7 +31,10 @@ export default function CarouselThumbnail({
     >
       <img
         src={images[index]}
-        srcSet={generateShopifySrcSet(images[index])}
+        srcSet={generateShopifySrcSet(
+          images[index],
+          SHOPIFY_THUMBNAIL_SRC_SET_WIDTHS,
+        )}
         sizes={SHOPIFY_IMAGE_SIZES.thumbnail}
         onClick={onClick}
         className="animate-fade-in aspect-[5/4] w-full rounded object-contain"

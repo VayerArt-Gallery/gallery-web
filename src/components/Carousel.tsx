@@ -11,11 +11,58 @@ import {
   CarouselPrevious,
   Carousel as CarouselRoot,
 } from '@/components/ui/carousel'
-import { generateSanitySrcSet, SANITY_IMAGE_SIZES } from '@/lib/sanity-images'
+import {
+  generateSanitySrcSet,
+  SANITY_DETAIL_SRC_SET_WIDTHS,
+  SANITY_IMAGE_SIZES,
+  SANITY_ZOOM_SRC_SET_WIDTHS,
+  transformSanityImage,
+} from '@/lib/sanity-images'
+import {
+  generateShopifySrcSet,
+  PRODUCT_IMAGE_SIZES,
+  PRODUCT_IMAGE_SRC_SET_WIDTHS,
+  transformShopifyImage,
+  ZOOM_PRODUCT_IMAGE_SIZES,
+  ZOOM_PRODUCT_IMAGE_SRC_SET_WIDTHS,
+  ZOOM_PRODUCT_IMAGE_WIDTH,
+} from '@/lib/shopify-images'
 import { cn } from '@/lib/utils'
-import { generateShopifySrcSet, SHOPIFY_IMAGE_SIZES } from '@/lib/shopify-images'
 
 import CarouselThumbnail from './CarouselThumbnail'
+
+type CdnType = 'shopify' | 'sanity'
+type ImageVariant = 'detail' | 'zoom'
+
+// Resolve the responsive-image config (srcset widths, `sizes`, and a bounded
+// fallback `src` width) for a given CDN + display context.
+function getCarouselImageConfig(cdnType: CdnType, variant: ImageVariant) {
+  if (cdnType === 'sanity') {
+    return variant === 'zoom'
+      ? {
+          widths: SANITY_ZOOM_SRC_SET_WIDTHS,
+          sizes: SANITY_IMAGE_SIZES.zoom,
+          fallbackWidth: 2048,
+        }
+      : {
+          widths: SANITY_DETAIL_SRC_SET_WIDTHS,
+          sizes: SANITY_IMAGE_SIZES.detail,
+          fallbackWidth: 960,
+        }
+  }
+
+  return variant === 'zoom'
+    ? {
+        widths: ZOOM_PRODUCT_IMAGE_SRC_SET_WIDTHS,
+        sizes: ZOOM_PRODUCT_IMAGE_SIZES,
+        fallbackWidth: ZOOM_PRODUCT_IMAGE_WIDTH,
+      }
+    : {
+        widths: PRODUCT_IMAGE_SRC_SET_WIDTHS,
+        sizes: PRODUCT_IMAGE_SIZES,
+        fallbackWidth: 960,
+      }
+}
 
 type CarouselProps = {
   images: string[]
@@ -29,7 +76,8 @@ type CarouselProps = {
   imageWrapperClassName?: string
   showNavButtons?: boolean
   navButtonClassName?: string
-  cdnType?: 'shopify' | 'sanity'
+  cdnType?: CdnType
+  imageVariant?: ImageVariant
 }
 
 export default function Carousel({
@@ -45,6 +93,7 @@ export default function Carousel({
   showNavButtons = false,
   navButtonClassName,
   cdnType = 'shopify',
+  imageVariant = 'detail',
 }: CarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
@@ -90,8 +139,10 @@ export default function Carousel({
   const isInteractive = enableZoom && typeof onImageClick === 'function'
   const generateSrcSet =
     cdnType === 'sanity' ? generateSanitySrcSet : generateShopifySrcSet
-  const imageSizes =
-    cdnType === 'sanity' ? SANITY_IMAGE_SIZES.detail : SHOPIFY_IMAGE_SIZES.detail
+  const transformImage =
+    cdnType === 'sanity' ? transformSanityImage : transformShopifyImage
+  const imageConfig = getCarouselImageConfig(cdnType, imageVariant)
+  const fallbackHeight = Math.round((imageConfig.fallbackWidth * 4) / 5)
 
   const handleImageClick = (index: number) => {
     if (isInteractive) {
@@ -123,11 +174,11 @@ export default function Carousel({
                 onClick={() => handleImageClick(index)}
               >
                 <img
-                  src={image}
-                  srcSet={generateSrcSet(image)}
-                  sizes={imageSizes}
-                  width="1920"
-                  height="1080"
+                  src={transformImage(image, imageConfig.fallbackWidth)}
+                  srcSet={generateSrcSet(image, imageConfig.widths)}
+                  sizes={imageConfig.sizes}
+                  width={imageConfig.fallbackWidth}
+                  height={fallbackHeight}
                   className={cn(
                     'animate-fade-in mx-auto aspect-[5/4] h-full rounded-md object-contain',
                     imageClassName,

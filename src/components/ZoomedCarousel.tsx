@@ -78,10 +78,14 @@ export default function ZoomedCarousel({
               maxHeight: '-webkit-fill-available',
             }}
           >
-            <div className="mx-auto flex h-full w-full max-w-5xl flex-col" style={{ minHeight: 0 }}>
+            <div
+              className="mx-auto flex h-full w-full max-w-5xl flex-col"
+              style={{ minHeight: 0 }}
+            >
               <Carousel
                 images={images}
                 enableZoom={false}
+                imageVariant="zoom"
                 initialSlide={safeInitial}
                 showNavButtons={isDesktop && images.length > 1}
                 wrapperClassName="flex h-full min-h-0 w-full flex-col items-center justify-center"

@@ -1,8 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import {
+  generateSanityGridSrcSet,
+  SANITY_IMAGE_SIZES,
+} from '@/lib/sanity-images'
+import {
+  generateShopifyGridSrcSet,
+  SHOPIFY_IMAGE_SIZES,
+} from '@/lib/shopify-images'
 import { cn } from '@/lib/utils'
-import { generateSanitySrcSet, SANITY_IMAGE_SIZES } from '@/lib/sanity-images'
-import { generateShopifyGridSrcSet, SHOPIFY_IMAGE_SIZES } from '@/lib/shopify-images'
 
 type HoverSlideshowProps = {
   cover: string
@@ -38,8 +44,10 @@ export default function HoverSlideshow({
   playSignal = 0,
 }: HoverSlideshowProps) {
   // Select the appropriate srcset generator based on CDN type
-  const generateSrcSet = cdnType === 'sanity' ? generateSanitySrcSet : generateShopifyGridSrcSet
-  const imageSizes = cdnType === 'sanity' ? SANITY_IMAGE_SIZES.grid : SHOPIFY_IMAGE_SIZES.grid
+  const generateSrcSet =
+    cdnType === 'sanity' ? generateSanityGridSrcSet : generateShopifyGridSrcSet
+  const imageSizes =
+    cdnType === 'sanity' ? SANITY_IMAGE_SIZES.grid : SHOPIFY_IMAGE_SIZES.grid
   const [hoverCapable, setHoverCapable] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
 

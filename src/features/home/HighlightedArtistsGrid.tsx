@@ -2,7 +2,10 @@ import type { Artist } from '@/types/artists'
 
 import { Link } from '@tanstack/react-router'
 
-import { generateSanitySrcSet, SANITY_IMAGE_SIZES } from '@/lib/sanity-images'
+import {
+  generateSanityGridSrcSet,
+  SANITY_IMAGE_SIZES,
+} from '@/lib/sanity-images'
 
 type ArtistsGridProps = {
   artists: Omit<Artist, 'bio'>[] | undefined
@@ -21,7 +24,7 @@ export default function HighlightedArtistsGrid({ artists }: ArtistsGridProps) {
                   <div className="group relative">
                     <img
                       src={artist.artistImage}
-                      srcSet={generateSanitySrcSet(artist.artistImage)}
+                      srcSet={generateSanityGridSrcSet(artist.artistImage)}
                       sizes={SANITY_IMAGE_SIZES.grid}
                       alt={`A portrait image of the artist ${artist.name}`}
                       width={1920}
@@ -31,7 +34,7 @@ export default function HighlightedArtistsGrid({ artists }: ArtistsGridProps) {
                     />
                     <img
                       src={artist.backgroundImage}
-                      srcSet={generateSanitySrcSet(artist.backgroundImage)}
+                      srcSet={generateSanityGridSrcSet(artist.backgroundImage)}
                       sizes={SANITY_IMAGE_SIZES.grid}
                       alt={`A portrait image of the artist ${artist.name}`}
                       width={1920}
